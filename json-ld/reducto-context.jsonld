@@ -1,0 +1,92 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://schema.org/",
+    "reducto": "https://platform.reducto.ai/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+
+    "ParseRequest": {
+      "@id": "reducto:Parse/Request",
+      "@context": {
+        "document_url": { "@id": "reducto:Parse/documentUrl", "@type": "xsd:anyURI" },
+        "options": { "@id": "reducto:Parse/options" },
+        "advanced_options": { "@id": "reducto:Parse/advancedOptions" },
+        "priority": { "@id": "reducto:Parse/priority", "@type": "xsd:boolean" }
+      }
+    },
+    "ParseResponse": {
+      "@id": "reducto:Parse/Response",
+      "@context": {
+        "job_id": { "@id": "reducto:Parse/jobId", "@type": "xsd:string" },
+        "result": { "@id": "reducto:Parse/result" },
+        "usage": { "@id": "reducto:Parse/usage" }
+      }
+    },
+    "ParseChunk": {
+      "@id": "reducto:Parse/Chunk",
+      "@context": {
+        "content": { "@id": "reducto:Parse/chunk/content", "@type": "xsd:string" },
+        "embed": { "@id": "reducto:Parse/chunk/embed", "@type": "xsd:string" },
+        "blocks": { "@id": "reducto:Parse/chunk/blocks", "@container": "@list" }
+      }
+    },
+    "ParseBlock": {
+      "@id": "reducto:Parse/Block",
+      "@context": {
+        "type": { "@id": "reducto:Parse/block/type", "@type": "xsd:string" },
+        "content": { "@id": "reducto:Parse/block/content", "@type": "xsd:string" },
+        "confidence": { "@id": "reducto:Parse/block/confidence", "@type": "xsd:string" },
+        "bbox": { "@id": "reducto:Parse/block/bbox" }
+      }
+    },
+    "ExtractRequest": {
+      "@id": "reducto:Extract/Request",
+      "@context": {
+        "document_url": { "@id": "reducto:Extract/documentUrl", "@type": "xsd:anyURI" },
+        "schema": { "@id": "reducto:Extract/schema" },
+        "system_prompt": { "@id": "reducto:Extract/systemPrompt", "@type": "xsd:string" }
+      }
+    },
+    "ExtractResponse": {
+      "@id": "reducto:Extract/Response",
+      "@context": {
+        "job_id": { "@id": "reducto:Extract/jobId", "@type": "xsd:string" },
+        "result": { "@id": "reducto:Extract/result" },
+        "citations": { "@id": "reducto:Extract/citations", "@container": "@list" }
+      }
+    },
+    "SplitRequest": { "@id": "reducto:Split/Request" },
+    "SplitResponse": { "@id": "reducto:Split/Response" },
+    "EditRequest": { "@id": "reducto:Edit/Request" },
+    "EditResponse": { "@id": "reducto:Edit/Response" },
+    "PipelineRequest": { "@id": "reducto:Pipeline/Request" },
+    "ClassifyRequest": { "@id": "reducto:Classify/Request" },
+    "Job": {
+      "@id": "reducto:Job",
+      "@context": {
+        "job_id": { "@id": "reducto:Job/jobId", "@type": "xsd:string" },
+        "status": { "@id": "reducto:Job/status", "@type": "xsd:string" },
+        "progress": { "@id": "reducto:Job/progress", "@type": "xsd:decimal" },
+        "result": { "@id": "reducto:Job/result" },
+        "created_at": { "@id": "reducto:Job/createdAt", "@type": "xsd:dateTime" }
+      }
+    },
+    "WebhookConfig": {
+      "@id": "reducto:Webhook/Config",
+      "@context": {
+        "url": { "@id": "reducto:Webhook/url", "@type": "xsd:anyURI" },
+        "events": { "@id": "reducto:Webhook/events", "@container": "@list" }
+      }
+    },
+    "Usage": {
+      "@id": "reducto:Usage",
+      "@context": {
+        "num_pages": { "@id": "reducto:Usage/numPages", "@type": "xsd:integer" },
+        "credits": { "@id": "reducto:Usage/credits", "@type": "xsd:decimal" }
+      }
+    }
+  }
+}

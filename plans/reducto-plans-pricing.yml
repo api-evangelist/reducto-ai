@@ -1,0 +1,120 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Reducto
+providerId: reducto-ai
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - Document AI
+  - OCR
+  - Parse
+  - Extract
+description: 'Reconciled plans and credit pricing for the Reducto Document AI platform. Source: reducto.ai/pricing
+  and docs.reducto.ai/reference/credit-usage.'
+sources:
+  - https://reducto.ai/pricing
+  - https://docs.reducto.ai/reference/credit-usage
+  - https://docs.reducto.ai/reference/rate-limits
+plans:
+  - id: reducto-standard
+    name: Standard
+    type: usage-based
+    description: Pay-as-you-go credit plan with the first 15,000 credits free. Includes Parse, Extract, Edit,
+      Split, Classify, Pipeline; 30+ file types; up to 5 Studio seats; 1 RPS sync rate limit.
+    entries:
+      - label: Free credits
+        name: free_credits
+        type: free
+        metric: credits
+        limit: 15000
+        timeFrame: lifetime
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Credits (post-free)
+        name: credits
+        type: metered
+        metric: credits
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.015'
+        userMultiplied: false
+  - id: reducto-growth
+    name: Growth
+    type: custom
+    description: Volume-discounted plan adding zero-data-retention option, BAA, premium 10 RPS rate limit, up
+      to 5 active priority requests, priority support, data residency endpoints, and unlimited Studio seats.
+    entries:
+      - label: Credits (volume discount)
+        name: credits
+        type: metered
+        metric: credits
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'custom'
+        userMultiplied: false
+  - id: reducto-enterprise
+    name: Enterprise
+    type: custom
+    description: Adds VPC and on-premises deployment, custom MSA/SLA, dedicated support, RBAC, SSO/SAML, and
+      100+ RPS custom throughput.
+    entries:
+      - label: Credits (custom)
+        name: credits
+        type: metered
+        metric: credits
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'custom'
+        userMultiplied: false
+creditCosts:
+  - operation: parse
+    label: Parse (standard)
+    creditsPerPage: 1
+  - operation: parse
+    label: Parse (complex)
+    creditsPerPage: 2
+  - operation: parse
+    label: Parse (agentic)
+    creditsPerPage: 4
+  - operation: parse
+    label: Parse — spreadsheets (accurate)
+    unit: 1000 cells
+    credits: 1
+  - operation: parse
+    label: Parse — spreadsheets (fast)
+    unit: 5000 cells
+    credits: 1
+  - operation: parse
+    label: Parse — text files
+    creditsPerPage: 0.5
+  - operation: extract
+    label: Extract (standard)
+    creditsPerPage: 2
+  - operation: extract
+    label: Deep Extract
+    notes: 4 credits per page + 0.1 credits per field; minimum 30 credits per document.
+  - operation: split
+    label: Split (standard)
+    creditsPerPage: 2
+  - operation: split
+    label: Deep Split
+    creditsPerPage: 4
+  - operation: classify
+    label: Classify
+    notes: 0.5 credits per page of context (default 5 pages = 2.5 credits per document).
+  - operation: edit
+    label: Edit (beta)
+    creditsPerPage: 4
+  - operation: pipeline
+    label: Pipeline
+    notes: Sum of component-operation credit costs.

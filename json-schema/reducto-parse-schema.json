@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.com/schemas/reducto/reducto-parse-schema.json",
+  "title": "Reducto Parse",
+  "description": "Schema for the Reducto Parse API request and response. POST /parse accepts either a SyncParseConfig or AsyncParseConfig; the response is a ParseResponse (sync) or AsyncParseResponse (async).",
+  "type": "object",
+  "definitions": {
+    "ParseRequest": {
+      "type": "object",
+      "description": "Request body for POST /parse — synchronous or asynchronous parse.",
+      "required": ["document_url"],
+      "properties": {
+        "document_url": {
+          "type": "string",
+          "description": "Source document. Accepts a public URL, presigned S3 URL, reducto:// reference returned by /upload, or jobid:// reference from a previous parse.",
+          "format": "uri"
+        },
+        "options": {
+          "type": "object",
+          "description": "Optional parse configuration covering OCR, chunking, table format, page range, agentic enhancements, and figure summarization.",
+          "properties": {
+            "ocr_mode": {
+              "type": "string",
+              "enum": ["standard", "highest_quality", "disabled"],
+              "description": "OCR engine mode. highest_quality uses agentic OCR with error correction; disabled is fastest."
+            },
+            "chunking": {
+              "type": "object",
+              "description": "Chunking strategy that controls how the parsed document is broken into retrieval-ready chunks.",
+              "properties": {
+                "chunk_mode": {
+                  "type": "string",
+                  "enum": ["variable", "section", "page", "block", "disabled"]
+                },
+                "chunk_size": { "type": "integer", "minimum": 1 }
+              }
+            },
+            "table_output_format": {
+              "type": "string",
+              "enum": ["html", "json", "md", "csv", "ai_json"],
+              "description": "Output format for detected tables."
+            },
+            "figure_summarization": { "type": "boolean" },
+            "page_range": { "type": "string", "description": "Inclusive page range, e.g. '1-10,15'." },
+            "embed_metadata": { "type": "boolean" }
+          }
+        },
+        "advanced_options": {
+          "type": "object",
+          "description": "Experimental and agentic features such as deep parse, agentic table merge, and layout enrichment."
+        },
+        "experimental_options": {
+          "type": "object",
+          "description": "Bleeding-edge options that may change without notice."
+        },
+        "priority": { "type": "boolean", "description": "Schedule the request on the priority lane (Growth and Enterprise tiers)." }
+      }
+    },
+    "ParseResponse": {
+      "type": "object",
+      "description": "Response from a synchronous /parse call. Contains structured document content, chunks, and usage metrics.",
+      "required": ["job_id", "result"],
+      "properties": {
+        "job_id": { "type": "string" },
+        "result": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "enum": ["full", "url"] },
+            "chunks": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/ParseChunk" }
+            },
+            "ocr_pages_count": { "type": "integer" },
+            "duration": { "type": "number" }
+          }
+        },
+        "usage": { "$ref": "#/definitions/Usage" }
+      }
+    },
+    "AsyncParseResponse": {
+      "type": "object",
+      "description": "Response from a /parse_async call. Returns a job_id that can be polled via /job/{job_id} or notified via webhook.",
+      "required": ["job_id"],
+      "properties": {
+        "job_id": { "type": "string" },
+        "status_url": { "type": "string", "format": "uri" }
+      }
+    },
+    "ParseChunk": {
+      "type": "object",
+      "description": "A single chunk emitted by the Parse pipeline.",
+      "properties": {
+        "content": { "type": "string" },
+        "embed": { "type": "string" },
+        "enriched": { "type": "string" },
+        "enrichment_success": { "type": "boolean" },
+        "blocks": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ParseBlock" }
+        }
+      }
+    },
+    "ParseBlock": {
+      "type": "object",
+      "description": "An individual layout block (text, table, figure, list, equation, etc.) detected on a page.",
+      "properties": {
+        "type": { "type": "string", "enum": ["Text", "Title", "Section Header", "List Item", "Table", "Figure", "Caption", "Footer", "Header", "Equation", "Discard"] },
+        "bbox": {
+          "type": "object",
+          "properties": {
+            "top": { "type": "number" },
+            "left": { "type": "number" },
+            "height": { "type": "number" },
+            "width": { "type": "number" },
+            "page": { "type": "integer" }
+          }
+        },
+        "content": { "type": "string" },
+        "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+      }
+    },
+    "Usage": {
+      "type": "object",
+      "description": "Billing usage emitted with sync responses.",
+      "properties": {
+        "num_pages": { "type": "integer" },
+        "credits": { "type": "number" }
+      }
+    }
+  }
+}

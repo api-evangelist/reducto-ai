@@ -1,0 +1,111 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Reducto
+providerId: reducto-ai
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - FinOps
+  - Cost Management
+  - FOCUS
+  - Document AI
+  - Credits
+description: FOCUS-aligned FinOps definition for the Reducto API. Credit-based metering with per-page,
+  per-cell, and per-field unit rates across Parse, Extract, Split, Edit, Classify, and Pipeline endpoints.
+sources:
+  - https://reducto.ai/pricing
+  - https://docs.reducto.ai/reference/credit-usage
+  - https://docs.reducto.ai/reference/page-billing-breakdown
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Reducto
+serviceCategory: AI and Machine Learning
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+    - Usage
+    - Purchase
+    - Tax
+    - Credit
+    - Adjustment
+  primaryUnit: credit
+  secondaryUnits:
+    - page
+    - cell
+    - field
+    - document
+focusColumns:
+  ServiceName: Reducto API
+  ServiceCategory: AI and Machine Learning
+  ProviderName: Reducto
+  PublisherName: Reducto
+  InvoiceIssuerName: Reducto
+  PricingCategory: Usage-Based
+  PricingUnit: credit
+  BillingCurrency: USD
+meters:
+  - name: parse_pages
+    unit: page
+    aggregation: sum
+    dimensions:
+      - endpoint
+      - mode
+      - workspace
+    description: Pages processed by /parse and /parse_async.
+  - name: extract_pages
+    unit: page
+    aggregation: sum
+    dimensions:
+      - endpoint
+      - mode
+      - workspace
+    description: Pages processed by /extract and /extract_async.
+  - name: deep_extract_fields
+    unit: field
+    aggregation: sum
+    description: Fields counted in Deep Extract (0.1 credits per field).
+  - name: split_pages
+    unit: page
+    aggregation: sum
+  - name: edit_pages
+    unit: page
+    aggregation: sum
+  - name: classify_context_pages
+    unit: page
+    aggregation: sum
+  - name: spreadsheet_cells
+    unit: cell
+    aggregation: sum
+    description: Cell-based metering for spreadsheet parsing.
+  - name: credits_consumed
+    unit: credit
+    aggregation: sum
+    description: Aggregated credits across all operations.
+discountLanes:
+  - name: free_tier
+    description: First 15,000 credits free on the Standard plan.
+  - name: priority
+    description: Priority lane on Growth tier — up to 5 active priority requests.
+  - name: jobid_reuse
+    description: Reusing a parse via jobid:// reference prevents double-billing across Extract / Split / Edit.
+allocation:
+  recommendedDimensions:
+    - endpoint
+    - workspace
+    - tenant
+    - document_type
+    - region
+optimization:
+  recommendations:
+    - Reuse parse results via jobid:// references when chaining Extract or Split.
+    - Disable agentic modes on clean digital PDFs to drop from 4 to 1 credit per page.
+    - Use /parse_async + webhooks to bypass sync concurrency and improve throughput per credit.
+    - Tune chunking strategy to right-size downstream embedding / LLM costs.

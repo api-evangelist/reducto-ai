@@ -1,0 +1,116 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Reducto Split API — Split
+  description: 'Reducto Split API — Split. 2 operations covering synchronous and asynchronous split. Splits
+    multi-document files and long forms into individual logical units using rules-based or deep split modes.'
+  tags:
+  - Reducto
+  - Split
+  - Document AI
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    REDUCTO_API_KEY: REDUCTO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: split-split
+    baseUri: https://platform.reducto.ai
+    description: Reducto Split API — Split business capability. Self-contained, no shared references.
+    resources:
+    - name: split
+      path: /split
+      operations:
+      - name: splitdocument
+        method: POST
+        description: Reducto Split Document
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: split-async
+      path: /split_async
+      operations:
+      - name: splitdocumentasync
+        method: POST
+        description: Reducto Split Document Async
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: bearer
+      value: '{{env.REDUCTO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: split-split-rest
+    port: 8080
+    description: REST adapter for Reducto Split API — Split.
+    resources:
+    - path: /v1/split
+      name: split
+      operations:
+      - method: POST
+        name: splitdocument
+        call: split-split.splitdocument
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/split_async
+      name: split-async
+      operations:
+      - method: POST
+        name: splitdocumentasync
+        call: split-split.splitdocumentasync
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: split-split-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Reducto Split API — Split.
+    tools:
+    - name: reducto-split
+      description: Reducto Split Document
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: split-split.splitdocument
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reducto-split-async
+      description: Reducto Split Document Async
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: split-split.splitdocumentasync
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

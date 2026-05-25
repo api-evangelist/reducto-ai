@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.com/schemas/reducto/reducto-extract-schema.json",
+  "title": "Reducto Extract",
+  "description": "Schema for the Reducto Extract API request and response. POST /extract returns structured JSON data shaped by a caller-supplied JSON Schema, with optional citations and deep-extract behavior.",
+  "type": "object",
+  "definitions": {
+    "ExtractRequest": {
+      "type": "object",
+      "description": "Request body for POST /extract — synchronous or asynchronous structured-data extraction.",
+      "required": ["document_url", "schema"],
+      "properties": {
+        "document_url": {
+          "type": "string",
+          "description": "Source document URL, reducto://upload, or jobid:// reference to reuse a prior parse.",
+          "format": "uri"
+        },
+        "schema": {
+          "type": "object",
+          "description": "JSON Schema describing the shape of the data to extract. Supports nested objects and arrays."
+        },
+        "system_prompt": {
+          "type": "string",
+          "description": "Optional natural-language instruction guiding extraction decisions."
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "generate_citations": { "type": "boolean" },
+            "use_chunking": { "type": "boolean" },
+            "deep_extract": {
+              "type": "object",
+              "description": "Enables deep extract mode for harder pages. Adds per-field cost.",
+              "properties": {
+                "enabled": { "type": "boolean" },
+                "mode": { "type": "string", "enum": ["balanced", "thorough"] }
+              }
+            },
+            "array_extract": {
+              "type": "object",
+              "properties": { "enabled": { "type": "boolean" } }
+            }
+          }
+        },
+        "priority": { "type": "boolean" }
+      }
+    },
+    "ExtractResponse": {
+      "type": "object",
+      "description": "Synchronous /extract response.",
+      "required": ["job_id", "result"],
+      "properties": {
+        "job_id": { "type": "string" },
+        "result": {
+          "type": "array",
+          "description": "Array of extraction results, one per matched document section.",
+          "items": { "type": "object" }
+        },
+        "citations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": { "type": "string" },
+              "page": { "type": "integer" },
+              "bbox": {
+                "type": "object",
+                "properties": {
+                  "top": { "type": "number" },
+                  "left": { "type": "number" },
+                  "height": { "type": "number" },
+                  "width": { "type": "number" }
+                }
+              }
+            }
+          }
+        },
+        "usage": {
+          "type": "object",
+          "properties": {
+            "num_pages": { "type": "integer" },
+            "credits": { "type": "number" }
+          }
+        }
+      }
+    }
+  }
+}

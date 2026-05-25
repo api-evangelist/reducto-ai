@@ -1,0 +1,116 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Reducto Classify API — Classify
+  description: 'Reducto Classify API — Classify. 2 operations covering classification and citation lookup. Sorts
+    documents into a defined set of categories and surfaces citations against parsed content.'
+  tags:
+  - Reducto
+  - Classify
+  - Document AI
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    REDUCTO_API_KEY: REDUCTO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: classify-classify
+    baseUri: https://platform.reducto.ai
+    description: Reducto Classify API — Classify business capability. Self-contained, no shared references.
+    resources:
+    - name: classify
+      path: /classify
+      operations:
+      - name: classifydocument
+        method: POST
+        description: Reducto Classify Document
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: cite
+      path: /cite
+      operations:
+      - name: citecontent
+        method: POST
+        description: Reducto Cite Content
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: bearer
+      value: '{{env.REDUCTO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: classify-classify-rest
+    port: 8080
+    description: REST adapter for Reducto Classify API — Classify.
+    resources:
+    - path: /v1/classify
+      name: classify
+      operations:
+      - method: POST
+        name: classifydocument
+        call: classify-classify.classifydocument
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/cite
+      name: cite
+      operations:
+      - method: POST
+        name: citecontent
+        call: classify-classify.citecontent
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: classify-classify-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Reducto Classify API — Classify.
+    tools:
+    - name: reducto-classify
+      description: Reducto Classify Document
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: classify-classify.classifydocument
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reducto-cite
+      description: Reducto Cite Content
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: classify-classify.citecontent
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

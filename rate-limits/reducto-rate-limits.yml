@@ -1,0 +1,55 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Reducto
+providerId: reducto-ai
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - Rate Limiting
+  - Quotas
+  - Document AI
+description: 'Reconciled rate limits for the Reducto API. Sources: docs.reducto.ai/reference/rate-limits and
+  reducto.ai/pricing. Sync endpoints share a 200-concurrent-request pool; async endpoints accept submissions
+  up to 500 RPS and bypass concurrency by returning job IDs.'
+sources:
+  - https://docs.reducto.ai/reference/rate-limits
+  - https://reducto.ai/pricing
+responseCodes:
+  throttled: 429
+  quotaExceeded: 429
+algorithm: concurrency-and-submission-rate
+limits:
+  - tier: Standard
+    syncConcurrent: 200
+    submissionRPS: 1
+    notes: Pay-as-you-go plan. 1 sync request per second.
+  - tier: Growth
+    syncConcurrent: 200
+    submissionRPS: 10
+    priorityRequests: 5
+    notes: Premium rate limit. Up to 5 active priority requests.
+  - tier: Enterprise
+    syncConcurrent: 200
+    submissionRPS: 100
+    notes: 100+ RPS with custom throughput available on request.
+endpoints:
+  sync:
+    - /parse
+    - /extract
+    - /split
+    - /edit
+    - /pipeline
+    - /classify
+    - /cite
+    - /upload
+  async:
+    - /parse_async
+    - /extract_async
+    - /split_async
+    - /edit_async
+    - /pipeline_async
+  notes: Async endpoints return immediately with a job_id, bypassing the sync concurrency cap. Submission
+    rate is still bound by the per-tier RPS limit.
+retryGuidance: Official Python and Node SDKs implement exponential backoff on 429 automatically.

@@ -1,0 +1,77 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Reducto Upload API — Upload
+  description: 'Reducto Upload API — Upload. 1 operation. Uploads files directly to Reducto storage and returns
+    a reducto://upload reference usable across Parse, Split, Extract, Edit, Pipeline, and Classify.'
+  tags:
+  - Reducto
+  - Upload
+  - Storage
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    REDUCTO_API_KEY: REDUCTO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: upload-upload
+    baseUri: https://platform.reducto.ai
+    description: Reducto Upload API — Upload business capability. Self-contained, no shared references.
+    resources:
+    - name: upload
+      path: /upload
+      operations:
+      - name: uploadfile
+        method: POST
+        description: Reducto Upload File
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: bearer
+      value: '{{env.REDUCTO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: upload-upload-rest
+    port: 8080
+    description: REST adapter for Reducto Upload API — Upload.
+    resources:
+    - path: /v1/upload
+      name: upload
+      operations:
+      - method: POST
+        name: uploadfile
+        call: upload-upload.uploadfile
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: upload-upload-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Reducto Upload API — Upload.
+    tools:
+    - name: reducto-upload-file
+      description: Reducto Upload File
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: upload-upload.uploadfile
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
