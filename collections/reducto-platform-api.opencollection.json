@@ -1,0 +1,79 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Reducto Platform API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Platform",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.reducto.ai/health"
+          },
+          "docs": "Health"
+        },
+        {
+          "info": {
+            "name": "Get Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.reducto.ai/version"
+          },
+          "docs": "Get Version"
+        },
+        {
+          "info": {
+            "name": "Prometheus Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.reducto.ai/prometheus"
+          },
+          "docs": "Prometheus Metrics"
+        },
+        {
+          "info": {
+            "name": "Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.reducto.ai/metrics"
+          },
+          "docs": "Metrics"
+        },
+        {
+          "info": {
+            "name": "Streaq Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.reducto.ai/streaq_metrics"
+          },
+          "docs": "Streaq Metrics"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
