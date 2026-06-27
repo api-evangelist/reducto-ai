@@ -26,7 +26,7 @@ apis:
       - url: json-schema/reducto-parse-schema.json
         type: JSONSchema
       - url: json-ld/reducto-context.jsonld
-        type: JSON-LD
+        type: JSONLD
     description: >-
       Parse documents (PDFs, images, spreadsheets, slides, text files) and capture layout, structure, OCR text, tables,
       figures, equations, lists, and LLM-optimized chunks. Supports agentic OCR with error correction, intelligent
@@ -249,7 +249,7 @@ common:
   - url: https://studio.reducto.ai
     type: Console
   - url: https://studio.reducto.ai
-    type: SignUp
+    type: Signup
   - url: https://reducto.ai/pricing
     type: Pricing
   - url: https://reducto.ai/blog
