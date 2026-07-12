@@ -1,0 +1,24 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/reducto-classify-api-openapi.yml, openapi/reducto-edit-api-openapi.yml, openapi/reducto-extract-api-openapi.yml,
+  openapi/reducto-jobs-api-openapi.yml, openapi/reducto-parse-api-openapi.yml, openapi/reducto-pipeline-api-openapi.yml,
+  openapi/reducto-platform-api-openapi.yml, openapi/reducto-split-api-openapi.yml, openapi/reducto-upload-api-openapi.yml,
+  openapi/reducto-webhooks-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: SkippableHTTPBearer
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/reducto-classify-api-openapi.yml
+  - openapi/reducto-edit-api-openapi.yml
+  - openapi/reducto-extract-api-openapi.yml
+  - openapi/reducto-jobs-api-openapi.yml
+  - openapi/reducto-parse-api-openapi.yml
+  - openapi/reducto-pipeline-api-openapi.yml
+  - openapi/reducto-platform-api-openapi.yml
+  - openapi/reducto-split-api-openapi.yml
+  - openapi/reducto-upload-api-openapi.yml
+  - openapi/reducto-webhooks-api-openapi.yml
