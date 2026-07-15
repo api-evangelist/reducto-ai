@@ -236,6 +236,8 @@ apis:
       Platform health, version, and metrics endpoints for operating and monitoring Reducto, including Prometheus and
       streaq metrics exposed by on-premise deployments.
 common:
+  - type: AgenticAccess
+    url: agentic-access/reducto-ai-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/reducto-ai-vulnerability-disclosure.yml
   - type: DomainSecurity
