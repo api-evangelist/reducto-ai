@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
-  title: Reducto Webhooks API
+  title: Reducto Classify Webhooks API
   version: 1.0.0
-  description: Configure webhooks for asynchronous job completion notifications, including Svix-backed delivery.
+  description: Classify documents into a defined set of categories and run citation lookups against parsed content.
   contact:
     name: Reducto Support
     email: support@reducto.ai
@@ -51,6 +51,15 @@ paths:
       - Webhooks
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -77,15 +86,6 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
   securitySchemes:
     SkippableHTTPBearer:
       type: http

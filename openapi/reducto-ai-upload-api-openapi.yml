@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
-  title: Reducto Upload API
+  title: Reducto Classify Upload API
   version: 1.0.0
-  description: Upload files directly to Reducto storage and receive a reducto://upload reference usable across the platform.
+  description: Classify documents into a defined set of categories and run citation lookups against parsed content.
   contact:
     name: Reducto Support
     email: support@reducto.ai

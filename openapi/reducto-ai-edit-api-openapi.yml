@@ -1,0 +1,477 @@
+openapi: 3.1.0
+info:
+  title: Reducto Classify Edit API
+  version: 1.0.0
+  description: Classify documents into a defined set of categories and run citation lookups against parsed content.
+  contact:
+    name: Reducto Support
+    email: support@reducto.ai
+    url: https://reducto.ai/contact
+  license:
+    name: Reducto Terms of Service
+    url: https://reducto.ai/terms
+servers:
+- url: https://platform.reducto.ai
+  description: Reducto production platform
+security:
+- SkippableHTTPBearer: []
+tags:
+- name: Edit
+paths:
+  /edit:
+    post:
+      summary: Edit
+      operationId: edit_edit_post
+      security:
+      - SkippableHTTPBearer: []
+      parameters:
+      - name: user-id
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User-Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditConfig'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Edit
+  /edit_async:
+    post:
+      summary: Edit Async
+      operationId: edit_async_edit_async_post
+      security:
+      - SkippableHTTPBearer: []
+      parameters:
+      - name: user-id
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User-Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncEditConfig'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncEditResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Edit
+components:
+  schemas:
+    EditWidget:
+      properties:
+        bbox:
+          $ref: '#/components/schemas/BoundingBox'
+          description: Bounding box coordinates of the widget
+        description:
+          type: string
+          title: Description
+          description: Description of the widget extracted from the document
+        type:
+          type: string
+          enum:
+          - text
+          - checkbox
+          - radio
+          - dropdown
+          - barcode
+          title: Type
+          description: Type of the form widget
+        fill:
+          type: boolean
+          title: Fill
+          description: If True (default), the system will attempt to fill this widget. If False, the widget will be created but intentionally left unfilled.
+          default: true
+        value:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Value
+          description: If provided, this value will be used directly instead of attempting to intelligently determine the field value.
+        font_size:
+          anyOf:
+          - type: number
+            maximum: 72
+            minimum: 1
+          - type: 'null'
+          title: Font Size
+          description: Font size in points for this specific field. Takes priority over the global font_size in EditOptions. If not set, falls back to the global font_size, then to auto-calculated sizing.
+      type: object
+      required:
+      - bbox
+      - description
+      - type
+      title: EditWidget
+    ParseUsage:
+      properties:
+        num_pages:
+          type: integer
+          title: Num Pages
+        credits:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Credits
+        credit_breakdown:
+          anyOf:
+          - additionalProperties:
+              type: number
+            propertyNames:
+              enum:
+              - page
+              - html_page
+              - docx_native_page
+              - chart_agent
+              - spreadsheet_cells
+              - billable_spreadsheet_pages
+              - agentic
+              - complex
+              - enrich_table
+              - figure_summary
+              - table_summary
+              - key_value
+              - agentic_text
+              - promptable_agentic_text
+            type: object
+          - type: 'null'
+          title: Credit Breakdown
+        page_billing_breakdown:
+          anyOf:
+          - additionalProperties:
+              items:
+                type: string
+                enum:
+                - page
+                - html_page
+                - docx_native_page
+                - agentic
+                - complex
+                - chart_agent
+                - spreadsheet_cells
+                - billable_spreadsheet_pages
+                - enrich_table
+                - figure_summary
+                - table_summary
+                - key_value
+                - agentic_text
+                - promptable_agentic_text
+              type: array
+            type: object
+          - type: 'null'
+          title: Page Billing Breakdown
+          description: Per-page breakdown of features used. Maps 1-indexed page numbers (as strings) to the list of billing features applied on that page (e.g. 'page', 'complex', 'chart_agent').
+      type: object
+      required:
+      - num_pages
+      title: ParseUsage
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AsyncEditConfig:
+      properties:
+        document_url:
+          anyOf:
+          - type: string
+          - $ref: '#/components/schemas/UploadResponse'
+          title: Document Url
+          description: 'The URL of the document to be processed. You can provide one of the following:
+
+            1. A publicly available URL
+
+            2. A presigned S3 URL
+
+            3. A reducto:// prefixed URL obtained from the /upload endpoint after directly uploading a document
+
+            '
+        edit_instructions:
+          type: string
+          title: Edit Instructions
+          description: The instructions for the edit.
+        edit_options:
+          $ref: '#/components/schemas/EditOptions'
+          default:
+            color: '#FF0000'
+            enable_overflow_pages: false
+            flatten: false
+        form_schema:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/EditWidget'
+            type: array
+          - type: 'null'
+          title: Form Schema
+          description: Form schema for PDF forms. List of widgets with their types, descriptions, and bounding boxes. Only works for PDFs.
+        priority:
+          type: boolean
+          title: Priority
+          description: If True, attempts to process the job with priority if the user has priority processing budget available; by default, sync jobs are prioritized above async jobs.
+          default: false
+        webhook:
+          $ref: '#/components/schemas/WebhookConfigNew'
+          default:
+            mode: disabled
+            channels: []
+      type: object
+      required:
+      - document_url
+      - edit_instructions
+      title: AsyncEditConfig
+    WebhookConfigNew:
+      properties:
+        mode:
+          type: string
+          enum:
+          - disabled
+          - svix
+          - direct
+          title: Mode
+          description: The mode to use for webhook delivery. Defaults to 'disabled'. We recommend using 'svix' for production environments.
+          default: disabled
+        url:
+          type: string
+          title: Url
+          description: The URL to send the webhook to (if using direct webhoook).
+        metadata:
+          title: Metadata
+          description: JSON metadata included in webhook request body
+        channels:
+          items:
+            type: string
+          type: array
+          title: Channels
+          description: A list of Svix channels the message will be delivered down, omit to send to all channels.
+      type: object
+      title: WebhookConfigNew
+    UploadResponse:
+      properties:
+        file_id:
+          type: string
+          title: File Id
+        presigned_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Presigned Url
+      type: object
+      required:
+      - file_id
+      title: UploadResponse
+    EditOptions:
+      properties:
+        color:
+          type: string
+          pattern: ^#[0-9A-Fa-f]{6}$
+          title: Color
+          description: The color to use for edits, in hex format.
+          default: '#FF0000'
+        font_size:
+          anyOf:
+          - type: number
+            maximum: 72
+            minimum: 1
+          - type: 'null'
+          title: Font Size
+          description: The font size (in points) to use for filled text fields. If not specified, font size is automatically calculated based on field dimensions.
+        llm_provider_preference:
+          anyOf:
+          - type: string
+            enum:
+            - openai
+            - anthropic
+            - google
+          - type: 'null'
+          title: Llm Provider Preference
+          description: The LLM provider to use for edit processing. If not specified, defaults to 'google'
+        enable_overflow_pages:
+          type: boolean
+          title: Enable Overflow Pages
+          description: If True, creates overflow pages for text that doesn't fit in form fields. Defaults to False.
+          default: false
+        flatten:
+          type: boolean
+          title: Flatten
+          description: If True, flattens form fields after filling, converting them to static content. Defaults to False.
+          default: false
+      type: object
+      title: EditOptions
+    EditResponse:
+      properties:
+        response_type:
+          type: string
+          const: edit
+          title: Response Type
+          default: edit
+        document_url:
+          type: string
+          title: Document Url
+          description: Presigned URL to download the edited document.
+        form_schema:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/EditWidget'
+            type: array
+          - type: 'null'
+          title: Form Schema
+          description: Form schema for PDF forms. List of widgets with their types, descriptions, and bounding boxes.
+        usage:
+          anyOf:
+          - $ref: '#/components/schemas/ParseUsage'
+          - type: 'null'
+          description: Usage information for the edit operation, including number of pages and credits charged.
+      type: object
+      required:
+      - document_url
+      title: EditResponse
+    EditConfig:
+      properties:
+        document_url:
+          anyOf:
+          - type: string
+          - $ref: '#/components/schemas/UploadResponse'
+          title: Document Url
+          description: 'The URL of the document to be processed. You can provide one of the following:
+
+            1. A publicly available URL
+
+            2. A presigned S3 URL
+
+            3. A reducto:// prefixed URL obtained from the /upload endpoint after directly uploading a document
+
+            '
+        edit_instructions:
+          type: string
+          title: Edit Instructions
+          description: The instructions for the edit.
+        edit_options:
+          $ref: '#/components/schemas/EditOptions'
+          default:
+            color: '#FF0000'
+            enable_overflow_pages: false
+            flatten: false
+        form_schema:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/EditWidget'
+            type: array
+          - type: 'null'
+          title: Form Schema
+          description: Form schema for PDF forms. List of widgets with their types, descriptions, and bounding boxes. Only works for PDFs.
+        priority:
+          type: boolean
+          title: Priority
+          description: If True, attempts to process the job with priority if the user has priority processing budget available; by default, sync jobs are prioritized above async jobs.
+          default: true
+      type: object
+      required:
+      - document_url
+      - edit_instructions
+      title: EditConfig
+    BoundingBox:
+      properties:
+        left:
+          type: number
+          title: Left
+        top:
+          type: number
+          title: Top
+        width:
+          type: number
+          title: Width
+        height:
+          type: number
+          title: Height
+        page:
+          type: integer
+          title: Page
+          description: The page number of the bounding box (1-indexed).
+        original_page:
+          type: integer
+          title: Original Page
+          description: The page number in the original document of the bounding box (1-indexed).
+      type: object
+      required:
+      - left
+      - top
+      - width
+      - height
+      - page
+      title: BoundingBox
+    AsyncEditResponse:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+      type: object
+      required:
+      - job_id
+      title: AsyncEditResponse
+  securitySchemes:
+    SkippableHTTPBearer:
+      type: http
+      scheme: bearer

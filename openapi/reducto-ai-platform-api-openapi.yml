@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
-  title: Reducto Platform API
+  title: Reducto Classify Platform API
   version: 1.0.0
-  description: Service health, version, and Prometheus / streaq metrics endpoints for operating and monitoring Reducto deployments.
+  description: Classify documents into a defined set of categories and run citation lookups against parsed content.
   contact:
     name: Reducto Support
     email: support@reducto.ai
@@ -83,7 +83,6 @@ paths:
       tags:
       - Platform
 components:
-  schemas: {}
   securitySchemes:
     SkippableHTTPBearer:
       type: http
