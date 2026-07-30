@@ -1,241 +1,1053 @@
 aid: reducto-ai
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/reducto-ai.png
 url: https://raw.githubusercontent.com/api-evangelist/reducto-ai/refs/heads/main/apis.yml
 apis:
-  - aid: reducto-ai:reducto-parse-api
-    name: Reducto Parse API
-    tags:
-      - Document AI
-      - Parse
-      - OCR
-      - LLM
-      - PDF
-    humanURL: https://docs.reducto.ai/parse/overview
-    properties:
-      - url: https://docs.reducto.ai/parse/overview
-        type: Documentation
-      - url: https://docs.reducto.ai/api-reference/parse
-        type: APIReference
-      - url: https://docs.reducto.ai/api-reference/async-parse
-        type: APIReference
-      - url: https://docs.reducto.ai/parse/response-format
-        type: Documentation
-      - url: https://docs.reducto.ai/parse/best-practices
-        type: Documentation
-      - url: openapi/reducto-parse-api-openapi.yml
-        type: OpenAPI
-      - url: json-schema/reducto-parse-schema.json
-        type: JSONSchema
-      - url: json-ld/reducto-context.jsonld
-        type: JSONLD
-    description: >-
-      Parse documents (PDFs, images, spreadsheets, slides, text files) and capture layout, structure, OCR text, tables,
-      figures, equations, lists, and LLM-optimized chunks. Supports agentic OCR with error correction, intelligent
-      ordering, figure summarization, embedding optimization, automatic page rotation, multilingual processing across
-      100+ languages, and synchronous or asynchronous execution.
-  - aid: reducto-ai:reducto-extract-api
-    name: Reducto Extract API
-    tags:
-      - Document AI
-      - Extract
-      - Structured Data
-      - JSON Schema
-    humanURL: https://docs.reducto.ai/extract/overview
-    properties:
-      - url: https://docs.reducto.ai/extract/overview
-        type: Documentation
-      - url: https://docs.reducto.ai/api-reference/extract
-        type: APIReference
-      - url: https://docs.reducto.ai/api-reference/extract-async
-        type: APIReference
-      - url: https://docs.reducto.ai/extract/response-format
-        type: Documentation
-      - url: https://docs.reducto.ai/extraction/best-practices-extract
-        type: Documentation
-      - url: https://docs.reducto.ai/configs/extract/deep-extract
-        type: Documentation
-      - url: https://docs.reducto.ai/configs/extract/array-extraction
-        type: Documentation
-      - url: https://docs.reducto.ai/configs/extract/citations
-        type: Documentation
-      - url: openapi/reducto-extract-api-openapi.yml
-        type: OpenAPI
-      - url: json-schema/reducto-extract-schema.json
-        type: JSONSchema
-    description: >-
-      Extract structured data from documents using a caller-supplied JSON Schema. Supports Deep Extract for harder
-      documents, Array Extract for repeating sections, and Citations that pin each extracted field to a page and
-      bounding box in the source document.
-  - aid: reducto-ai:reducto-split-api
-    name: Reducto Split API
-    tags:
-      - Document AI
-      - Split
-      - Document Classification
-    humanURL: https://docs.reducto.ai/split
-    properties:
-      - url: https://docs.reducto.ai/split
-        type: Documentation
-      - url: https://docs.reducto.ai/api-reference/split
-        type: APIReference
-      - url: https://docs.reducto.ai/api-reference/split-async
-        type: APIReference
-      - url: https://docs.reducto.ai/configs/split/configuration
-        type: Documentation
-      - url: https://docs.reducto.ai/configs/split/deep-split
-        type: Documentation
-      - url: openapi/reducto-split-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      Automatically separate multi-document files and long forms into individual logical units using rules-based Split
-      or Deep Split, then route each unit to downstream Parse, Extract, or Edit operations inside a Pipeline.
-  - aid: reducto-ai:reducto-edit-api
-    name: Reducto Edit API
-    tags:
-      - Document AI
-      - Edit
-      - Forms
-      - Form Filling
-    humanURL: https://docs.reducto.ai/editing/edit-overview
-    properties:
-      - url: https://docs.reducto.ai/editing/edit-overview
-        type: Documentation
-      - url: https://docs.reducto.ai/api-reference/edit
-        type: APIReference
-      - url: https://docs.reducto.ai/api-reference/edit-async
-        type: APIReference
-      - url: https://docs.reducto.ai/configs/edit/form-schema
-        type: Documentation
-      - url: openapi/reducto-edit-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      Fill detected blanks, tables, and checkboxes inside documents from a provided form schema, without requiring
-      per-document templates. Beta endpoint priced at 4 credits per page.
-  - aid: reducto-ai:reducto-pipeline-api
-    name: Reducto Pipeline API
-    tags:
-      - Document AI
-      - Workflow
-      - Pipeline
-    humanURL: https://docs.reducto.ai/workflows/pipeline-basics
-    properties:
-      - url: https://docs.reducto.ai/workflows/pipeline-basics
-        type: Documentation
-      - url: https://docs.reducto.ai/api-reference/pipeline
-        type: APIReference
-      - url: https://docs.reducto.ai/api-reference/pipeline-async
-        type: APIReference
-      - url: https://docs.reducto.ai/workflows/multi-document-pipelines
-        type: Documentation
-      - url: https://docs.reducto.ai/workflows/chaining-endpoints
-        type: Documentation
-      - url: openapi/reducto-pipeline-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      Compose Parse, Split, Extract, Edit, and Classify into a single multi-step workflow with chained outputs. Supports
-      priority requests on Growth, and on-premise / VPC deployments on Enterprise.
-  - aid: reducto-ai:reducto-classify-api
-    name: Reducto Classify API
-    tags:
-      - Document AI
-      - Classify
-      - Document Classification
-      - Citations
-    humanURL: https://docs.reducto.ai/classify/overview
-    properties:
-      - url: https://docs.reducto.ai/classify/overview
-        type: Documentation
-      - url: https://docs.reducto.ai/classify/best-practices
-        type: Documentation
-      - url: https://docs.reducto.ai/classify/response-format
-        type: Documentation
-      - url: https://docs.reducto.ai/configs/classify/configuration
-        type: Documentation
-      - url: openapi/reducto-classify-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      Classify documents into a defined set of categories and run citation lookups against parsed content. Billed at 0.5
-      credits per page of context (default 5 pages = 2.5 credits per document).
-  - aid: reducto-ai:reducto-jobs-api
-    name: Reducto Jobs API
-    tags:
-      - Document AI
-      - Jobs
-      - Async
-    humanURL: https://docs.reducto.ai/workflows/async-overview
-    properties:
-      - url: https://docs.reducto.ai/workflows/async-overview
-        type: Documentation
-      - url: https://docs.reducto.ai/api-reference/get-jobs
-        type: APIReference
-      - url: https://docs.reducto.ai/api-reference/cancel-job
-        type: APIReference
-      - url: https://docs.reducto.ai/api-reference/retrieve-parse
-        type: APIReference
-      - url: openapi/reducto-jobs-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      Retrieve, cancel, and list async jobs created by parse_async, extract_async, split_async, edit_async, and
-      pipeline_async. Pairs with direct or Svix-backed webhooks for completion notifications.
-  - aid: reducto-ai:reducto-upload-api
-    name: Reducto Upload API
-    tags:
-      - Document AI
-      - Upload
-      - Storage
-    humanURL: https://docs.reducto.ai/upload/overview
-    properties:
-      - url: https://docs.reducto.ai/upload/overview
-        type: Documentation
-      - url: https://docs.reducto.ai/upload/large-files
-        type: Documentation
-      - url: https://docs.reducto.ai/api-reference/upload
-        type: APIReference
-      - url: openapi/reducto-upload-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      Upload files directly to Reducto storage and receive a reducto://upload reference usable across Parse, Split,
-      Extract, Edit, Pipeline, and Classify. Includes large-file (chunked) upload support.
-  - aid: reducto-ai:reducto-webhooks-api
-    name: Reducto Webhooks API
-    tags:
-      - Document AI
-      - Webhooks
-      - Async
-    humanURL: https://docs.reducto.ai/workflows/direct-webhooks
-    properties:
-      - url: https://docs.reducto.ai/workflows/direct-webhooks
-        type: Documentation
-      - url: https://docs.reducto.ai/workflows/svix-webhooks
-        type: Documentation
-      - url: https://docs.reducto.ai/api-reference/webhook-portal
-        type: Documentation
-      - url: https://docs.reducto.ai/api-reference/upload
-        type: APIReference
-      - url: openapi/reducto-webhooks-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      Configure webhook endpoints for asynchronous job completion. Supports direct webhooks and Svix-backed delivery,
-      plus a hosted Webhook Portal for end-customer subscription management.
-  - aid: reducto-ai:reducto-platform-api
-    name: Reducto Platform API
-    tags:
-      - Document AI
-      - Platform
-      - Observability
-    humanURL: https://docs.reducto.ai/api-reference/get-version
-    properties:
-      - url: https://docs.reducto.ai/api-reference/get-version
-        type: APIReference
-      - url: https://docs.reducto.ai/reference/version-pinning
-        type: Documentation
-      - url: https://docs.reducto.ai/onprem/observability
-        type: Documentation
-      - url: openapi/reducto-platform-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      Platform health, version, and metrics endpoints for operating and monitoring Reducto, including Prometheus and
-      streaq metrics exposed by on-premise deployments.
+- aid: reducto-ai:reducto-ai-classify-api
+  name: reducto-ai Classify API
+  description: The Classify API from reducto-ai — 2 operation(s) for classify.
+  humanURL: https://docs.reducto.ai/parse/overview
+  tags:
+  - Classify
+  properties:
+  - type: OpenAPI
+    url: openapi/reducto-ai-classify-api-openapi.yml
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/parse
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/async-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/best-practices
+  - type: JSONSchema
+    url: json-schema/reducto-parse-schema.json
+  - type: JSONLD
+    url: json-ld/reducto-context.jsonld
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract-async
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/extraction/best-practices-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/deep-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/array-extraction
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/citations
+  - type: JSONSchema
+    url: json-schema/reducto-extract-schema.json
+  - type: Documentation
+    url: https://docs.reducto.ai/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/deep-split
+  - type: Documentation
+    url: https://docs.reducto.ai/editing/edit-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/edit/form-schema
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/pipeline-basics
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline-async
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/multi-document-pipelines
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/chaining-endpoints
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/best-practices
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/classify/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/async-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-jobs
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/cancel-job
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/retrieve-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/large-files
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/upload
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/direct-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/svix-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/api-reference/webhook-portal
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-version
+  - type: Documentation
+    url: https://docs.reducto.ai/reference/version-pinning
+  - type: Documentation
+    url: https://docs.reducto.ai/onprem/observability
+- aid: reducto-ai:reducto-ai-edit-api
+  name: reducto-ai Edit API
+  description: The Edit API from reducto-ai — 2 operation(s) for edit.
+  humanURL: https://docs.reducto.ai/parse/overview
+  tags:
+  - Edit
+  properties:
+  - type: OpenAPI
+    url: openapi/reducto-ai-edit-api-openapi.yml
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/parse
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/async-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/best-practices
+  - type: JSONSchema
+    url: json-schema/reducto-parse-schema.json
+  - type: JSONLD
+    url: json-ld/reducto-context.jsonld
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract-async
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/extraction/best-practices-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/deep-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/array-extraction
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/citations
+  - type: JSONSchema
+    url: json-schema/reducto-extract-schema.json
+  - type: Documentation
+    url: https://docs.reducto.ai/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/deep-split
+  - type: Documentation
+    url: https://docs.reducto.ai/editing/edit-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/edit/form-schema
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/pipeline-basics
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline-async
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/multi-document-pipelines
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/chaining-endpoints
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/best-practices
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/classify/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/async-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-jobs
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/cancel-job
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/retrieve-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/large-files
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/upload
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/direct-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/svix-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/api-reference/webhook-portal
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-version
+  - type: Documentation
+    url: https://docs.reducto.ai/reference/version-pinning
+  - type: Documentation
+    url: https://docs.reducto.ai/onprem/observability
+- aid: reducto-ai:reducto-ai-extract-api
+  name: reducto-ai Extract API
+  description: The Extract API from reducto-ai — 2 operation(s) for extract.
+  humanURL: https://docs.reducto.ai/parse/overview
+  tags:
+  - Extract
+  properties:
+  - type: OpenAPI
+    url: openapi/reducto-ai-extract-api-openapi.yml
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/parse
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/async-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/best-practices
+  - type: JSONSchema
+    url: json-schema/reducto-parse-schema.json
+  - type: JSONLD
+    url: json-ld/reducto-context.jsonld
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract-async
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/extraction/best-practices-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/deep-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/array-extraction
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/citations
+  - type: JSONSchema
+    url: json-schema/reducto-extract-schema.json
+  - type: Documentation
+    url: https://docs.reducto.ai/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/deep-split
+  - type: Documentation
+    url: https://docs.reducto.ai/editing/edit-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/edit/form-schema
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/pipeline-basics
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline-async
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/multi-document-pipelines
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/chaining-endpoints
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/best-practices
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/classify/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/async-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-jobs
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/cancel-job
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/retrieve-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/large-files
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/upload
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/direct-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/svix-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/api-reference/webhook-portal
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-version
+  - type: Documentation
+    url: https://docs.reducto.ai/reference/version-pinning
+  - type: Documentation
+    url: https://docs.reducto.ai/onprem/observability
+- aid: reducto-ai:reducto-ai-jobs-api
+  name: reducto-ai Jobs API
+  description: The Jobs API from reducto-ai — 3 operation(s) for jobs.
+  humanURL: https://docs.reducto.ai/parse/overview
+  tags:
+  - Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/reducto-ai-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/parse
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/async-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/best-practices
+  - type: JSONSchema
+    url: json-schema/reducto-parse-schema.json
+  - type: JSONLD
+    url: json-ld/reducto-context.jsonld
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract-async
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/extraction/best-practices-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/deep-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/array-extraction
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/citations
+  - type: JSONSchema
+    url: json-schema/reducto-extract-schema.json
+  - type: Documentation
+    url: https://docs.reducto.ai/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/deep-split
+  - type: Documentation
+    url: https://docs.reducto.ai/editing/edit-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/edit/form-schema
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/pipeline-basics
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline-async
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/multi-document-pipelines
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/chaining-endpoints
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/best-practices
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/classify/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/async-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-jobs
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/cancel-job
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/retrieve-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/large-files
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/upload
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/direct-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/svix-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/api-reference/webhook-portal
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-version
+  - type: Documentation
+    url: https://docs.reducto.ai/reference/version-pinning
+  - type: Documentation
+    url: https://docs.reducto.ai/onprem/observability
+- aid: reducto-ai:reducto-ai-parse-api
+  name: reducto-ai Parse API
+  description: The Parse API from reducto-ai — 2 operation(s) for parse.
+  humanURL: https://docs.reducto.ai/parse/overview
+  tags:
+  - Parse
+  properties:
+  - type: OpenAPI
+    url: openapi/reducto-ai-parse-api-openapi.yml
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/parse
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/async-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/best-practices
+  - type: JSONSchema
+    url: json-schema/reducto-parse-schema.json
+  - type: JSONLD
+    url: json-ld/reducto-context.jsonld
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract-async
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/extraction/best-practices-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/deep-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/array-extraction
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/citations
+  - type: JSONSchema
+    url: json-schema/reducto-extract-schema.json
+  - type: Documentation
+    url: https://docs.reducto.ai/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/deep-split
+  - type: Documentation
+    url: https://docs.reducto.ai/editing/edit-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/edit/form-schema
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/pipeline-basics
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline-async
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/multi-document-pipelines
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/chaining-endpoints
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/best-practices
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/classify/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/async-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-jobs
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/cancel-job
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/retrieve-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/large-files
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/upload
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/direct-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/svix-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/api-reference/webhook-portal
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-version
+  - type: Documentation
+    url: https://docs.reducto.ai/reference/version-pinning
+  - type: Documentation
+    url: https://docs.reducto.ai/onprem/observability
+- aid: reducto-ai:reducto-ai-pipeline-api
+  name: reducto-ai Pipeline API
+  description: The Pipeline API from reducto-ai — 2 operation(s) for pipeline.
+  humanURL: https://docs.reducto.ai/parse/overview
+  tags:
+  - Pipeline
+  properties:
+  - type: OpenAPI
+    url: openapi/reducto-ai-pipeline-api-openapi.yml
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/parse
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/async-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/best-practices
+  - type: JSONSchema
+    url: json-schema/reducto-parse-schema.json
+  - type: JSONLD
+    url: json-ld/reducto-context.jsonld
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract-async
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/extraction/best-practices-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/deep-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/array-extraction
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/citations
+  - type: JSONSchema
+    url: json-schema/reducto-extract-schema.json
+  - type: Documentation
+    url: https://docs.reducto.ai/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/deep-split
+  - type: Documentation
+    url: https://docs.reducto.ai/editing/edit-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/edit/form-schema
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/pipeline-basics
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline-async
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/multi-document-pipelines
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/chaining-endpoints
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/best-practices
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/classify/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/async-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-jobs
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/cancel-job
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/retrieve-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/large-files
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/upload
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/direct-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/svix-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/api-reference/webhook-portal
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-version
+  - type: Documentation
+    url: https://docs.reducto.ai/reference/version-pinning
+  - type: Documentation
+    url: https://docs.reducto.ai/onprem/observability
+- aid: reducto-ai:reducto-ai-platform-api
+  name: reducto-ai Platform API
+  description: The Platform API from reducto-ai — 5 operation(s) for platform.
+  humanURL: https://docs.reducto.ai/parse/overview
+  tags:
+  - Platform
+  properties:
+  - type: OpenAPI
+    url: openapi/reducto-ai-platform-api-openapi.yml
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/parse
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/async-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/best-practices
+  - type: JSONSchema
+    url: json-schema/reducto-parse-schema.json
+  - type: JSONLD
+    url: json-ld/reducto-context.jsonld
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract-async
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/extraction/best-practices-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/deep-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/array-extraction
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/citations
+  - type: JSONSchema
+    url: json-schema/reducto-extract-schema.json
+  - type: Documentation
+    url: https://docs.reducto.ai/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/deep-split
+  - type: Documentation
+    url: https://docs.reducto.ai/editing/edit-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/edit/form-schema
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/pipeline-basics
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline-async
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/multi-document-pipelines
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/chaining-endpoints
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/best-practices
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/classify/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/async-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-jobs
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/cancel-job
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/retrieve-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/large-files
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/upload
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/direct-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/svix-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/api-reference/webhook-portal
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-version
+  - type: Documentation
+    url: https://docs.reducto.ai/reference/version-pinning
+  - type: Documentation
+    url: https://docs.reducto.ai/onprem/observability
+- aid: reducto-ai:reducto-ai-split-api
+  name: reducto-ai Split API
+  description: The Split API from reducto-ai — 2 operation(s) for split.
+  humanURL: https://docs.reducto.ai/parse/overview
+  tags:
+  - Split
+  properties:
+  - type: OpenAPI
+    url: openapi/reducto-ai-split-api-openapi.yml
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/parse
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/async-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/best-practices
+  - type: JSONSchema
+    url: json-schema/reducto-parse-schema.json
+  - type: JSONLD
+    url: json-ld/reducto-context.jsonld
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract-async
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/extraction/best-practices-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/deep-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/array-extraction
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/citations
+  - type: JSONSchema
+    url: json-schema/reducto-extract-schema.json
+  - type: Documentation
+    url: https://docs.reducto.ai/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/deep-split
+  - type: Documentation
+    url: https://docs.reducto.ai/editing/edit-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/edit/form-schema
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/pipeline-basics
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline-async
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/multi-document-pipelines
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/chaining-endpoints
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/best-practices
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/classify/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/async-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-jobs
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/cancel-job
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/retrieve-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/large-files
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/upload
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/direct-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/svix-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/api-reference/webhook-portal
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-version
+  - type: Documentation
+    url: https://docs.reducto.ai/reference/version-pinning
+  - type: Documentation
+    url: https://docs.reducto.ai/onprem/observability
+- aid: reducto-ai:reducto-ai-upload-api
+  name: reducto-ai Upload API
+  description: The Upload API from reducto-ai — 1 operation(s) for upload.
+  humanURL: https://docs.reducto.ai/parse/overview
+  tags:
+  - Upload
+  properties:
+  - type: OpenAPI
+    url: openapi/reducto-ai-upload-api-openapi.yml
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/parse
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/async-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/best-practices
+  - type: JSONSchema
+    url: json-schema/reducto-parse-schema.json
+  - type: JSONLD
+    url: json-ld/reducto-context.jsonld
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract-async
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/extraction/best-practices-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/deep-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/array-extraction
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/citations
+  - type: JSONSchema
+    url: json-schema/reducto-extract-schema.json
+  - type: Documentation
+    url: https://docs.reducto.ai/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/deep-split
+  - type: Documentation
+    url: https://docs.reducto.ai/editing/edit-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/edit/form-schema
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/pipeline-basics
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline-async
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/multi-document-pipelines
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/chaining-endpoints
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/best-practices
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/classify/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/async-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-jobs
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/cancel-job
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/retrieve-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/large-files
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/upload
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/direct-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/svix-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/api-reference/webhook-portal
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-version
+  - type: Documentation
+    url: https://docs.reducto.ai/reference/version-pinning
+  - type: Documentation
+    url: https://docs.reducto.ai/onprem/observability
+- aid: reducto-ai:reducto-ai-webhooks-api
+  name: reducto-ai Webhooks API
+  description: The Webhooks API from reducto-ai — 1 operation(s) for webhooks.
+  humanURL: https://docs.reducto.ai/parse/overview
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/reducto-ai-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/parse
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/async-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/parse/best-practices
+  - type: JSONSchema
+    url: json-schema/reducto-parse-schema.json
+  - type: JSONLD
+    url: json-ld/reducto-context.jsonld
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/extract-async
+  - type: Documentation
+    url: https://docs.reducto.ai/extract/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/extraction/best-practices-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/deep-extract
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/array-extraction
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/extract/citations
+  - type: JSONSchema
+    url: json-schema/reducto-extract-schema.json
+  - type: Documentation
+    url: https://docs.reducto.ai/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/split-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/split/deep-split
+  - type: Documentation
+    url: https://docs.reducto.ai/editing/edit-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/edit-async
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/edit/form-schema
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/pipeline-basics
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/pipeline-async
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/multi-document-pipelines
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/chaining-endpoints
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/best-practices
+  - type: Documentation
+    url: https://docs.reducto.ai/classify/response-format
+  - type: Documentation
+    url: https://docs.reducto.ai/configs/classify/configuration
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/async-overview
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-jobs
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/cancel-job
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/retrieve-parse
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/overview
+  - type: Documentation
+    url: https://docs.reducto.ai/upload/large-files
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/upload
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/direct-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/workflows/svix-webhooks
+  - type: Documentation
+    url: https://docs.reducto.ai/api-reference/webhook-portal
+  - type: APIReference
+    url: https://docs.reducto.ai/api-reference/get-version
+  - type: Documentation
+    url: https://docs.reducto.ai/reference/version-pinning
+  - type: Documentation
+    url: https://docs.reducto.ai/onprem/observability
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/reducto-ai/overview
   - type: AgenticAccess
     url: agentic-access/reducto-ai-agentic-access.yml
   - type: VulnerabilityDisclosure
