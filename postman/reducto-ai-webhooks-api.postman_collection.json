@@ -1,0 +1,175 @@
+{
+  "info": {
+    "_postman_id": "60e4409a-9966-4c68-b7d0-5d673bb113ab",
+    "name": "Reducto Classify Webhooks API",
+    "description": "Classify documents into a defined set of categories and run citation lookups against parsed content.\n\nContact Support:\n Name: Reducto Support\n Email: support@reducto.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:43:57.000Z",
+    "updatedAt": "2026-07-28T02:43:58.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-60e4409a-9966-4c68-b7d0-5d673bb113ab"
+  },
+  "item": [
+    {
+      "name": "configure_webhook",
+      "item": [
+        {
+          "name": "Webhook Portal",
+          "id": "d009e2a4-a70e-40f8-acf7-d68e7e963b51",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "user-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/configure_webhook",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "configure_webhook"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "49385a46-6f1f-4d01-a5d9-6f19dfa1ae8a",
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/configure_webhook",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "configure_webhook"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "<string>",
+              "createdAt": "2026-07-28T02:43:58.000Z",
+              "updatedAt": "2026-07-28T02:43:58.000Z",
+              "uid": "35240-49385a46-6f1f-4d01-a5d9-6f19dfa1ae8a"
+            },
+            {
+              "id": "6912e5c4-5ffd-4b49-a895-e795f3776ab7",
+              "name": "Validation Error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/configure_webhook",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "configure_webhook"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T02:43:58.000Z",
+              "updatedAt": "2026-07-28T02:43:58.000Z",
+              "uid": "35240-6912e5c4-5ffd-4b49-a895-e795f3776ab7"
+            }
+          ],
+          "createdAt": "2026-07-28T02:43:58.000Z",
+          "updatedAt": "2026-07-28T02:43:58.000Z",
+          "uid": "35240-d009e2a4-a70e-40f8-acf7-d68e7e963b51"
+        }
+      ],
+      "id": "e5032f82-ec83-4e7b-b19a-7d992b707e4d",
+      "createdAt": "2026-07-28T02:43:58.000Z",
+      "updatedAt": "2026-07-28T02:43:58.000Z",
+      "uid": "35240-e5032f82-ec83-4e7b-b19a-7d992b707e4d"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://platform.reducto.ai"
+    }
+  ]
+}

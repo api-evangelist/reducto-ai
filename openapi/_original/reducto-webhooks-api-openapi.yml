@@ -1,0 +1,92 @@
+openapi: 3.1.0
+info:
+  title: Reducto Webhooks API
+  version: 1.0.0
+  description: Configure webhooks for asynchronous job completion notifications, including Svix-backed delivery.
+  contact:
+    name: Reducto Support
+    email: support@reducto.ai
+    url: https://reducto.ai/contact
+  license:
+    name: Reducto Terms of Service
+    url: https://reducto.ai/terms
+servers:
+- url: https://platform.reducto.ai
+  description: Reducto production platform
+security:
+- SkippableHTTPBearer: []
+tags:
+- name: Webhooks
+paths:
+  /configure_webhook:
+    post:
+      summary: Webhook Portal
+      operationId: webhook_portal_configure_webhook_post
+      security:
+      - SkippableHTTPBearer: []
+      parameters:
+      - name: user-id
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User-Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: string
+                title: Response Webhook Portal Configure Webhook Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Webhooks
+components:
+  schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+  securitySchemes:
+    SkippableHTTPBearer:
+      type: http
+      scheme: bearer

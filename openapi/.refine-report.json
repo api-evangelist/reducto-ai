@@ -1,0 +1,32 @@
+{
+  "provider": "reducto-ai",
+  "sources": [
+    "reducto-ai-classify-api-openapi.yml",
+    "reducto-ai-edit-api-openapi.yml",
+    "reducto-ai-extract-api-openapi.yml",
+    "reducto-ai-jobs-api-openapi.yml",
+    "reducto-ai-parse-api-openapi.yml",
+    "reducto-ai-pipeline-api-openapi.yml",
+    "reducto-ai-platform-api-openapi.yml",
+    "reducto-ai-split-api-openapi.yml",
+    "reducto-ai-upload-api-openapi.yml",
+    "reducto-ai-webhooks-api-openapi.yml"
+  ],
+  "outputs": [
+    "reducto-ai-classify-api-openapi.yml",
+    "reducto-ai-edit-api-openapi.yml",
+    "reducto-ai-extract-api-openapi.yml",
+    "reducto-ai-jobs-api-openapi.yml",
+    "reducto-ai-parse-api-openapi.yml",
+    "reducto-ai-pipeline-api-openapi.yml",
+    "reducto-ai-platform-api-openapi.yml",
+    "reducto-ai-split-api-openapi.yml",
+    "reducto-ai-upload-api-openapi.yml",
+    "reducto-ai-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

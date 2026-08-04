@@ -1,0 +1,597 @@
+{
+  "info": {
+    "_postman_id": "ee4700a4-0245-44be-84a9-2e0cdc513a8e",
+    "name": "Reducto Classify Jobs API",
+    "description": "Classify documents into a defined set of categories and run citation lookups against parsed content.\n\nContact Support:\n Name: Reducto Support\n Email: support@reducto.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:43:45.000Z",
+    "updatedAt": "2026-07-28T02:43:46.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ee4700a4-0245-44be-84a9-2e0cdc513a8e"
+  },
+  "item": [
+    {
+      "name": "job",
+      "item": [
+        {
+          "name": "{job_id}",
+          "item": [
+            {
+              "name": "Retrieve Parse",
+              "id": "0a070ba2-6435-4e08-b017-672abafb7e38",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/job/:job_id?timeout=<number>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "job",
+                    ":job_id"
+                  ],
+                  "query": [
+                    {
+                      "description": "Timeout in seconds for long-polling",
+                      "key": "timeout",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "ddc8046e-9818-42ab-ac0d-1a8329aecd15",
+                      "key": "job_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "e620aa5d-ae43-48b2-b619-63d19008e469",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "user-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/job/:job_id?timeout=<number>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "job",
+                        ":job_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Timeout in seconds for long-polling",
+                          "key": "timeout",
+                          "value": "<number>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "job_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"status\": \"Idle\",\n  \"result\": {\n    \"job_id\": \"<string>\",\n    \"duration\": \"<number>\",\n    \"usage\": {\n      \"num_pages\": \"<integer>\",\n      \"credits\": \"<number>\",\n      \"credit_breakdown\": {\n        \"dolor_532\": \"<number>\"\n      },\n      \"page_billing_breakdown\": {\n        \"Duis5\": [\n          \"html_page\",\n          \"docx_native_page\"\n        ],\n        \"aute_e\": [\n          \"html_page\",\n          \"key_value\"\n        ],\n        \"ipsum__8f\": [\n          \"key_value\",\n          \"agentic_text\"\n        ]\n      }\n    },\n    \"result\": {\n      \"type\": \"<string>\",\n      \"chunks\": [\n        {\n          \"content\": \"<string>\",\n          \"embed\": \"<string>\",\n          \"enriched\": \"<string>\",\n          \"blocks\": [\n            {\n              \"type\": \"List Item\",\n              \"bbox\": {\n                \"left\": \"<number>\",\n                \"top\": \"<number>\",\n                \"width\": \"<number>\",\n                \"height\": \"<number>\",\n                \"page\": \"<integer>\",\n                \"original_page\": \"<integer>\"\n              },\n              \"content\": \"<string>\",\n              \"image_url\": \"<string>\",\n              \"chart_data\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"confidence\": \"<string>\",\n              \"granular_confidence\": {\n                \"extract_confidence\": \"<number>\",\n                \"parse_confidence\": \"<number>\"\n              },\n              \"extra\": {\n                \"ut4b6\": \"dolore cillum quis consequat\",\n                \"cupidatat_1\": 34752855\n              }\n            },\n            {\n              \"type\": \"Header\",\n              \"bbox\": {\n                \"left\": \"<number>\",\n                \"top\": \"<number>\",\n                \"width\": \"<number>\",\n                \"height\": \"<number>\",\n                \"page\": \"<integer>\",\n                \"original_page\": \"<integer>\"\n              },\n              \"content\": \"<string>\",\n              \"image_url\": \"<string>\",\n              \"chart_data\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"confidence\": \"<string>\",\n              \"granular_confidence\": {\n                \"extract_confidence\": \"<number>\",\n                \"parse_confidence\": \"<number>\"\n              },\n              \"extra\": {\n                \"eta87\": -79165276.75702594,\n                \"enim__c3\": 76628087,\n                \"non_65f\": false\n              }\n            }\n          ],\n          \"enrichment_success\": false\n        },\n        {\n          \"content\": \"<string>\",\n          \"embed\": \"<string>\",\n          \"enriched\": \"<string>\",\n          \"blocks\": [\n            {\n              \"type\": \"Key Value\",\n              \"bbox\": {\n                \"left\": \"<number>\",\n                \"top\": \"<number>\",\n                \"width\": \"<number>\",\n                \"height\": \"<number>\",\n                \"page\": \"<integer>\",\n                \"original_page\": \"<integer>\"\n              },\n              \"content\": \"<string>\",\n              \"image_url\": \"<string>\",\n              \"chart_data\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"confidence\": \"<string>\",\n              \"granular_confidence\": {\n                \"extract_confidence\": \"<number>\",\n                \"parse_confidence\": \"<number>\"\n              },\n              \"extra\": {\n                \"ut__68\": 33231638.01697491,\n                \"minim_ab\": 8358110.899942651\n              }\n            },\n            {\n              \"type\": \"Table\",\n              \"bbox\": {\n                \"left\": \"<number>\",\n                \"top\": \"<number>\",\n                \"width\": \"<number>\",\n                \"height\": \"<number>\",\n                \"page\": \"<integer>\",\n                \"original_page\": \"<integer>\"\n              },\n              \"content\": \"<string>\",\n              \"image_url\": \"<string>\",\n              \"chart_data\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"confidence\": \"<string>\",\n              \"granular_confidence\": {\n                \"extract_confidence\": \"<number>\",\n                \"parse_confidence\": \"<number>\"\n              },\n              \"extra\": {\n                \"magna7\": \"dolor exercitation dolor sunt incididunt\"\n              }\n            }\n          ],\n          \"enrichment_success\": false\n        }\n      ],\n      \"ocr\": {\n        \"words\": [\n          {\n            \"text\": \"<string>\",\n            \"bbox\": {\n              \"left\": \"<number>\",\n              \"top\": \"<number>\",\n              \"width\": \"<number>\",\n              \"height\": \"<number>\",\n              \"page\": \"<integer>\",\n              \"original_page\": \"<integer>\"\n            },\n            \"confidence\": \"<number>\",\n            \"chunk_index\": \"<integer>\",\n            \"rotation\": \"<integer>\"\n          },\n          {\n            \"text\": \"<string>\",\n            \"bbox\": {\n              \"left\": \"<number>\",\n              \"top\": \"<number>\",\n              \"width\": \"<number>\",\n              \"height\": \"<number>\",\n              \"page\": \"<integer>\",\n              \"original_page\": \"<integer>\"\n            },\n            \"confidence\": \"<number>\",\n            \"chunk_index\": \"<integer>\",\n            \"rotation\": \"<integer>\"\n          }\n        ],\n        \"lines\": [\n          {\n            \"text\": \"<string>\",\n            \"bbox\": {\n              \"left\": \"<number>\",\n              \"top\": \"<number>\",\n              \"width\": \"<number>\",\n              \"height\": \"<number>\",\n              \"page\": \"<integer>\",\n              \"original_page\": \"<integer>\"\n            },\n            \"confidence\": \"<number>\",\n            \"chunk_index\": \"<integer>\",\n            \"rotation\": \"<integer>\"\n          },\n          {\n            \"text\": \"<string>\",\n            \"bbox\": {\n              \"left\": \"<number>\",\n              \"top\": \"<number>\",\n              \"width\": \"<number>\",\n              \"height\": \"<number>\",\n              \"page\": \"<integer>\",\n              \"original_page\": \"<integer>\"\n            },\n            \"confidence\": \"<number>\",\n            \"chunk_index\": \"<integer>\",\n            \"rotation\": \"<integer>\"\n          }\n        ]\n      },\n      \"custom\": {}\n    },\n    \"response_type\": \"parse\",\n    \"pdf_url\": \"<string>\",\n    \"studio_link\": \"<string>\",\n    \"parse_mode\": \"lite\"\n  },\n  \"progress\": \"<number>\",\n  \"reason\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:43:46.000Z",
+                  "updatedAt": "2026-07-28T02:43:46.000Z",
+                  "uid": "35240-e620aa5d-ae43-48b2-b619-63d19008e469"
+                },
+                {
+                  "id": "62ac2379-6fa5-4173-a384-e69f6d1ea721",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "user-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/job/:job_id?timeout=<number>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "job",
+                        ":job_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Timeout in seconds for long-polling",
+                          "key": "timeout",
+                          "value": "<number>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "job_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:43:46.000Z",
+                  "updatedAt": "2026-07-28T02:43:46.000Z",
+                  "uid": "35240-62ac2379-6fa5-4173-a384-e69f6d1ea721"
+                }
+              ],
+              "createdAt": "2026-07-28T02:43:46.000Z",
+              "updatedAt": "2026-07-28T02:43:46.000Z",
+              "uid": "35240-0a070ba2-6435-4e08-b017-672abafb7e38"
+            }
+          ],
+          "id": "fece0a3a-7c0a-4647-b022-7044e62bad09",
+          "createdAt": "2026-07-28T02:43:46.000Z",
+          "updatedAt": "2026-07-28T02:43:46.000Z",
+          "uid": "35240-fece0a3a-7c0a-4647-b022-7044e62bad09"
+        }
+      ],
+      "id": "58a1019b-c945-46a4-a348-84c65d46cf71",
+      "createdAt": "2026-07-28T02:43:46.000Z",
+      "updatedAt": "2026-07-28T02:43:46.000Z",
+      "uid": "35240-58a1019b-c945-46a4-a348-84c65d46cf71"
+    },
+    {
+      "name": "cancel",
+      "item": [
+        {
+          "name": "{job_id}",
+          "item": [
+            {
+              "name": "Cancel Job",
+              "id": "e2fa02ac-e96d-4f26-b2ec-a60db27aa476",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/cancel/:job_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "cancel",
+                    ":job_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "3c9259d7-c45e-4295-ba0e-afc77bdc8313",
+                      "key": "job_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "7f7ceb71-4a91-43fe-a8b6-5cb4bc37e57f",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "user-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cancel/:job_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cancel",
+                        ":job_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "job_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{}",
+                  "createdAt": "2026-07-28T02:43:46.000Z",
+                  "updatedAt": "2026-07-28T02:43:46.000Z",
+                  "uid": "35240-7f7ceb71-4a91-43fe-a8b6-5cb4bc37e57f"
+                },
+                {
+                  "id": "ebe272ad-69c1-4fdb-bc8b-84f9648473f9",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "user-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cancel/:job_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cancel",
+                        ":job_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "job_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:43:46.000Z",
+                  "updatedAt": "2026-07-28T02:43:46.000Z",
+                  "uid": "35240-ebe272ad-69c1-4fdb-bc8b-84f9648473f9"
+                }
+              ],
+              "createdAt": "2026-07-28T02:43:46.000Z",
+              "updatedAt": "2026-07-28T02:43:46.000Z",
+              "uid": "35240-e2fa02ac-e96d-4f26-b2ec-a60db27aa476"
+            }
+          ],
+          "id": "0a4a8a59-5e84-457b-b1e2-6bd7183b8cc7",
+          "createdAt": "2026-07-28T02:43:46.000Z",
+          "updatedAt": "2026-07-28T02:43:46.000Z",
+          "uid": "35240-0a4a8a59-5e84-457b-b1e2-6bd7183b8cc7"
+        }
+      ],
+      "id": "7bc3346c-84a1-458f-a9db-646a9abc0726",
+      "createdAt": "2026-07-28T02:43:46.000Z",
+      "updatedAt": "2026-07-28T02:43:46.000Z",
+      "uid": "35240-7bc3346c-84a1-458f-a9db-646a9abc0726"
+    },
+    {
+      "name": "jobs",
+      "item": [
+        {
+          "name": "Get Jobs",
+          "id": "c6a36cf4-f0e1-4de3-a84c-d184fb0c457d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "user-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/jobs?exclude_configs=false&cursor=<string>&limit=100",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "jobs"
+              ],
+              "query": [
+                {
+                  "description": "Exclude raw_config from response to reduce size",
+                  "key": "exclude_configs",
+                  "value": "false"
+                },
+                {
+                  "description": "Cursor for pagination. Use the next_cursor from the previous response to fetch the next page.",
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Maximum number of jobs to return per page. Defaults to 100, max 500.",
+                  "key": "limit",
+                  "value": "100"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1b5de6f1-59d0-4ebb-8a52-bb5d61c8f742",
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/jobs?exclude_configs=false&cursor=<string>&limit=100",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "jobs"
+                  ],
+                  "query": [
+                    {
+                      "description": "Exclude raw_config from response to reduce size",
+                      "key": "exclude_configs",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Cursor for pagination. Use the next_cursor from the previous response to fetch the next page.",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of jobs to return per page. Defaults to 100, max 500.",
+                      "key": "limit",
+                      "value": "100"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"jobs\": [\n    {\n      \"job_id\": \"<string>\",\n      \"status\": \"Idle\",\n      \"type\": \"Classify\",\n      \"raw_config\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"num_pages\": \"<integer>\",\n      \"total_pages\": \"<integer>\",\n      \"duration\": \"<number>\",\n      \"source\": {},\n      \"bucket\": {}\n    },\n    {\n      \"job_id\": \"<string>\",\n      \"status\": \"InProgress\",\n      \"type\": \"Extract\",\n      \"raw_config\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"num_pages\": \"<integer>\",\n      \"total_pages\": \"<integer>\",\n      \"duration\": \"<number>\",\n      \"source\": {},\n      \"bucket\": {}\n    }\n  ],\n  \"next_cursor\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:43:46.000Z",
+              "updatedAt": "2026-07-28T02:43:46.000Z",
+              "uid": "35240-1b5de6f1-59d0-4ebb-8a52-bb5d61c8f742"
+            },
+            {
+              "id": "1238ba2a-3530-45cd-a2d8-699619192c03",
+              "name": "Validation Error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/jobs?exclude_configs=false&cursor=<string>&limit=100",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "jobs"
+                  ],
+                  "query": [
+                    {
+                      "description": "Exclude raw_config from response to reduce size",
+                      "key": "exclude_configs",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Cursor for pagination. Use the next_cursor from the previous response to fetch the next page.",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of jobs to return per page. Defaults to 100, max 500.",
+                      "key": "limit",
+                      "value": "100"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T02:43:46.000Z",
+              "updatedAt": "2026-07-28T02:43:46.000Z",
+              "uid": "35240-1238ba2a-3530-45cd-a2d8-699619192c03"
+            }
+          ],
+          "createdAt": "2026-07-28T02:43:46.000Z",
+          "updatedAt": "2026-07-28T02:43:46.000Z",
+          "uid": "35240-c6a36cf4-f0e1-4de3-a84c-d184fb0c457d"
+        }
+      ],
+      "id": "473e0554-bdf6-4603-99ba-895be19271b0",
+      "createdAt": "2026-07-28T02:43:46.000Z",
+      "updatedAt": "2026-07-28T02:43:46.000Z",
+      "uid": "35240-473e0554-bdf6-4603-99ba-895be19271b0"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://platform.reducto.ai"
+    }
+  ]
+}

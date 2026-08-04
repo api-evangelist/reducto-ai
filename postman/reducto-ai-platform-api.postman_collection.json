@@ -1,0 +1,435 @@
+{
+  "info": {
+    "_postman_id": "b971a244-9f69-4337-b30c-dddef759eeb0",
+    "name": "Reducto Classify Platform API",
+    "description": "Classify documents into a defined set of categories and run citation lookups against parsed content.\n\nContact Support:\n Name: Reducto Support\n Email: support@reducto.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:43:54.000Z",
+    "updatedAt": "2026-07-28T02:43:55.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-b971a244-9f69-4337-b30c-dddef759eeb0"
+  },
+  "item": [
+    {
+      "name": "health",
+      "item": [
+        {
+          "name": "Health",
+          "id": "c0499e72-a799-4afd-abf0-05257e89fe0b",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8a790ce1-6ad3-492f-898c-dd74e59eb9ba",
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/health",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "health"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "<string>",
+              "createdAt": "2026-07-28T02:43:55.000Z",
+              "updatedAt": "2026-07-28T02:43:55.000Z",
+              "uid": "35240-8a790ce1-6ad3-492f-898c-dd74e59eb9ba"
+            }
+          ],
+          "createdAt": "2026-07-28T02:43:55.000Z",
+          "updatedAt": "2026-07-28T02:43:55.000Z",
+          "uid": "35240-c0499e72-a799-4afd-abf0-05257e89fe0b"
+        }
+      ],
+      "id": "efeef8ba-1b6f-42f6-b568-4daf3b77998f",
+      "createdAt": "2026-07-28T02:43:55.000Z",
+      "updatedAt": "2026-07-28T02:43:55.000Z",
+      "uid": "35240-efeef8ba-1b6f-42f6-b568-4daf3b77998f"
+    },
+    {
+      "name": "version",
+      "item": [
+        {
+          "name": "Get Version",
+          "id": "6c2e81dd-5272-4b67-a973-804c3edad989",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/version",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "version"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "421317cd-7262-48ea-82b7-8891be743707",
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/version",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "version"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "<string>",
+              "createdAt": "2026-07-28T02:43:55.000Z",
+              "updatedAt": "2026-07-28T02:43:55.000Z",
+              "uid": "35240-421317cd-7262-48ea-82b7-8891be743707"
+            }
+          ],
+          "createdAt": "2026-07-28T02:43:55.000Z",
+          "updatedAt": "2026-07-28T02:43:55.000Z",
+          "uid": "35240-6c2e81dd-5272-4b67-a973-804c3edad989"
+        }
+      ],
+      "id": "b7d9886f-17bd-4ecf-8fe9-b34522f89129",
+      "createdAt": "2026-07-28T02:43:55.000Z",
+      "updatedAt": "2026-07-28T02:43:55.000Z",
+      "uid": "35240-b7d9886f-17bd-4ecf-8fe9-b34522f89129"
+    },
+    {
+      "name": "prometheus",
+      "item": [
+        {
+          "name": "Prometheus Metrics",
+          "id": "3b4312d7-4ecd-4ba3-9464-98664a826db8",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/prometheus",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "prometheus"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ae853b3e-1e98-4cae-bdbd-06f4655ee2ad",
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/prometheus",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "prometheus"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{}",
+              "createdAt": "2026-07-28T02:43:55.000Z",
+              "updatedAt": "2026-07-28T02:43:55.000Z",
+              "uid": "35240-ae853b3e-1e98-4cae-bdbd-06f4655ee2ad"
+            }
+          ],
+          "createdAt": "2026-07-28T02:43:55.000Z",
+          "updatedAt": "2026-07-28T02:43:55.000Z",
+          "uid": "35240-3b4312d7-4ecd-4ba3-9464-98664a826db8"
+        }
+      ],
+      "id": "3974bb95-75a7-4623-a02e-eadccca9e7b4",
+      "createdAt": "2026-07-28T02:43:55.000Z",
+      "updatedAt": "2026-07-28T02:43:55.000Z",
+      "uid": "35240-3974bb95-75a7-4623-a02e-eadccca9e7b4"
+    },
+    {
+      "name": "metrics",
+      "item": [
+        {
+          "name": "Metrics",
+          "id": "a8036c8d-cd0d-4ac3-8f54-18fd3fdc3ea3",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/metrics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metrics"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "60670720-b176-4fd3-8f20-4990c3f0da2e",
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/metrics",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "metrics"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{}",
+              "createdAt": "2026-07-28T02:43:55.000Z",
+              "updatedAt": "2026-07-28T02:43:55.000Z",
+              "uid": "35240-60670720-b176-4fd3-8f20-4990c3f0da2e"
+            }
+          ],
+          "createdAt": "2026-07-28T02:43:55.000Z",
+          "updatedAt": "2026-07-28T02:43:55.000Z",
+          "uid": "35240-a8036c8d-cd0d-4ac3-8f54-18fd3fdc3ea3"
+        }
+      ],
+      "id": "b80b255c-23a7-424e-90e9-6fe4308febc3",
+      "createdAt": "2026-07-28T02:43:55.000Z",
+      "updatedAt": "2026-07-28T02:43:55.000Z",
+      "uid": "35240-b80b255c-23a7-424e-90e9-6fe4308febc3"
+    },
+    {
+      "name": "streaq_metrics",
+      "item": [
+        {
+          "name": "Streaq Metrics",
+          "id": "6d79d49e-4e07-45eb-967e-e863ce6118f7",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/streaq_metrics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "streaq_metrics"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1b4b58c2-fa1f-46a5-a944-1a156b201575",
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/streaq_metrics",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "streaq_metrics"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{}",
+              "createdAt": "2026-07-28T02:43:55.000Z",
+              "updatedAt": "2026-07-28T02:43:55.000Z",
+              "uid": "35240-1b4b58c2-fa1f-46a5-a944-1a156b201575"
+            }
+          ],
+          "createdAt": "2026-07-28T02:43:55.000Z",
+          "updatedAt": "2026-07-28T02:43:55.000Z",
+          "uid": "35240-6d79d49e-4e07-45eb-967e-e863ce6118f7"
+        }
+      ],
+      "id": "5cb6cd36-951d-4cb8-93d9-0ee852ab656b",
+      "createdAt": "2026-07-28T02:43:55.000Z",
+      "updatedAt": "2026-07-28T02:43:55.000Z",
+      "uid": "35240-5cb6cd36-951d-4cb8-93d9-0ee852ab656b"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://platform.reducto.ai"
+    }
+  ]
+}

@@ -1,0 +1,1225 @@
+openapi: 3.1.0
+info:
+  title: Reducto Jobs API
+  version: 1.0.0
+  description: Retrieve, list, and cancel async jobs created by /parse_async, /extract_async, /split_async, /edit_async, and
+    /pipeline_async.
+  contact:
+    name: Reducto Support
+    email: support@reducto.ai
+    url: https://reducto.ai/contact
+  license:
+    name: Reducto Terms of Service
+    url: https://reducto.ai/terms
+servers:
+- url: https://platform.reducto.ai
+  description: Reducto production platform
+security:
+- SkippableHTTPBearer: []
+tags:
+- name: Jobs
+paths:
+  /job/{job_id}:
+    get:
+      summary: Retrieve Parse
+      operationId: retrieve_parse_job__job_id__get
+      security:
+      - SkippableHTTPBearer: []
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Job Id
+      - name: timeout
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: Timeout in seconds for long-polling
+          title: Timeout
+        description: Timeout in seconds for long-polling
+      - name: user-id
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User-Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/AsyncJobResponse'
+                - $ref: '#/components/schemas/EnhancedAsyncJobResponse'
+                title: Response Retrieve Parse Job  Job Id  Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Jobs
+  /cancel/{job_id}:
+    post:
+      summary: Cancel Job
+      operationId: cancel_job_cancel__job_id__post
+      security:
+      - SkippableHTTPBearer: []
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Job Id
+      - name: user-id
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User-Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Jobs
+  /jobs:
+    get:
+      summary: Get Jobs
+      operationId: get_jobs_jobs_get
+      security:
+      - SkippableHTTPBearer: []
+      parameters:
+      - name: exclude_configs
+        in: query
+        required: false
+        schema:
+          type: boolean
+          description: Exclude raw_config from response to reduce size
+          default: false
+          title: Exclude Configs
+        description: Exclude raw_config from response to reduce size
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Cursor for pagination. Use the next_cursor from the previous response to fetch the next page.
+          title: Cursor
+        description: Cursor for pagination. Use the next_cursor from the previous response to fetch the next page.
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 500
+          minimum: 1
+          description: Maximum number of jobs to return per page. Defaults to 100, max 500.
+          default: 100
+          title: Limit
+        description: Maximum number of jobs to return per page. Defaults to 100, max 500.
+      - name: user-id
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User-Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobsResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Jobs
+components:
+  schemas:
+    ClassifyResponse:
+      properties:
+        response_type:
+          type: string
+          const: classify
+          title: Response Type
+          default: classify
+        job_id:
+          type: string
+          title: Job Id
+        result:
+          $ref: '#/components/schemas/ClassifyResponseCategory'
+        response_confidence:
+          anyOf:
+          - $ref: '#/components/schemas/ResponseConfidence'
+          - type: 'null'
+        duration:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Duration
+          description: The duration of the classify request in seconds.
+      type: object
+      required:
+      - job_id
+      - result
+      title: ClassifyResponse
+      description: Response from classify job - returned when polling /job/{job_id}
+    UrlResult:
+      properties:
+        type:
+          type: string
+          const: url
+          title: Type
+          description: type = 'url'
+        url:
+          type: string
+          title: Url
+        result_id:
+          type: string
+          title: Result Id
+      type: object
+      required:
+      - type
+      - url
+      - result_id
+      title: UrlResult
+    ParseBlock-Output:
+      properties:
+        type:
+          type: string
+          enum:
+          - Header
+          - Footer
+          - Title
+          - Section Header
+          - Page Number
+          - List Item
+          - Figure
+          - Table
+          - Key Value
+          - Text
+          - Comment
+          - Signature
+          title: Type
+          description: The type of block extracted from the document.
+        bbox:
+          $ref: '#/components/schemas/BoundingBox'
+          description: The bounding box of the block extracted from the document.
+        content:
+          type: string
+          title: Content
+          description: The content of the block extracted from the document.
+        image_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Image Url
+          description: (Experimental) The URL of the image associated with the block.
+        chart_data:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Chart Data
+          description: (Experimental) The URL/link to chart data JSON for figure blocks processed by chart agent.
+        confidence:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Confidence
+          description: The confidence for the block. It is either low or high and takes into account factors like OCR and
+            table structure
+          default: low
+        granular_confidence:
+          anyOf:
+          - $ref: '#/components/schemas/GranularConfidence'
+          - type: 'null'
+          description: Granular confidence scores for the block. It is a dictionary of confidence scores for the block. The
+            confidence scores will not be None if the user has enabled numeric confidence scores.
+        extra:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Extra
+          description: Extra metadata fields for the block. Fields like 'is_chart' will only appear when set to True.
+      type: object
+      required:
+      - type
+      - bbox
+      - content
+      title: ParseBlock
+    ParseChunk-Output:
+      properties:
+        content:
+          type: string
+          title: Content
+          description: The content of the chunk extracted from the document.
+        embed:
+          type: string
+          title: Embed
+          description: Chunk content optimized for embedding and retrieval.
+        enriched:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Enriched
+          description: The enriched content of the chunk extracted from the document.
+        enrichment_success:
+          type: boolean
+          title: Enrichment Success
+          description: Whether the enrichment was successful.
+          default: false
+        blocks:
+          items:
+            $ref: '#/components/schemas/ParseBlock-Output'
+          type: array
+          title: Blocks
+      type: object
+      required:
+      - content
+      - embed
+      - enriched
+      - blocks
+      title: ParseChunk
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    Split:
+      properties:
+        name:
+          type: string
+          title: Name
+        pages:
+          items:
+            type: integer
+          type: array
+          title: Pages
+        conf:
+          type: string
+          enum:
+          - high
+          - low
+          title: Conf
+          default: low
+        partitions:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/SplitPartition'
+            type: array
+          - type: 'null'
+          title: Partitions
+      type: object
+      required:
+      - name
+      - pages
+      title: Split
+    ParseUsage:
+      properties:
+        num_pages:
+          type: integer
+          title: Num Pages
+        credits:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Credits
+        credit_breakdown:
+          anyOf:
+          - additionalProperties:
+              type: number
+            propertyNames:
+              enum:
+              - page
+              - html_page
+              - docx_native_page
+              - chart_agent
+              - spreadsheet_cells
+              - billable_spreadsheet_pages
+              - agentic
+              - complex
+              - enrich_table
+              - figure_summary
+              - table_summary
+              - key_value
+              - agentic_text
+              - promptable_agentic_text
+            type: object
+          - type: 'null'
+          title: Credit Breakdown
+        page_billing_breakdown:
+          anyOf:
+          - additionalProperties:
+              items:
+                type: string
+                enum:
+                - page
+                - html_page
+                - docx_native_page
+                - agentic
+                - complex
+                - chart_agent
+                - spreadsheet_cells
+                - billable_spreadsheet_pages
+                - enrich_table
+                - figure_summary
+                - table_summary
+                - key_value
+                - agentic_text
+                - promptable_agentic_text
+              type: array
+            type: object
+          - type: 'null'
+          title: Page Billing Breakdown
+          description: Per-page breakdown of features used. Maps 1-indexed page numbers (as strings) to the list of billing
+            features applied on that page (e.g. 'page', 'complex', 'chart_agent').
+      type: object
+      required:
+      - num_pages
+      title: ParseUsage
+    OCRResult-Output:
+      properties:
+        words:
+          items:
+            $ref: '#/components/schemas/OCRWord'
+          type: array
+          title: Words
+        lines:
+          items:
+            $ref: '#/components/schemas/OCRLine'
+          type: array
+          title: Lines
+      type: object
+      required:
+      - words
+      - lines
+      title: OCRResult
+    SingleJob:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        status:
+          type: string
+          enum:
+          - Pending
+          - Completed
+          - Failed
+          - Idle
+          - InProgress
+          - Completing
+          - Cancelled
+          title: Status
+        type:
+          type: string
+          enum:
+          - Parse
+          - Extract
+          - Split
+          - Edit
+          - Pipeline
+          - Classify
+          title: Type
+        raw_config:
+          type: string
+          title: Raw Config
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        source:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Source
+        num_pages:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Num Pages
+        total_pages:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Total Pages
+        duration:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Duration
+        bucket:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Bucket
+      type: object
+      required:
+      - job_id
+      - status
+      - type
+      - raw_config
+      - created_at
+      - num_pages
+      - total_pages
+      - duration
+      title: SingleJob
+    ResponseConfidence:
+      properties:
+        categories:
+          items:
+            $ref: '#/components/schemas/CategoryConfidence'
+          type: array
+          title: Categories
+      type: object
+      required:
+      - categories
+      title: ResponseConfidence
+      description: Overall confidence breakdown for classification response.
+    ClassifyResponseCategory:
+      properties:
+        category:
+          type: string
+          title: Category
+      type: object
+      required:
+      - category
+      title: ClassifyResponseCategory
+    CriteriaConfidence:
+      properties:
+        criterion:
+          type: string
+          title: Criterion
+        confidence:
+          type: string
+          enum:
+          - high
+          - low
+          title: Confidence
+      type: object
+      required:
+      - criterion
+      - confidence
+      title: CriteriaConfidence
+      description: Confidence result for a single criterion.
+    AsyncJobResponse:
+      properties:
+        status:
+          type: string
+          enum:
+          - Pending
+          - Completed
+          - Failed
+          - Idle
+          title: Status
+        result:
+          anyOf:
+          - oneOf:
+            - $ref: '#/components/schemas/ParseResponse'
+            - $ref: '#/components/schemas/ExtractResponse'
+            - $ref: '#/components/schemas/SplitResponse'
+            - $ref: '#/components/schemas/EditResponse'
+            - $ref: '#/components/schemas/PipelineResponse'
+            - $ref: '#/components/schemas/V3ExtractResponse'
+            - $ref: '#/components/schemas/ClassifyResponse'
+            discriminator:
+              propertyName: response_type
+              mapping:
+                classify: '#/components/schemas/ClassifyResponse'
+                edit: '#/components/schemas/EditResponse'
+                extract: '#/components/schemas/ExtractResponse'
+                parse: '#/components/schemas/ParseResponse'
+                pipeline: '#/components/schemas/PipelineResponse'
+                split: '#/components/schemas/SplitResponse'
+                v3_extract: '#/components/schemas/V3ExtractResponse'
+          - type: 'null'
+          title: Result
+        progress:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Progress
+        reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reason
+      type: object
+      required:
+      - status
+      title: AsyncJobResponse
+    BoundingBox:
+      properties:
+        left:
+          type: number
+          title: Left
+        top:
+          type: number
+          title: Top
+        width:
+          type: number
+          title: Width
+        height:
+          type: number
+          title: Height
+        page:
+          type: integer
+          title: Page
+          description: The page number of the bounding box (1-indexed).
+        original_page:
+          type: integer
+          title: Original Page
+          description: The page number in the original document of the bounding box (1-indexed).
+      type: object
+      required:
+      - left
+      - top
+      - width
+      - height
+      - page
+      title: BoundingBox
+    SplitPartition:
+      properties:
+        name:
+          type: string
+          title: Name
+        pages:
+          items:
+            type: integer
+          type: array
+          title: Pages
+        conf:
+          type: string
+          enum:
+          - high
+          - low
+          title: Conf
+          default: low
+      type: object
+      required:
+      - name
+      - pages
+      title: SplitPartition
+    ExtractResponse:
+      additionalProperties: true
+      type: object
+    SplitResult:
+      properties:
+        section_mapping:
+          anyOf:
+          - additionalProperties:
+              items:
+                type: integer
+              type: array
+            type: object
+          - type: 'null'
+          title: Section Mapping
+        splits:
+          items:
+            $ref: '#/components/schemas/Split'
+          type: array
+          title: Splits
+      type: object
+      required:
+      - section_mapping
+      - splits
+      title: SplitResult
+    CategoryConfidence:
+      properties:
+        category:
+          type: string
+          title: Category
+        confidence:
+          type: number
+          title: Confidence
+        criteria_confidence:
+          items:
+            $ref: '#/components/schemas/CriteriaConfidence'
+          type: array
+          title: Criteria Confidence
+      type: object
+      required:
+      - category
+      - confidence
+      - criteria_confidence
+      title: CategoryConfidence
+      description: Confidence result for a category.
+    ExtractSplitResponse:
+      properties:
+        split_name:
+          type: string
+          title: Split Name
+        page_range:
+          items:
+            type: integer
+          type: array
+          title: Page Range
+        partition:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Partition
+        result:
+          anyOf:
+          - $ref: '#/components/schemas/ExtractResponse'
+          - $ref: '#/components/schemas/V3ExtractResponse'
+          title: Result
+      type: object
+      required:
+      - split_name
+      - page_range
+      - result
+      title: ExtractSplitResponse
+      description: This is the response format for Extract -> Split Pipelines
+    PipelineResponse:
+      properties:
+        response_type:
+          type: string
+          const: pipeline
+          title: Response Type
+          default: pipeline
+        job_id:
+          type: string
+          title: Job Id
+        usage:
+          $ref: '#/components/schemas/ParseUsage'
+        result:
+          $ref: '#/components/schemas/PipelineResult'
+      type: object
+      required:
+      - job_id
+      - usage
+      - result
+      title: PipelineResponse
+    V3ExtractResponse:
+      additionalProperties: true
+      type: object
+    EnhancedAsyncJobResponse:
+      properties:
+        status:
+          type: string
+          enum:
+          - Pending
+          - Completed
+          - Failed
+          - Idle
+          title: Status
+        result:
+          anyOf:
+          - oneOf:
+            - $ref: '#/components/schemas/ParseResponse'
+            - $ref: '#/components/schemas/ExtractResponse'
+            - $ref: '#/components/schemas/SplitResponse'
+            - $ref: '#/components/schemas/EditResponse'
+            - $ref: '#/components/schemas/PipelineResponse'
+            - $ref: '#/components/schemas/V3ExtractResponse'
+            - $ref: '#/components/schemas/ClassifyResponse'
+            discriminator:
+              propertyName: response_type
+              mapping:
+                classify: '#/components/schemas/ClassifyResponse'
+                edit: '#/components/schemas/EditResponse'
+                extract: '#/components/schemas/ExtractResponse'
+                parse: '#/components/schemas/ParseResponse'
+                pipeline: '#/components/schemas/PipelineResponse'
+                split: '#/components/schemas/SplitResponse'
+                v3_extract: '#/components/schemas/V3ExtractResponse'
+          - type: 'null'
+          title: Result
+        progress:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Progress
+        reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reason
+        type:
+          anyOf:
+          - type: string
+            enum:
+            - Parse
+            - Extract
+            - Split
+            - Edit
+            - Pipeline
+            - Classify
+          - type: 'null'
+          title: Type
+        num_pages:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Num Pages
+        total_pages:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Total Pages
+        source:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Source
+        duration:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Duration
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
+        raw_config:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Raw Config
+        bucket:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Bucket
+      type: object
+      required:
+      - status
+      title: EnhancedAsyncJobResponse
+    GranularConfidence:
+      properties:
+        extract_confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Extract Confidence
+        parse_confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Parse Confidence
+      type: object
+      title: GranularConfidence
+    ParseResponse:
+      properties:
+        response_type:
+          type: string
+          const: parse
+          title: Response Type
+          default: parse
+        job_id:
+          type: string
+          title: Job Id
+        duration:
+          type: number
+          title: Duration
+          description: The duration of the parse request in seconds.
+        pdf_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Pdf Url
+          description: The storage URL of the converted PDF file.
+        studio_link:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Studio Link
+          description: The link to the studio pipeline for the document.
+        usage:
+          $ref: '#/components/schemas/ParseUsage'
+        result:
+          anyOf:
+          - $ref: '#/components/schemas/FullResult-Output'
+          - $ref: '#/components/schemas/UrlResult'
+          title: Result
+          description: The response from the document processing service. Note that there can be two types of responses, Full
+            Result and URL Result. This is due to limitations on the max return size on HTTPS. If the response is too large,
+            it will be returned as a presigned URL in the URL response. You should handle this in your application.
+        parse_mode:
+          anyOf:
+          - type: string
+            enum:
+            - base
+            - lite
+          - type: 'null'
+          title: Parse Mode
+          description: "Which pipeline produced this response. ``lite`` means Reducto Flash Lite served the request; ``base``\
+            \ is the standard pipeline. Optional / nullable for forward compatibility \u2014 older API instances or persisted\
+            \ responses written before this field existed will leave it ``None``; treat ``None`` as ``base``."
+      type: object
+      required:
+      - job_id
+      - duration
+      - usage
+      - result
+      title: ParseResponse
+    EditWidget:
+      properties:
+        bbox:
+          $ref: '#/components/schemas/BoundingBox'
+          description: Bounding box coordinates of the widget
+        description:
+          type: string
+          title: Description
+          description: Description of the widget extracted from the document
+        type:
+          type: string
+          enum:
+          - text
+          - checkbox
+          - radio
+          - dropdown
+          - barcode
+          title: Type
+          description: Type of the form widget
+        fill:
+          type: boolean
+          title: Fill
+          description: If True (default), the system will attempt to fill this widget. If False, the widget will be created
+            but intentionally left unfilled.
+          default: true
+        value:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Value
+          description: If provided, this value will be used directly instead of attempting to intelligently determine the
+            field value.
+        font_size:
+          anyOf:
+          - type: number
+            maximum: 72
+            minimum: 1
+          - type: 'null'
+          title: Font Size
+          description: Font size in points for this specific field. Takes priority over the global font_size in EditOptions.
+            If not set, falls back to the global font_size, then to auto-calculated sizing.
+      type: object
+      required:
+      - bbox
+      - description
+      - type
+      title: EditWidget
+    DeepSplitPartition:
+      properties:
+        name:
+          type: string
+          title: Name
+        pages:
+          items:
+            $ref: '#/components/schemas/DeepSplitPageEvidence'
+          type: array
+          title: Pages
+      type: object
+      required:
+      - name
+      - pages
+      title: DeepSplitPartition
+    OCRWord:
+      properties:
+        text:
+          type: string
+          title: Text
+        bbox:
+          $ref: '#/components/schemas/BoundingBox'
+        confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Confidence
+          description: OCR confidence score between 0 and 1, where 1 indicates highest confidence
+        chunk_index:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Chunk Index
+          description: The index of the chunk that the word belongs to.
+        rotation:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rotation
+          description: The rotation angle in degrees, from 0 to 360, counterclockwise.
+      type: object
+      required:
+      - text
+      - bbox
+      title: OCRWord
+    SplitResponse:
+      properties:
+        response_type:
+          type: string
+          const: split
+          title: Response Type
+          default: split
+        usage:
+          $ref: '#/components/schemas/ParseUsage'
+        result:
+          anyOf:
+          - $ref: '#/components/schemas/SplitResult'
+          - $ref: '#/components/schemas/DeepSplitResult'
+          title: Result
+          description: The split result.
+      type: object
+      required:
+      - usage
+      - result
+      title: SplitResponse
+    DeepSplitResult:
+      properties:
+        splits:
+          items:
+            $ref: '#/components/schemas/DeepSplit'
+          type: array
+          title: Splits
+      type: object
+      required:
+      - splits
+      title: DeepSplitResult
+    JobsResponse:
+      properties:
+        jobs:
+          items:
+            $ref: '#/components/schemas/SingleJob'
+          type: array
+          title: Jobs
+          description: List of jobs with their job_id, status, type, raw_config, created_at, num_pages and duration
+        next_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Cursor
+          description: Cursor to fetch the next page of results. If null, there are no more results.
+      type: object
+      required:
+      - jobs
+      title: JobsResponse
+    FullResult-Output:
+      properties:
+        type:
+          type: string
+          const: full
+          title: Type
+          description: type = 'full'
+        chunks:
+          items:
+            $ref: '#/components/schemas/ParseChunk-Output'
+          type: array
+          title: Chunks
+        ocr:
+          anyOf:
+          - $ref: '#/components/schemas/OCRResult-Output'
+          - type: 'null'
+        custom:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Custom
+      type: object
+      required:
+      - type
+      - chunks
+      title: FullResult
+    PipelineResult:
+      properties:
+        parse:
+          anyOf:
+          - $ref: '#/components/schemas/ParseResponse'
+          - items:
+              $ref: '#/components/schemas/ParseResponse'
+            type: array
+          - type: 'null'
+          title: Parse
+        extract:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ExtractSplitResponse'
+            type: array
+          - $ref: '#/components/schemas/ExtractResponse'
+          - $ref: '#/components/schemas/V3ExtractResponse'
+          - type: 'null'
+          title: Extract
+        split:
+          anyOf:
+          - $ref: '#/components/schemas/SplitResponse'
+          - type: 'null'
+        edit:
+          anyOf:
+          - $ref: '#/components/schemas/EditResponse'
+          - type: 'null'
+      type: object
+      required:
+      - parse
+      - extract
+      - split
+      title: PipelineResult
+    EditResponse:
+      properties:
+        response_type:
+          type: string
+          const: edit
+          title: Response Type
+          default: edit
+        document_url:
+          type: string
+          title: Document Url
+          description: Presigned URL to download the edited document.
+        form_schema:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/EditWidget'
+            type: array
+          - type: 'null'
+          title: Form Schema
+          description: Form schema for PDF forms. List of widgets with their types, descriptions, and bounding boxes.
+        usage:
+          anyOf:
+          - $ref: '#/components/schemas/ParseUsage'
+          - type: 'null'
+          description: Usage information for the edit operation, including number of pages and credits charged.
+      type: object
+      required:
+      - document_url
+      title: EditResponse
+    DeepSplitPageEvidence:
+      properties:
+        page_number:
+          type: integer
+          title: Page Number
+        evidence:
+          type: string
+          title: Evidence
+        confidence:
+          anyOf:
+          - type: string
+            enum:
+            - high
+            - medium
+            - low
+          - type: 'null'
+          title: Confidence
+      type: object
+      required:
+      - page_number
+      - evidence
+      title: DeepSplitPageEvidence
+    DeepSplit:
+      properties:
+        name:
+          type: string
+          title: Name
+        pages:
+          items:
+            $ref: '#/components/schemas/DeepSplitPageEvidence'
+          type: array
+          title: Pages
+        partitions:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/DeepSplitPartition'
+            type: array
+          - type: 'null'
+          title: Partitions
+      type: object
+      required:
+      - name
+      - pages
+      title: DeepSplit
+    OCRLine:
+      properties:
+        text:
+          type: string
+          title: Text
+        bbox:
+          $ref: '#/components/schemas/BoundingBox'
+        confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Confidence
+          description: OCR confidence score between 0 and 1, where 1 indicates highest confidence
+        chunk_index:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Chunk Index
+          description: The index of the chunk that the line belongs to.
+        rotation:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rotation
+          description: The rotation angle in degrees, from 0 to 360, counterclockwise.
+      type: object
+      required:
+      - text
+      - bbox
+      title: OCRLine
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+  securitySchemes:
+    SkippableHTTPBearer:
+      type: http
+      scheme: bearer

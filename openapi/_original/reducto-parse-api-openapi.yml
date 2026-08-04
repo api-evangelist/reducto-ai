@@ -1,0 +1,1125 @@
+openapi: 3.1.0
+info:
+  title: Reducto Parse API
+  version: 1.0.0
+  description: Parse documents (PDFs, images, spreadsheets, slides) and extract layout, structure, text, tables, figures,
+    and chunks with agentic OCR and LLM-optimized output.
+  contact:
+    name: Reducto Support
+    email: support@reducto.ai
+    url: https://reducto.ai/contact
+  license:
+    name: Reducto Terms of Service
+    url: https://reducto.ai/terms
+servers:
+- url: https://platform.reducto.ai
+  description: Reducto production platform
+security:
+- SkippableHTTPBearer: []
+tags:
+- name: Parse
+paths:
+  /parse:
+    post:
+      summary: Parse
+      operationId: parse_parse_post
+      security:
+      - SkippableHTTPBearer: []
+      parameters:
+      - name: user-id
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User-Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/SyncParseConfig'
+              - $ref: '#/components/schemas/AsyncParseConfig'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/ParseResponse'
+                - $ref: '#/components/schemas/AsyncParseResponse'
+                title: Response Parse Parse Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Parse
+  /parse_async:
+    post:
+      summary: Async Parse
+      operationId: async_parse_parse_async_post
+      security:
+      - SkippableHTTPBearer: []
+      parameters:
+      - name: user-id
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User-Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncParseConfig'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncParseResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Parse
+components:
+  schemas:
+    UrlResult:
+      properties:
+        type:
+          type: string
+          const: url
+          title: Type
+          description: type = 'url'
+        url:
+          type: string
+          title: Url
+        result_id:
+          type: string
+          title: Result Id
+      type: object
+      required:
+      - type
+      - url
+      - result_id
+      title: UrlResult
+    ParseBlock-Output:
+      properties:
+        type:
+          type: string
+          enum:
+          - Header
+          - Footer
+          - Title
+          - Section Header
+          - Page Number
+          - List Item
+          - Figure
+          - Table
+          - Key Value
+          - Text
+          - Comment
+          - Signature
+          title: Type
+          description: The type of block extracted from the document.
+        bbox:
+          $ref: '#/components/schemas/BoundingBox'
+          description: The bounding box of the block extracted from the document.
+        content:
+          type: string
+          title: Content
+          description: The content of the block extracted from the document.
+        image_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Image Url
+          description: (Experimental) The URL of the image associated with the block.
+        chart_data:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Chart Data
+          description: (Experimental) The URL/link to chart data JSON for figure blocks processed by chart agent.
+        confidence:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Confidence
+          description: The confidence for the block. It is either low or high and takes into account factors like OCR and
+            table structure
+          default: low
+        granular_confidence:
+          anyOf:
+          - $ref: '#/components/schemas/GranularConfidence'
+          - type: 'null'
+          description: Granular confidence scores for the block. It is a dictionary of confidence scores for the block. The
+            confidence scores will not be None if the user has enabled numeric confidence scores.
+        extra:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Extra
+          description: Extra metadata fields for the block. Fields like 'is_chart' will only appear when set to True.
+      type: object
+      required:
+      - type
+      - bbox
+      - content
+      title: ParseBlock
+    Settings:
+      properties:
+        ocr_system:
+          type: string
+          enum:
+          - standard
+          - legacy
+          title: Ocr System
+          description: Standard is our best multilingual OCR system. Legacy only supports germanic languages and is available
+            for backwards compatibility.
+          default: standard
+        extraction_mode:
+          type: string
+          enum:
+          - ocr
+          - hybrid
+          title: Extraction Mode
+          description: The mode to use for text extraction from PDFs. OCR mode uses optical character recognition only. Hybrid
+            mode combines OCR with embedded PDF text for best accuracy (default).
+          default: hybrid
+        force_url_result:
+          type: boolean
+          title: Force Url Result
+          description: Force the result to be returned in URL form.
+          default: false
+        force_file_extension:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Force File Extension
+          description: Force the URL to be downloaded as a specific file extension (e.g. `.png`).
+        return_ocr_data:
+          type: boolean
+          title: Return Ocr Data
+          description: If True, return OCR data in the result. Defaults to False.
+          default: false
+        return_images:
+          items:
+            type: string
+            enum:
+            - figure
+            - table
+            - page
+          type: array
+          title: Return Images
+          description: Whether to return images for the specified block types. 'page' returns full page images. By default,
+            no images are returned.
+          default: []
+        embed_pdf_metadata:
+          type: boolean
+          title: Embed Pdf Metadata
+          description: If True, embed OCR metadata into the returned PDF. Defaults to False.
+          default: false
+        embed_pdf_metadata_dpi:
+          type: integer
+          maximum: 250
+          minimum: 50
+          title: Embed Pdf Metadata Dpi
+          description: Render DPI used when rasterizing the source PDF before embedding the OCR text layer (only applies when
+            ``embed_pdf_metadata`` is True). Lower values produce dramatically smaller output PDFs; higher values preserve
+            more detail when zoomed past 200%. Defaults to 100 (good for on-screen viewing); raise toward the source scan
+            DPI for crisper output. Min 50, max 250.
+          default: 100
+        persist_results:
+          type: boolean
+          title: Persist Results
+          description: If True, persist the results indefinitely. Defaults to False.
+          default: false
+        timeout:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Timeout
+          description: The timeout for the job in seconds.
+        page_range:
+          anyOf:
+          - $ref: '#/components/schemas/PageRange'
+          - items:
+              $ref: '#/components/schemas/PageRange'
+            type: array
+          - items:
+              type: integer
+            type: array
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Page Range
+          description: The page range to process (1-indexed). By default, the entire document is processed. For spreadsheets,
+            you can also provide a list of sheet names.
+        document_password:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Document Password
+          description: Password to decrypt password-protected documents.
+      type: object
+      title: Settings
+    ParseChunk-Output:
+      properties:
+        content:
+          type: string
+          title: Content
+          description: The content of the chunk extracted from the document.
+        embed:
+          type: string
+          title: Embed
+          description: Chunk content optimized for embedding and retrieval.
+        enriched:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Enriched
+          description: The enriched content of the chunk extracted from the document.
+        enrichment_success:
+          type: boolean
+          title: Enrichment Success
+          description: Whether the enrichment was successful.
+          default: false
+        blocks:
+          items:
+            $ref: '#/components/schemas/ParseBlock-Output'
+          type: array
+          title: Blocks
+      type: object
+      required:
+      - content
+      - embed
+      - enriched
+      - blocks
+      title: ParseChunk
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    Enhance:
+      properties:
+        agentic:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/TableAgentic'
+            - $ref: '#/components/schemas/FigureAgentic'
+            - $ref: '#/components/schemas/TextAgentic'
+          type: array
+          title: Agentic
+          description: Agentic uses vision language models to enhance the accuracy of the output of different types of extraction.
+            This will incur a cost and latency increase.
+          default: []
+        summarize_figures:
+          type: boolean
+          title: Summarize Figures
+          description: If True, summarize figures using a small vision language model. Defaults to True.
+          default: true
+        intelligent_ordering:
+          type: boolean
+          title: Intelligent Ordering
+          description: If True, use an advanced vision language model to improve reading order accuracy, with a small increase
+            in latency. Defaults to False.
+          default: false
+      type: object
+      title: Enhance
+    OCRResult-Output:
+      properties:
+        words:
+          items:
+            $ref: '#/components/schemas/OCRWord'
+          type: array
+          title: Words
+        lines:
+          items:
+            $ref: '#/components/schemas/OCRLine'
+          type: array
+          title: Lines
+      type: object
+      required:
+      - words
+      - lines
+      title: OCRResult
+    ParseUsage:
+      properties:
+        num_pages:
+          type: integer
+          title: Num Pages
+        credits:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Credits
+        credit_breakdown:
+          anyOf:
+          - additionalProperties:
+              type: number
+            propertyNames:
+              enum:
+              - page
+              - html_page
+              - docx_native_page
+              - chart_agent
+              - spreadsheet_cells
+              - billable_spreadsheet_pages
+              - agentic
+              - complex
+              - enrich_table
+              - figure_summary
+              - table_summary
+              - key_value
+              - agentic_text
+              - promptable_agentic_text
+            type: object
+          - type: 'null'
+          title: Credit Breakdown
+        page_billing_breakdown:
+          anyOf:
+          - additionalProperties:
+              items:
+                type: string
+                enum:
+                - page
+                - html_page
+                - docx_native_page
+                - agentic
+                - complex
+                - chart_agent
+                - spreadsheet_cells
+                - billable_spreadsheet_pages
+                - enrich_table
+                - figure_summary
+                - table_summary
+                - key_value
+                - agentic_text
+                - promptable_agentic_text
+              type: array
+            type: object
+          - type: 'null'
+          title: Page Billing Breakdown
+          description: Per-page breakdown of features used. Maps 1-indexed page numbers (as strings) to the list of billing
+            features applied on that page (e.g. 'page', 'complex', 'chart_agent').
+      type: object
+      required:
+      - num_pages
+      title: ParseUsage
+    config__v3__AsyncConfig:
+      properties:
+        metadata:
+          title: Metadata
+          description: JSON metadata included in webhook request body. Defaults to None.
+        priority:
+          type: boolean
+          title: Priority
+          description: If True, attempts to process the job with priority if the user has priority processing budget available;
+            by default, sync jobs are prioritized above async jobs.
+          default: false
+        webhook:
+          anyOf:
+          - $ref: '#/components/schemas/SvixWebhookConfig'
+          - $ref: '#/components/schemas/DirectWebhookConfig'
+          - type: 'null'
+          title: Webhook
+          description: The webhook configuration for the asynchronous processing.
+      type: object
+      title: AsyncConfig
+    Spreadsheet:
+      properties:
+        split_large_tables:
+          $ref: '#/components/schemas/SplitLargeTables'
+          default:
+            enabled: true
+            size: 50
+        include:
+          items:
+            type: string
+            enum:
+            - cell_colors
+            - formula
+            - dropdowns
+          type: array
+          title: Include
+          description: Whether to include cell color, formula, and dropdown information in the output.
+          default: []
+        clustering:
+          type: string
+          enum:
+          - accurate
+          - fast
+          - disabled
+          title: Clustering
+          description: "In a spreadsheet with different tables inside, we enable splitting up the tables by default. Accurate\
+            \ mode applies more powerful models for superior accuracy, at 5\xD7 the default per-cell rate. Disabling will\
+            \ register as one large table."
+          default: accurate
+        exclude:
+          items:
+            type: string
+            enum:
+            - hidden_sheets
+            - hidden_rows
+            - hidden_cols
+            - styling
+            - spreadsheet_images
+          type: array
+          title: Exclude
+          description: Whether to exclude hidden sheets, rows, or columns in the output.
+          default: []
+      type: object
+      title: Spreadsheet
+    SvixWebhookConfig:
+      properties:
+        mode:
+          type: string
+          const: svix
+          title: Mode
+          default: svix
+        channels:
+          items:
+            type: string
+          type: array
+          title: Channels
+          description: A list of Svix channels the message will be delivered down, omit to send to all channels.
+      type: object
+      title: SvixWebhookConfig
+    FigureAgentic:
+      properties:
+        scope:
+          type: string
+          const: figure
+          title: Scope
+        prompt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt
+          description: Custom prompt for figure agentic.
+        advanced_chart_agent:
+          type: boolean
+          title: Advanced Chart Agent
+          description: If True, use the advanced chart agent. Defaults to False.
+          default: false
+        return_overlays:
+          type: boolean
+          title: Return Overlays
+          description: If True, return overlays for the figure. This is so you can use the overlays to double check the quality
+            of the extraction
+          default: false
+      type: object
+      required:
+      - scope
+      title: FigureAgentic
+    AsyncParseResponse:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+      type: object
+      required:
+      - job_id
+      title: AsyncParseResponse
+    BoundingBox:
+      properties:
+        left:
+          type: number
+          title: Left
+        top:
+          type: number
+          title: Top
+        width:
+          type: number
+          title: Width
+        height:
+          type: number
+          title: Height
+        page:
+          type: integer
+          title: Page
+          description: The page number of the bounding box (1-indexed).
+        original_page:
+          type: integer
+          title: Original Page
+          description: The page number in the original document of the bounding box (1-indexed).
+      type: object
+      required:
+      - left
+      - top
+      - width
+      - height
+      - page
+      title: BoundingBox
+    Chunking:
+      properties:
+        chunk_mode:
+          type: string
+          enum:
+          - variable
+          - section
+          - page
+          - disabled
+          - block
+          - page_sections
+          title: Chunk Mode
+          description: Choose how to partition chunks. Variable mode chunks by character length and visual context. Section
+            mode chunks by section headers. Page mode chunks according to pages. Page sections mode chunks first by page,
+            then by sections within each page. Disabled returns one single chunk.
+          default: disabled
+        chunk_size:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Chunk Size
+          description: The approximate size of chunks (in characters) that the document will be split into. Defaults to null,
+            in which case the chunk size is variable between 250 - 1500 characters.
+        chunk_overlap:
+          type: integer
+          title: Chunk Overlap
+          description: Number of characters of overlap to include from adjacent chunks. Defaults to 0.
+          default: 0
+      type: object
+      title: Chunking
+    TextAgentic:
+      properties:
+        scope:
+          type: string
+          const: text
+          title: Scope
+        prompt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt
+          description: 'Custom instructions for agentic text. Note: This only applies to form regions (key-value).'
+      type: object
+      required:
+      - scope
+      title: TextAgentic
+    QueuePriority:
+      type: string
+      enum:
+      - auto
+      - batch
+      title: QueuePriority
+      description: Customer-facing queue priority for parse jobs.
+    DirectWebhookConfig:
+      properties:
+        mode:
+          type: string
+          const: direct
+          title: Mode
+          default: direct
+        url:
+          type: string
+          title: Url
+      type: object
+      required:
+      - url
+      title: DirectWebhookConfig
+    TableAgentic:
+      properties:
+        scope:
+          type: string
+          const: table
+          title: Scope
+        prompt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt
+          description: Custom prompt for table agentic.
+        mode:
+          type: string
+          enum:
+          - default
+          - auto
+          title: Mode
+          description: 'Routing mode for table agentic: ''default'' runs enrichment on all tables, ''auto'' uses the router
+            to skip tables where enrichment is unlikely to help.'
+          default: default
+      type: object
+      required:
+      - scope
+      title: TableAgentic
+    GranularConfidence:
+      properties:
+        extract_confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Extract Confidence
+        parse_confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Parse Confidence
+      type: object
+      title: GranularConfidence
+    ParseResponse:
+      properties:
+        response_type:
+          type: string
+          const: parse
+          title: Response Type
+          default: parse
+        job_id:
+          type: string
+          title: Job Id
+        duration:
+          type: number
+          title: Duration
+          description: The duration of the parse request in seconds.
+        pdf_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Pdf Url
+          description: The storage URL of the converted PDF file.
+        studio_link:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Studio Link
+          description: The link to the studio pipeline for the document.
+        usage:
+          $ref: '#/components/schemas/ParseUsage'
+        result:
+          anyOf:
+          - $ref: '#/components/schemas/FullResult-Output'
+          - $ref: '#/components/schemas/UrlResult'
+          title: Result
+          description: The response from the document processing service. Note that there can be two types of responses, Full
+            Result and URL Result. This is due to limitations on the max return size on HTTPS. If the response is too large,
+            it will be returned as a presigned URL in the URL response. You should handle this in your application.
+        parse_mode:
+          anyOf:
+          - type: string
+            enum:
+            - base
+            - lite
+          - type: 'null'
+          title: Parse Mode
+          description: "Which pipeline produced this response. ``lite`` means Reducto Flash Lite served the request; ``base``\
+            \ is the standard pipeline. Optional / nullable for forward compatibility \u2014 older API instances or persisted\
+            \ responses written before this field existed will leave it ``None``; treat ``None`` as ``base``."
+      type: object
+      required:
+      - job_id
+      - duration
+      - usage
+      - result
+      title: ParseResponse
+    SplitLargeTables:
+      properties:
+        enabled:
+          type: boolean
+          title: Enabled
+          description: If True, split large tables into smaller tables. Defaults to True.
+          default: true
+        size:
+          anyOf:
+          - type: integer
+          - $ref: '#/components/schemas/SplitLargeTableSizes'
+          title: Size
+          description: The size of the tables to split into. Defaults to 50. Use 'row' and 'column' to independently specify
+            the number of rows and columns to include when splitting. If you only want to split by rows or columns, set the
+            other value to None.
+          default: 50
+      type: object
+      title: SplitLargeTables
+    PageRange:
+      properties:
+        start:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Start
+          description: The page number to start processing from (1-indexed).
+        end:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: End
+          description: The page number to stop processing at (1-indexed).
+      type: object
+      title: PageRange
+    OCRWord:
+      properties:
+        text:
+          type: string
+          title: Text
+        bbox:
+          $ref: '#/components/schemas/BoundingBox'
+        confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Confidence
+          description: OCR confidence score between 0 and 1, where 1 indicates highest confidence
+        chunk_index:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Chunk Index
+          description: The index of the chunk that the word belongs to.
+        rotation:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rotation
+          description: The rotation angle in degrees, from 0 to 360, counterclockwise.
+      type: object
+      required:
+      - text
+      - bbox
+      title: OCRWord
+    AsyncParseConfig:
+      properties:
+        async:
+          $ref: '#/components/schemas/config__v3__AsyncConfig'
+          description: The configuration options for asynchronous processing (default synchronous).
+          default:
+            priority: false
+        input:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          - $ref: '#/components/schemas/UploadResponse'
+          title: Input
+          description: "For parse/split/extract pipelines, the URL of the document to be processed. You can provide one of\
+            \ the following:\n            1. A publicly available URL\n            2. A presigned S3 URL\n            3. A\
+            \ reducto:// prefixed URL obtained from the /upload endpoint after directly uploading a document\n           \
+            \ 4. A jobid:// prefixed URL obtained from a previous /parse invocation\n            5. A list of URLs (for multi-document\
+            \ pipelines, V3 API only)\n\n            For edit pipelines, this should be a string containing the edit instructions "
+        enhance:
+          $ref: '#/components/schemas/Enhance'
+          default:
+            agentic: []
+            summarize_figures: true
+            intelligent_ordering: false
+        retrieval:
+          $ref: '#/components/schemas/Retrieval'
+          default:
+            chunking:
+              chunk_mode: disabled
+              chunk_overlap: 0
+            filter_blocks: []
+            embedding_optimized: false
+        formatting:
+          $ref: '#/components/schemas/Formatting'
+          default:
+            add_page_markers: false
+            table_output_format: dynamic
+            merge_tables: false
+            include: []
+        spreadsheet:
+          $ref: '#/components/schemas/Spreadsheet'
+          default:
+            split_large_tables:
+              enabled: true
+              size: 50
+            include: []
+            clustering: accurate
+            exclude: []
+        settings:
+          $ref: '#/components/schemas/Settings'
+          default:
+            ocr_system: standard
+            extraction_mode: hybrid
+            force_url_result: false
+            return_ocr_data: false
+            return_images: []
+            embed_pdf_metadata: false
+            embed_pdf_metadata_dpi: 100
+            persist_results: false
+        queue_priority:
+          $ref: '#/components/schemas/QueuePriority'
+          description: Queue priority. 'batch' for non-urgent work that processes when spare GPU capacity is available.
+          default: auto
+      type: object
+      required:
+      - input
+      title: AsyncParseConfig
+    FullResult-Output:
+      properties:
+        type:
+          type: string
+          const: full
+          title: Type
+          description: type = 'full'
+        chunks:
+          items:
+            $ref: '#/components/schemas/ParseChunk-Output'
+          type: array
+          title: Chunks
+        ocr:
+          anyOf:
+          - $ref: '#/components/schemas/OCRResult-Output'
+          - type: 'null'
+        custom:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Custom
+      type: object
+      required:
+      - type
+      - chunks
+      title: FullResult
+    UploadResponse:
+      properties:
+        file_id:
+          type: string
+          title: File Id
+        presigned_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Presigned Url
+      type: object
+      required:
+      - file_id
+      title: UploadResponse
+    SplitLargeTableSizes:
+      properties:
+        row:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Row
+          description: The number of rows to include in each chunk when splitting large tables. Does not chunk rows if set
+            to None.
+        column:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Column
+          description: The number of columns to include in each chunk when splitting large tables. Does not chunk columns
+            if set to None.
+      type: object
+      title: SplitLargeTableSizes
+    Retrieval:
+      properties:
+        chunking:
+          $ref: '#/components/schemas/Chunking'
+          default:
+            chunk_mode: disabled
+            chunk_overlap: 0
+        filter_blocks:
+          items:
+            type: string
+            enum:
+            - Header
+            - Footer
+            - Title
+            - Section Header
+            - Page Number
+            - List Item
+            - Figure
+            - Table
+            - Key Value
+            - Text
+            - Comment
+            - Signature
+          type: array
+          title: Filter Blocks
+          description: A list of block types to filter out from 'content' and 'embed' fields. By default, no blocks are filtered.
+          default: []
+        embedding_optimized:
+          type: boolean
+          title: Embedding Optimized
+          description: If True, use embedding optimized mode. Defaults to False.
+          default: false
+      type: object
+      title: Retrieval
+    SyncParseConfig:
+      properties:
+        input:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          - $ref: '#/components/schemas/UploadResponse'
+          title: Input
+          description: "For parse/split/extract pipelines, the URL of the document to be processed. You can provide one of\
+            \ the following:\n            1. A publicly available URL\n            2. A presigned S3 URL\n            3. A\
+            \ reducto:// prefixed URL obtained from the /upload endpoint after directly uploading a document\n           \
+            \ 4. A jobid:// prefixed URL obtained from a previous /parse invocation\n            5. A list of URLs (for multi-document\
+            \ pipelines, V3 API only)\n\n            For edit pipelines, this should be a string containing the edit instructions "
+        enhance:
+          $ref: '#/components/schemas/Enhance'
+          default:
+            agentic: []
+            summarize_figures: true
+            intelligent_ordering: false
+        retrieval:
+          $ref: '#/components/schemas/Retrieval'
+          default:
+            chunking:
+              chunk_mode: disabled
+              chunk_overlap: 0
+            filter_blocks: []
+            embedding_optimized: false
+        formatting:
+          $ref: '#/components/schemas/Formatting'
+          default:
+            add_page_markers: false
+            table_output_format: dynamic
+            merge_tables: false
+            include: []
+        spreadsheet:
+          $ref: '#/components/schemas/Spreadsheet'
+          default:
+            split_large_tables:
+              enabled: true
+              size: 50
+            include: []
+            clustering: accurate
+            exclude: []
+        settings:
+          $ref: '#/components/schemas/Settings'
+          default:
+            ocr_system: standard
+            extraction_mode: hybrid
+            force_url_result: false
+            return_ocr_data: false
+            return_images: []
+            embed_pdf_metadata: false
+            embed_pdf_metadata_dpi: 100
+            persist_results: false
+      type: object
+      required:
+      - input
+      title: SyncParseConfig
+    Formatting:
+      properties:
+        add_page_markers:
+          type: boolean
+          title: Add Page Markers
+          description: If True, add page markers to the output. Defaults to False. Useful for extracting data with page specific
+            information.
+          default: false
+        table_output_format:
+          type: string
+          enum:
+          - html
+          - json
+          - md
+          - jsonbbox
+          - dynamic
+          - csv
+          title: Table Output Format
+          description: The mode to use for table output. Defaults to dynamic, which returns md for simpler tables and html
+            for more complex tables.
+          default: dynamic
+        merge_tables:
+          type: boolean
+          title: Merge Tables
+          description: A flag to indicate if consecutive tables with the same number of columns should be merged. Defaults
+            to False.
+          default: false
+        include:
+          items:
+            type: string
+            enum:
+            - change_tracking
+            - highlight
+            - comments
+            - hyperlinks
+            - signatures
+            - ignore_watermarks
+          type: array
+          title: Include
+          description: A list of formatting to include in the output.
+          default: []
+      type: object
+      title: Formatting
+    OCRLine:
+      properties:
+        text:
+          type: string
+          title: Text
+        bbox:
+          $ref: '#/components/schemas/BoundingBox'
+        confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Confidence
+          description: OCR confidence score between 0 and 1, where 1 indicates highest confidence
+        chunk_index:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Chunk Index
+          description: The index of the chunk that the line belongs to.
+        rotation:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rotation
+          description: The rotation angle in degrees, from 0 to 360, counterclockwise.
+      type: object
+      required:
+      - text
+      - bbox
+      title: OCRLine
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+  securitySchemes:
+    SkippableHTTPBearer:
+      type: http
+      scheme: bearer

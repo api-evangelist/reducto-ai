@@ -1,0 +1,656 @@
+openapi: 3.1.0
+info:
+  title: Reducto Classify API
+  version: 1.0.0
+  description: Classify documents into a defined set of categories and run citation lookups against parsed content.
+  contact:
+    name: Reducto Support
+    email: support@reducto.ai
+    url: https://reducto.ai/contact
+  license:
+    name: Reducto Terms of Service
+    url: https://reducto.ai/terms
+servers:
+- url: https://platform.reducto.ai
+  description: Reducto production platform
+security:
+- SkippableHTTPBearer: []
+tags:
+- name: Classify
+paths:
+  /classify:
+    post:
+      summary: Classify
+      operationId: classify_classify_post
+      security:
+      - SkippableHTTPBearer: []
+      parameters:
+      - name: user-id
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User-Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClassifyConfig'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClassifyResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Classify
+  /cite:
+    post:
+      summary: Cite
+      description: 'Locate exact bounding boxes for text citations in a parsed document.
+
+
+        Requires the document to have been parsed with return_ocr_data=true.'
+      operationId: cite_cite_post
+      security:
+      - SkippableHTTPBearer: []
+      parameters:
+      - name: user-id
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User-Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CiteRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CiteResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Classify
+components:
+  schemas:
+    ClassifyResponse:
+      properties:
+        response_type:
+          type: string
+          const: classify
+          title: Response Type
+          default: classify
+        job_id:
+          type: string
+          title: Job Id
+        result:
+          $ref: '#/components/schemas/ClassifyResponseCategory'
+        response_confidence:
+          anyOf:
+          - $ref: '#/components/schemas/ResponseConfidence'
+          - type: 'null'
+        duration:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Duration
+          description: The duration of the classify request in seconds.
+      type: object
+      required:
+      - job_id
+      - result
+      title: ClassifyResponse
+      description: Response from classify job - returned when polling /job/{job_id}
+    CitationQuery:
+      properties:
+        text:
+          type: string
+          minLength: 1
+          title: Text
+          description: Text to locate. Whitespace is normalized for matching.
+        bbox_filter:
+          anyOf:
+          - $ref: '#/components/schemas/BoundingBox'
+          - type: 'null'
+          description: Optional region to limit search.
+      type: object
+      required:
+      - text
+      title: CitationQuery
+      description: A text to locate in the document.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ParseChunk-Input:
+      properties:
+        content:
+          type: string
+          title: Content
+          description: The content of the chunk extracted from the document.
+        embed:
+          type: string
+          title: Embed
+          description: Chunk content optimized for embedding and retrieval.
+        enriched:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Enriched
+          description: The enriched content of the chunk extracted from the document.
+        enrichment_success:
+          type: boolean
+          title: Enrichment Success
+          description: Whether the enrichment was successful.
+          default: false
+        blocks:
+          items:
+            $ref: '#/components/schemas/ParseBlock-Input'
+          type: array
+          title: Blocks
+      type: object
+      required:
+      - content
+      - embed
+      - enriched
+      - blocks
+      title: ParseChunk
+    CiteResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/CitationQueryResult'
+          type: array
+          title: Results
+          description: Results in same order as input queries (1:1 correspondence).
+        duration:
+          type: number
+          title: Duration
+          description: Processing time in seconds.
+      type: object
+      required:
+      - results
+      - duration
+      title: CiteResponse
+      description: Citation location results.
+    ResponseConfidence:
+      properties:
+        categories:
+          items:
+            $ref: '#/components/schemas/CategoryConfidence'
+          type: array
+          title: Categories
+      type: object
+      required:
+      - categories
+      title: ResponseConfidence
+      description: Overall confidence breakdown for classification response.
+    FullResult-Input:
+      properties:
+        type:
+          type: string
+          const: full
+          title: Type
+          description: type = 'full'
+        chunks:
+          items:
+            $ref: '#/components/schemas/ParseChunk-Input'
+          type: array
+          title: Chunks
+        ocr:
+          anyOf:
+          - $ref: '#/components/schemas/OCRResult-Input'
+          - type: 'null'
+        custom:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Custom
+      type: object
+      required:
+      - type
+      - chunks
+      title: FullResult
+    ClassifyResponseCategory:
+      properties:
+        category:
+          type: string
+          title: Category
+      type: object
+      required:
+      - category
+      title: ClassifyResponseCategory
+    CriteriaConfidence:
+      properties:
+        criterion:
+          type: string
+          title: Criterion
+        confidence:
+          type: string
+          enum:
+          - high
+          - low
+          title: Confidence
+      type: object
+      required:
+      - criterion
+      - confidence
+      title: CriteriaConfidence
+      description: Confidence result for a single criterion.
+    BoundingBox:
+      properties:
+        left:
+          type: number
+          title: Left
+        top:
+          type: number
+          title: Top
+        width:
+          type: number
+          title: Width
+        height:
+          type: number
+          title: Height
+        page:
+          type: integer
+          title: Page
+          description: The page number of the bounding box (1-indexed).
+        original_page:
+          type: integer
+          title: Original Page
+          description: The page number in the original document of the bounding box (1-indexed).
+      type: object
+      required:
+      - left
+      - top
+      - width
+      - height
+      - page
+      title: BoundingBox
+    CategoryConfidence:
+      properties:
+        category:
+          type: string
+          title: Category
+        confidence:
+          type: number
+          title: Confidence
+        criteria_confidence:
+          items:
+            $ref: '#/components/schemas/CriteriaConfidence'
+          type: array
+          title: Criteria Confidence
+      type: object
+      required:
+      - category
+      - confidence
+      - criteria_confidence
+      title: CategoryConfidence
+      description: Confidence result for a category.
+    CitationMatch:
+      properties:
+        page:
+          type: integer
+          title: Page
+          description: Page number (1-indexed).
+        bboxes:
+          items:
+            $ref: '#/components/schemas/BoundingBox'
+          type: array
+          title: Bboxes
+          description: Bounding boxes for the match. Multiple boxes for multi-line text.
+      type: object
+      required:
+      - page
+      - bboxes
+      title: CitationMatch
+      description: A location where the citation text was found.
+    GranularConfidence:
+      properties:
+        extract_confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Extract Confidence
+        parse_confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Parse Confidence
+      type: object
+      title: GranularConfidence
+    PageRange:
+      properties:
+        start:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Start
+          description: The page number to start processing from (1-indexed).
+        end:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: End
+          description: The page number to stop processing at (1-indexed).
+      type: object
+      title: PageRange
+    OCRWord:
+      properties:
+        text:
+          type: string
+          title: Text
+        bbox:
+          $ref: '#/components/schemas/BoundingBox'
+        confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Confidence
+          description: OCR confidence score between 0 and 1, where 1 indicates highest confidence
+        chunk_index:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Chunk Index
+          description: The index of the chunk that the word belongs to.
+        rotation:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rotation
+          description: The rotation angle in degrees, from 0 to 360, counterclockwise.
+      type: object
+      required:
+      - text
+      - bbox
+      title: OCRWord
+    OCRResult-Input:
+      properties:
+        words:
+          items:
+            $ref: '#/components/schemas/OCRWord'
+          type: array
+          title: Words
+        lines:
+          items:
+            $ref: '#/components/schemas/OCRLine'
+          type: array
+          title: Lines
+      type: object
+      required:
+      - words
+      - lines
+      title: OCRResult
+    UploadResponse:
+      properties:
+        file_id:
+          type: string
+          title: File Id
+        presigned_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Presigned Url
+      type: object
+      required:
+      - file_id
+      title: UploadResponse
+    CiteRequest:
+      properties:
+        source:
+          anyOf:
+          - type: string
+          - $ref: '#/components/schemas/FullResult-Input'
+          title: Source
+          description: Either 'jobid://<job_id>' string or full parse result object. The parse must have been run with return_ocr_data=true.
+        queries:
+          items:
+            $ref: '#/components/schemas/CitationQuery'
+          type: array
+          minItems: 1
+          title: Queries
+          description: List of text citations to locate.
+      type: object
+      required:
+      - source
+      - queries
+      title: CiteRequest
+      description: Request to locate text citations in a parsed document.
+    ClassificationCategory:
+      properties:
+        category:
+          type: string
+          title: Category
+          description: The category name/label that documents will be classified into (e.g., 'invoice', 'contract', 'receipt').
+        criteria:
+          items:
+            type: string
+          type: array
+          title: Criteria
+          description: A list of criteria, keywords, or descriptions that define what characteristics a document must have
+            to be classified into this category (e.g., ['contains billing information', 'has itemized charges']).
+      type: object
+      required:
+      - category
+      - criteria
+      title: ClassificationCategory
+      description: A single classification category with its matching criteria.
+    ParseBlock-Input:
+      properties:
+        type:
+          type: string
+          enum:
+          - Header
+          - Footer
+          - Title
+          - Section Header
+          - Page Number
+          - List Item
+          - Figure
+          - Table
+          - Key Value
+          - Text
+          - Comment
+          - Signature
+          title: Type
+          description: The type of block extracted from the document.
+        bbox:
+          $ref: '#/components/schemas/BoundingBox'
+          description: The bounding box of the block extracted from the document.
+        content:
+          type: string
+          title: Content
+          description: The content of the block extracted from the document.
+        image_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Image Url
+          description: (Experimental) The URL of the image associated with the block.
+        chart_data:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Chart Data
+          description: (Experimental) The URL/link to chart data JSON for figure blocks processed by chart agent.
+        confidence:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Confidence
+          description: The confidence for the block. It is either low or high and takes into account factors like OCR and
+            table structure
+          default: low
+        granular_confidence:
+          anyOf:
+          - $ref: '#/components/schemas/GranularConfidence'
+          - type: 'null'
+          description: Granular confidence scores for the block. It is a dictionary of confidence scores for the block. The
+            confidence scores will not be None if the user has enabled numeric confidence scores.
+        extra:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Extra
+          description: Extra metadata fields for the block. Fields like 'is_chart' will only appear when set to True.
+      type: object
+      required:
+      - type
+      - bbox
+      - content
+      title: ParseBlock
+    ClassifyConfig:
+      properties:
+        persist_results:
+          type: boolean
+          title: Persist Results
+          description: If True, persist the results indefinitely. Defaults to False.
+          default: false
+        input:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          - $ref: '#/components/schemas/UploadResponse'
+          title: Input
+          description: "For parse/split/extract pipelines, the URL of the document to be processed. You can provide one of\
+            \ the following:\n            1. A publicly available URL\n            2. A presigned S3 URL\n            3. A\
+            \ reducto:// prefixed URL obtained from the /upload endpoint after directly uploading a document\n           \
+            \ 4. A jobid:// prefixed URL obtained from a previous /parse invocation\n            5. A list of URLs (for multi-document\
+            \ pipelines, V3 API only)\n\n            For edit pipelines, this should be a string containing the edit instructions "
+        classification_schema:
+          items:
+            $ref: '#/components/schemas/ClassificationCategory'
+          type: array
+          title: Classification Schema
+          description: A list of classification categories and their matching criteria.
+          default: []
+        page_range:
+          anyOf:
+          - $ref: '#/components/schemas/PageRange'
+          - items:
+              $ref: '#/components/schemas/PageRange'
+            type: array
+          - items:
+              type: integer
+            type: array
+          - type: 'null'
+          title: Page Range
+          description: The page range to process (1-indexed). By default, the first 5 pages are used. If more than 25 pages
+            are selected, only the first 25 (after sorting) are used. Only applies to PDFs; ignored for other document types.
+        document_metadata:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Document Metadata
+          description: Optional document-level metadata to include in classification prompts.
+      type: object
+      required:
+      - input
+      title: ClassifyConfig
+    CitationQueryResult:
+      properties:
+        matches:
+          items:
+            $ref: '#/components/schemas/CitationMatch'
+          type: array
+          title: Matches
+          description: All locations where the text was found. Empty if no matches.
+      type: object
+      required:
+      - matches
+      title: CitationQueryResult
+      description: Results for one query.
+    OCRLine:
+      properties:
+        text:
+          type: string
+          title: Text
+        bbox:
+          $ref: '#/components/schemas/BoundingBox'
+        confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Confidence
+          description: OCR confidence score between 0 and 1, where 1 indicates highest confidence
+        chunk_index:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Chunk Index
+          description: The index of the chunk that the line belongs to.
+        rotation:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rotation
+          description: The rotation angle in degrees, from 0 to 360, counterclockwise.
+      type: object
+      required:
+      - text
+      - bbox
+      title: OCRLine
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+  securitySchemes:
+    SkippableHTTPBearer:
+      type: http
+      scheme: bearer

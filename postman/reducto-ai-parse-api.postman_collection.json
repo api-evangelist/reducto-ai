@@ -1,0 +1,404 @@
+{
+  "info": {
+    "_postman_id": "7fdb64bc-a5b7-45c5-af28-5da120c92304",
+    "name": "Reducto Classify Parse API",
+    "description": "Classify documents into a defined set of categories and run citation lookups against parsed content.\n\nContact Support:\n Name: Reducto Support\n Email: support@reducto.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:43:46.000Z",
+    "updatedAt": "2026-07-28T02:43:47.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-7fdb64bc-a5b7-45c5-af28-5da120c92304"
+  },
+  "item": [
+    {
+      "name": "parse",
+      "item": [
+        {
+          "name": "Parse",
+          "id": "4ddf21bb-0e12-4e37-ab97-1bd9e78847a6",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "user-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": \"<string>\",\n  \"enhance\": {\n    \"summarize_figures\": true,\n    \"intelligent_ordering\": false\n  },\n  \"retrieval\": {\n    \"chunking\": {\n      \"chunk_mode\": \"disabled\",\n      \"chunk_size\": \"<integer>\",\n      \"chunk_overlap\": 0\n    },\n    \"embedding_optimized\": false\n  },\n  \"formatting\": {\n    \"add_page_markers\": false,\n    \"table_output_format\": \"dynamic\",\n    \"merge_tables\": false\n  },\n  \"spreadsheet\": {\n    \"split_large_tables\": {\n      \"enabled\": true,\n      \"size\": \"<integer>\"\n    },\n    \"clustering\": \"accurate\"\n  },\n  \"settings\": {\n    \"ocr_system\": \"standard\",\n    \"extraction_mode\": \"hybrid\",\n    \"force_url_result\": false,\n    \"force_file_extension\": \"<string>\",\n    \"return_ocr_data\": false,\n    \"embed_pdf_metadata\": false,\n    \"embed_pdf_metadata_dpi\": 100,\n    \"persist_results\": false,\n    \"timeout\": \"<number>\",\n    \"page_range\": {\n      \"start\": \"<integer>\",\n      \"end\": \"<integer>\"\n    },\n    \"document_password\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/parse",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "parse"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7290dfa3-2e88-4f67-940d-d980fb8c97e9",
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"<string>\",\n  \"enhance\": {\n    \"summarize_figures\": true,\n    \"intelligent_ordering\": false\n  },\n  \"retrieval\": {\n    \"chunking\": {\n      \"chunk_mode\": \"disabled\",\n      \"chunk_size\": \"<integer>\",\n      \"chunk_overlap\": 0\n    },\n    \"embedding_optimized\": false\n  },\n  \"formatting\": {\n    \"add_page_markers\": false,\n    \"table_output_format\": \"dynamic\",\n    \"merge_tables\": false\n  },\n  \"spreadsheet\": {\n    \"split_large_tables\": {\n      \"enabled\": true,\n      \"size\": \"<integer>\"\n    },\n    \"clustering\": \"accurate\"\n  },\n  \"settings\": {\n    \"ocr_system\": \"standard\",\n    \"extraction_mode\": \"hybrid\",\n    \"force_url_result\": false,\n    \"force_file_extension\": \"<string>\",\n    \"return_ocr_data\": false,\n    \"embed_pdf_metadata\": false,\n    \"embed_pdf_metadata_dpi\": 100,\n    \"persist_results\": false,\n    \"timeout\": \"<number>\",\n    \"page_range\": {\n      \"start\": \"<integer>\",\n      \"end\": \"<integer>\"\n    },\n    \"document_password\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/parse",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "parse"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"job_id\": \"<string>\",\n  \"duration\": \"<number>\",\n  \"usage\": {\n    \"num_pages\": \"<integer>\",\n    \"credits\": \"<number>\",\n    \"credit_breakdown\": {\n      \"mollita\": \"<number>\",\n      \"enim93\": \"<number>\"\n    },\n    \"page_billing_breakdown\": {\n      \"aliquip_a\": [\n        \"figure_summary\",\n        \"figure_summary\"\n      ]\n    }\n  },\n  \"result\": {\n    \"type\": \"<string>\",\n    \"chunks\": [\n      {\n        \"content\": \"<string>\",\n        \"embed\": \"<string>\",\n        \"enriched\": \"<string>\",\n        \"blocks\": [\n          {\n            \"type\": \"Page Number\",\n            \"bbox\": {\n              \"left\": \"<number>\",\n              \"top\": \"<number>\",\n              \"width\": \"<number>\",\n              \"height\": \"<number>\",\n              \"page\": \"<integer>\",\n              \"original_page\": \"<integer>\"\n            },\n            \"content\": \"<string>\",\n            \"image_url\": \"<string>\",\n            \"chart_data\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"confidence\": \"<string>\",\n            \"granular_confidence\": {\n              \"extract_confidence\": \"<number>\",\n              \"parse_confidence\": \"<number>\"\n            },\n            \"extra\": {\n              \"dolorefc\": \"occaecat\"\n            }\n          },\n          {\n            \"type\": \"Table\",\n            \"bbox\": {\n              \"left\": \"<number>\",\n              \"top\": \"<number>\",\n              \"width\": \"<number>\",\n              \"height\": \"<number>\",\n              \"page\": \"<integer>\",\n              \"original_page\": \"<integer>\"\n            },\n            \"content\": \"<string>\",\n            \"image_url\": \"<string>\",\n            \"chart_data\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"confidence\": \"<string>\",\n            \"granular_confidence\": {\n              \"extract_confidence\": \"<number>\",\n              \"parse_confidence\": \"<number>\"\n            },\n            \"extra\": {\n              \"ipsum_d\": -5782808,\n              \"aliquip_2\": -70269738.6981423\n            }\n          }\n        ],\n        \"enrichment_success\": false\n      },\n      {\n        \"content\": \"<string>\",\n        \"embed\": \"<string>\",\n        \"enriched\": \"<string>\",\n        \"blocks\": [\n          {\n            \"type\": \"Section Header\",\n            \"bbox\": {\n              \"left\": \"<number>\",\n              \"top\": \"<number>\",\n              \"width\": \"<number>\",\n              \"height\": \"<number>\",\n              \"page\": \"<integer>\",\n              \"original_page\": \"<integer>\"\n            },\n            \"content\": \"<string>\",\n            \"image_url\": \"<string>\",\n            \"chart_data\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"confidence\": \"<string>\",\n            \"granular_confidence\": {\n              \"extract_confidence\": \"<number>\",\n              \"parse_confidence\": \"<number>\"\n            },\n            \"extra\": {\n              \"Duis_a39\": -21679624.635058567\n            }\n          },\n          {\n            \"type\": \"Footer\",\n            \"bbox\": {\n              \"left\": \"<number>\",\n              \"top\": \"<number>\",\n              \"width\": \"<number>\",\n              \"height\": \"<number>\",\n              \"page\": \"<integer>\",\n              \"original_page\": \"<integer>\"\n            },\n            \"content\": \"<string>\",\n            \"image_url\": \"<string>\",\n            \"chart_data\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"confidence\": \"<string>\",\n            \"granular_confidence\": {\n              \"extract_confidence\": \"<number>\",\n              \"parse_confidence\": \"<number>\"\n            },\n            \"extra\": {\n              \"laborum73\": 44864932\n            }\n          }\n        ],\n        \"enrichment_success\": false\n      }\n    ],\n    \"ocr\": {\n      \"words\": [\n        {\n          \"text\": \"<string>\",\n          \"bbox\": {\n            \"left\": \"<number>\",\n            \"top\": \"<number>\",\n            \"width\": \"<number>\",\n            \"height\": \"<number>\",\n            \"page\": \"<integer>\",\n            \"original_page\": \"<integer>\"\n          },\n          \"confidence\": \"<number>\",\n          \"chunk_index\": \"<integer>\",\n          \"rotation\": \"<integer>\"\n        },\n        {\n          \"text\": \"<string>\",\n          \"bbox\": {\n            \"left\": \"<number>\",\n            \"top\": \"<number>\",\n            \"width\": \"<number>\",\n            \"height\": \"<number>\",\n            \"page\": \"<integer>\",\n            \"original_page\": \"<integer>\"\n          },\n          \"confidence\": \"<number>\",\n          \"chunk_index\": \"<integer>\",\n          \"rotation\": \"<integer>\"\n        }\n      ],\n      \"lines\": [\n        {\n          \"text\": \"<string>\",\n          \"bbox\": {\n            \"left\": \"<number>\",\n            \"top\": \"<number>\",\n            \"width\": \"<number>\",\n            \"height\": \"<number>\",\n            \"page\": \"<integer>\",\n            \"original_page\": \"<integer>\"\n          },\n          \"confidence\": \"<number>\",\n          \"chunk_index\": \"<integer>\",\n          \"rotation\": \"<integer>\"\n        },\n        {\n          \"text\": \"<string>\",\n          \"bbox\": {\n            \"left\": \"<number>\",\n            \"top\": \"<number>\",\n            \"width\": \"<number>\",\n            \"height\": \"<number>\",\n            \"page\": \"<integer>\",\n            \"original_page\": \"<integer>\"\n          },\n          \"confidence\": \"<number>\",\n          \"chunk_index\": \"<integer>\",\n          \"rotation\": \"<integer>\"\n        }\n      ]\n    },\n    \"custom\": {}\n  },\n  \"response_type\": \"parse\",\n  \"pdf_url\": \"<string>\",\n  \"studio_link\": \"<string>\",\n  \"parse_mode\": \"lite\"\n}",
+              "createdAt": "2026-07-28T02:43:47.000Z",
+              "updatedAt": "2026-07-28T02:43:47.000Z",
+              "uid": "35240-7290dfa3-2e88-4f67-940d-d980fb8c97e9"
+            },
+            {
+              "id": "82bf3f28-6719-428a-9d91-10cdf6bbbad0",
+              "name": "Validation Error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"<string>\",\n  \"enhance\": {\n    \"summarize_figures\": true,\n    \"intelligent_ordering\": false\n  },\n  \"retrieval\": {\n    \"chunking\": {\n      \"chunk_mode\": \"disabled\",\n      \"chunk_size\": \"<integer>\",\n      \"chunk_overlap\": 0\n    },\n    \"embedding_optimized\": false\n  },\n  \"formatting\": {\n    \"add_page_markers\": false,\n    \"table_output_format\": \"dynamic\",\n    \"merge_tables\": false\n  },\n  \"spreadsheet\": {\n    \"split_large_tables\": {\n      \"enabled\": true,\n      \"size\": \"<integer>\"\n    },\n    \"clustering\": \"accurate\"\n  },\n  \"settings\": {\n    \"ocr_system\": \"standard\",\n    \"extraction_mode\": \"hybrid\",\n    \"force_url_result\": false,\n    \"force_file_extension\": \"<string>\",\n    \"return_ocr_data\": false,\n    \"embed_pdf_metadata\": false,\n    \"embed_pdf_metadata_dpi\": 100,\n    \"persist_results\": false,\n    \"timeout\": \"<number>\",\n    \"page_range\": {\n      \"start\": \"<integer>\",\n      \"end\": \"<integer>\"\n    },\n    \"document_password\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/parse",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "parse"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T02:43:47.000Z",
+              "updatedAt": "2026-07-28T02:43:47.000Z",
+              "uid": "35240-82bf3f28-6719-428a-9d91-10cdf6bbbad0"
+            }
+          ],
+          "createdAt": "2026-07-28T02:43:47.000Z",
+          "updatedAt": "2026-07-28T02:43:47.000Z",
+          "uid": "35240-4ddf21bb-0e12-4e37-ab97-1bd9e78847a6"
+        }
+      ],
+      "id": "faca361e-e49d-41c6-a62a-b92cd91cbac2",
+      "createdAt": "2026-07-28T02:43:47.000Z",
+      "updatedAt": "2026-07-28T02:43:47.000Z",
+      "uid": "35240-faca361e-e49d-41c6-a62a-b92cd91cbac2"
+    },
+    {
+      "name": "parse_async",
+      "item": [
+        {
+          "name": "Async Parse",
+          "id": "cb18164c-4a2f-4f9b-9db2-e324e1cc9232",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "user-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": \"<string>\",\n  \"async\": {\n    \"metadata\": {\n      \"title\": \"Metadata\",\n      \"description\": \"JSON metadata included in webhook request body. Defaults to None.\"\n    },\n    \"priority\": false,\n    \"webhook\": {\n      \"mode\": \"svix\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"enhance\": {\n    \"summarize_figures\": true,\n    \"intelligent_ordering\": false\n  },\n  \"retrieval\": {\n    \"chunking\": {\n      \"chunk_mode\": \"disabled\",\n      \"chunk_size\": \"<integer>\",\n      \"chunk_overlap\": 0\n    },\n    \"embedding_optimized\": false\n  },\n  \"formatting\": {\n    \"add_page_markers\": false,\n    \"table_output_format\": \"dynamic\",\n    \"merge_tables\": false\n  },\n  \"spreadsheet\": {\n    \"split_large_tables\": {\n      \"enabled\": true,\n      \"size\": \"<integer>\"\n    },\n    \"clustering\": \"accurate\"\n  },\n  \"settings\": {\n    \"ocr_system\": \"standard\",\n    \"extraction_mode\": \"hybrid\",\n    \"force_url_result\": false,\n    \"force_file_extension\": \"<string>\",\n    \"return_ocr_data\": false,\n    \"embed_pdf_metadata\": false,\n    \"embed_pdf_metadata_dpi\": 100,\n    \"persist_results\": false,\n    \"timeout\": \"<number>\",\n    \"page_range\": {\n      \"start\": \"<integer>\",\n      \"end\": \"<integer>\"\n    },\n    \"document_password\": \"<string>\"\n  },\n  \"queue_priority\": \"batch\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/parse_async",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "parse_async"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "81916e6a-5f46-4407-ae8a-9bafa342ff01",
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"<string>\",\n  \"async\": {\n    \"metadata\": {\n      \"title\": \"Metadata\",\n      \"description\": \"JSON metadata included in webhook request body. Defaults to None.\"\n    },\n    \"priority\": false,\n    \"webhook\": {\n      \"mode\": \"svix\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"enhance\": {\n    \"summarize_figures\": true,\n    \"intelligent_ordering\": false\n  },\n  \"retrieval\": {\n    \"chunking\": {\n      \"chunk_mode\": \"disabled\",\n      \"chunk_size\": \"<integer>\",\n      \"chunk_overlap\": 0\n    },\n    \"embedding_optimized\": false\n  },\n  \"formatting\": {\n    \"add_page_markers\": false,\n    \"table_output_format\": \"dynamic\",\n    \"merge_tables\": false\n  },\n  \"spreadsheet\": {\n    \"split_large_tables\": {\n      \"enabled\": true,\n      \"size\": \"<integer>\"\n    },\n    \"clustering\": \"accurate\"\n  },\n  \"settings\": {\n    \"ocr_system\": \"standard\",\n    \"extraction_mode\": \"hybrid\",\n    \"force_url_result\": false,\n    \"force_file_extension\": \"<string>\",\n    \"return_ocr_data\": false,\n    \"embed_pdf_metadata\": false,\n    \"embed_pdf_metadata_dpi\": 100,\n    \"persist_results\": false,\n    \"timeout\": \"<number>\",\n    \"page_range\": {\n      \"start\": \"<integer>\",\n      \"end\": \"<integer>\"\n    },\n    \"document_password\": \"<string>\"\n  },\n  \"queue_priority\": \"batch\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/parse_async",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "parse_async"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"job_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:43:47.000Z",
+              "updatedAt": "2026-07-28T02:43:47.000Z",
+              "uid": "35240-81916e6a-5f46-4407-ae8a-9bafa342ff01"
+            },
+            {
+              "id": "dbe8e570-3361-4e26-a542-af87aad20533",
+              "name": "Validation Error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"<string>\",\n  \"async\": {\n    \"metadata\": {\n      \"title\": \"Metadata\",\n      \"description\": \"JSON metadata included in webhook request body. Defaults to None.\"\n    },\n    \"priority\": false,\n    \"webhook\": {\n      \"mode\": \"svix\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"enhance\": {\n    \"summarize_figures\": true,\n    \"intelligent_ordering\": false\n  },\n  \"retrieval\": {\n    \"chunking\": {\n      \"chunk_mode\": \"disabled\",\n      \"chunk_size\": \"<integer>\",\n      \"chunk_overlap\": 0\n    },\n    \"embedding_optimized\": false\n  },\n  \"formatting\": {\n    \"add_page_markers\": false,\n    \"table_output_format\": \"dynamic\",\n    \"merge_tables\": false\n  },\n  \"spreadsheet\": {\n    \"split_large_tables\": {\n      \"enabled\": true,\n      \"size\": \"<integer>\"\n    },\n    \"clustering\": \"accurate\"\n  },\n  \"settings\": {\n    \"ocr_system\": \"standard\",\n    \"extraction_mode\": \"hybrid\",\n    \"force_url_result\": false,\n    \"force_file_extension\": \"<string>\",\n    \"return_ocr_data\": false,\n    \"embed_pdf_metadata\": false,\n    \"embed_pdf_metadata_dpi\": 100,\n    \"persist_results\": false,\n    \"timeout\": \"<number>\",\n    \"page_range\": {\n      \"start\": \"<integer>\",\n      \"end\": \"<integer>\"\n    },\n    \"document_password\": \"<string>\"\n  },\n  \"queue_priority\": \"batch\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/parse_async",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "parse_async"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T02:43:47.000Z",
+              "updatedAt": "2026-07-28T02:43:47.000Z",
+              "uid": "35240-dbe8e570-3361-4e26-a542-af87aad20533"
+            }
+          ],
+          "createdAt": "2026-07-28T02:43:47.000Z",
+          "updatedAt": "2026-07-28T02:43:47.000Z",
+          "uid": "35240-cb18164c-4a2f-4f9b-9db2-e324e1cc9232"
+        }
+      ],
+      "id": "d5690d8d-445a-4d8a-85f0-177f9d344e02",
+      "createdAt": "2026-07-28T02:43:47.000Z",
+      "updatedAt": "2026-07-28T02:43:47.000Z",
+      "uid": "35240-d5690d8d-445a-4d8a-85f0-177f9d344e02"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://platform.reducto.ai"
+    }
+  ]
+}

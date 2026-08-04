@@ -1,0 +1,405 @@
+{
+  "info": {
+    "_postman_id": "47ef4ce3-e1a9-4725-a209-9aa583d76f2a",
+    "name": "Reducto Classify API",
+    "description": "Classify documents into a defined set of categories and run citation lookups against parsed content.\n\nContact Support:\n Name: Reducto Support\n Email: support@reducto.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:43:38.000Z",
+    "updatedAt": "2026-07-28T02:43:39.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-47ef4ce3-e1a9-4725-a209-9aa583d76f2a"
+  },
+  "item": [
+    {
+      "name": "classify",
+      "item": [
+        {
+          "name": "Classify",
+          "id": "b4581e36-8b42-4c5a-ac01-a0746de94de6",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "user-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": \"<string>\",\n  \"persist_results\": false,\n  \"page_range\": {\n    \"start\": \"<integer>\",\n    \"end\": \"<integer>\"\n  },\n  \"document_metadata\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/classify",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "classify"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d89897d1-03c4-4f09-848f-bf7bac4d47fb",
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"<string>\",\n  \"persist_results\": false,\n  \"page_range\": {\n    \"start\": \"<integer>\",\n    \"end\": \"<integer>\"\n  },\n  \"document_metadata\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/classify",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "classify"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"job_id\": \"<string>\",\n  \"result\": {\n    \"category\": \"<string>\"\n  },\n  \"response_type\": \"classify\",\n  \"response_confidence\": {\n    \"categories\": [\n      {\n        \"category\": \"<string>\",\n        \"confidence\": \"<number>\",\n        \"criteria_confidence\": [\n          {\n            \"criterion\": \"<string>\",\n            \"confidence\": \"high\"\n          },\n          {\n            \"criterion\": \"<string>\",\n            \"confidence\": \"low\"\n          }\n        ]\n      },\n      {\n        \"category\": \"<string>\",\n        \"confidence\": \"<number>\",\n        \"criteria_confidence\": [\n          {\n            \"criterion\": \"<string>\",\n            \"confidence\": \"low\"\n          },\n          {\n            \"criterion\": \"<string>\",\n            \"confidence\": \"high\"\n          }\n        ]\n      }\n    ]\n  },\n  \"duration\": \"<number>\"\n}",
+              "createdAt": "2026-07-28T02:43:39.000Z",
+              "updatedAt": "2026-07-28T02:43:39.000Z",
+              "uid": "35240-d89897d1-03c4-4f09-848f-bf7bac4d47fb"
+            },
+            {
+              "id": "a147a08f-4b69-40c8-b38e-4bc7748bcc25",
+              "name": "Validation Error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"<string>\",\n  \"persist_results\": false,\n  \"page_range\": {\n    \"start\": \"<integer>\",\n    \"end\": \"<integer>\"\n  },\n  \"document_metadata\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/classify",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "classify"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T02:43:39.000Z",
+              "updatedAt": "2026-07-28T02:43:39.000Z",
+              "uid": "35240-a147a08f-4b69-40c8-b38e-4bc7748bcc25"
+            }
+          ],
+          "createdAt": "2026-07-28T02:43:39.000Z",
+          "updatedAt": "2026-07-28T02:43:39.000Z",
+          "uid": "35240-b4581e36-8b42-4c5a-ac01-a0746de94de6"
+        }
+      ],
+      "id": "08291fa2-452d-4531-b6ef-93816a9e0344",
+      "createdAt": "2026-07-28T02:43:39.000Z",
+      "updatedAt": "2026-07-28T02:43:39.000Z",
+      "uid": "35240-08291fa2-452d-4531-b6ef-93816a9e0344"
+    },
+    {
+      "name": "cite",
+      "item": [
+        {
+          "name": "Cite",
+          "id": "d6f3a14b-b595-4455-95d7-ac12717807d3",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "user-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source\": \"<string>\",\n  \"queries\": [\n    {\n      \"text\": \"<string>\",\n      \"bbox_filter\": {\n        \"left\": \"<number>\",\n        \"top\": \"<number>\",\n        \"width\": \"<number>\",\n        \"height\": \"<number>\",\n        \"page\": \"<integer>\",\n        \"original_page\": \"<integer>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cite",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cite"
+              ]
+            },
+            "description": "Locate exact bounding boxes for text citations in a parsed document.\n\nRequires the document to have been parsed with return_ocr_data=true."
+          },
+          "response": [
+            {
+              "id": "b0167bfc-4c07-4971-a0f9-085592c2e4ce",
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": \"<string>\",\n  \"queries\": [\n    {\n      \"text\": \"<string>\",\n      \"bbox_filter\": {\n        \"left\": \"<number>\",\n        \"top\": \"<number>\",\n        \"width\": \"<number>\",\n        \"height\": \"<number>\",\n        \"page\": \"<integer>\",\n        \"original_page\": \"<integer>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/cite",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "cite"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"results\": [\n    {\n      \"matches\": [\n        {\n          \"page\": \"<integer>\",\n          \"bboxes\": [\n            {\n              \"left\": \"<number>\",\n              \"top\": \"<number>\",\n              \"width\": \"<number>\",\n              \"height\": \"<number>\",\n              \"page\": \"<integer>\",\n              \"original_page\": \"<integer>\"\n            },\n            {\n              \"left\": \"<number>\",\n              \"top\": \"<number>\",\n              \"width\": \"<number>\",\n              \"height\": \"<number>\",\n              \"page\": \"<integer>\",\n              \"original_page\": \"<integer>\"\n            }\n          ]\n        },\n        {\n          \"page\": \"<integer>\",\n          \"bboxes\": [\n            {\n              \"left\": \"<number>\",\n              \"top\": \"<number>\",\n              \"width\": \"<number>\",\n              \"height\": \"<number>\",\n              \"page\": \"<integer>\",\n              \"original_page\": \"<integer>\"\n            },\n            {\n              \"left\": \"<number>\",\n              \"top\": \"<number>\",\n              \"width\": \"<number>\",\n              \"height\": \"<number>\",\n              \"page\": \"<integer>\",\n              \"original_page\": \"<integer>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"matches\": [\n        {\n          \"page\": \"<integer>\",\n          \"bboxes\": [\n            {\n              \"left\": \"<number>\",\n              \"top\": \"<number>\",\n              \"width\": \"<number>\",\n              \"height\": \"<number>\",\n              \"page\": \"<integer>\",\n              \"original_page\": \"<integer>\"\n            },\n            {\n              \"left\": \"<number>\",\n              \"top\": \"<number>\",\n              \"width\": \"<number>\",\n              \"height\": \"<number>\",\n              \"page\": \"<integer>\",\n              \"original_page\": \"<integer>\"\n            }\n          ]\n        },\n        {\n          \"page\": \"<integer>\",\n          \"bboxes\": [\n            {\n              \"left\": \"<number>\",\n              \"top\": \"<number>\",\n              \"width\": \"<number>\",\n              \"height\": \"<number>\",\n              \"page\": \"<integer>\",\n              \"original_page\": \"<integer>\"\n            },\n            {\n              \"left\": \"<number>\",\n              \"top\": \"<number>\",\n              \"width\": \"<number>\",\n              \"height\": \"<number>\",\n              \"page\": \"<integer>\",\n              \"original_page\": \"<integer>\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"duration\": \"<number>\"\n}",
+              "createdAt": "2026-07-28T02:43:39.000Z",
+              "updatedAt": "2026-07-28T02:43:39.000Z",
+              "uid": "35240-b0167bfc-4c07-4971-a0f9-085592c2e4ce"
+            },
+            {
+              "id": "54f79960-2ca8-49b2-a135-2a7ac4bb7b58",
+              "name": "Validation Error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": \"<string>\",\n  \"queries\": [\n    {\n      \"text\": \"<string>\",\n      \"bbox_filter\": {\n        \"left\": \"<number>\",\n        \"top\": \"<number>\",\n        \"width\": \"<number>\",\n        \"height\": \"<number>\",\n        \"page\": \"<integer>\",\n        \"original_page\": \"<integer>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/cite",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "cite"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T02:43:39.000Z",
+              "updatedAt": "2026-07-28T02:43:39.000Z",
+              "uid": "35240-54f79960-2ca8-49b2-a135-2a7ac4bb7b58"
+            }
+          ],
+          "createdAt": "2026-07-28T02:43:39.000Z",
+          "updatedAt": "2026-07-28T02:43:39.000Z",
+          "uid": "35240-d6f3a14b-b595-4455-95d7-ac12717807d3"
+        }
+      ],
+      "id": "dc1d300a-8c0b-413a-afd2-e938f6824829",
+      "createdAt": "2026-07-28T02:43:39.000Z",
+      "updatedAt": "2026-07-28T02:43:39.000Z",
+      "uid": "35240-dc1d300a-8c0b-413a-afd2-e938f6824829"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://platform.reducto.ai"
+    }
+  ]
+}

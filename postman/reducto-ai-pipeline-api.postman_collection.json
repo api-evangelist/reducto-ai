@@ -1,0 +1,404 @@
+{
+  "info": {
+    "_postman_id": "c2a8e4ad-d98d-481a-bf1b-f721b4be310f",
+    "name": "Reducto Classify Pipeline API",
+    "description": "Classify documents into a defined set of categories and run citation lookups against parsed content.\n\nContact Support:\n Name: Reducto Support\n Email: support@reducto.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:43:48.000Z",
+    "updatedAt": "2026-07-28T02:43:48.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-c2a8e4ad-d98d-481a-bf1b-f721b4be310f"
+  },
+  "item": [
+    {
+      "name": "pipeline",
+      "item": [
+        {
+          "name": "Pipeline",
+          "id": "bbc4ecaa-9b11-4834-a065-bf15fa630995",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "user-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": \"<string>\",\n  \"pipeline_id\": \"<string>\",\n  \"settings\": {\n    \"document_password\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pipeline",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pipeline"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ff9ace06-0e48-449a-995f-f695331b6b10",
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"<string>\",\n  \"pipeline_id\": \"<string>\",\n  \"settings\": {\n    \"document_password\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/pipeline",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pipeline"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"job_id\": \"<string>\",\n  \"usage\": {\n    \"num_pages\": \"<integer>\",\n    \"credits\": \"<number>\",\n    \"credit_breakdown\": {\n      \"ullamco8f\": \"<number>\",\n      \"sint2fd\": \"<number>\",\n      \"ipsum304\": \"<number>\"\n    },\n    \"page_billing_breakdown\": {\n      \"sitf48\": [\n        \"agentic\",\n        \"enrich_table\"\n      ],\n      \"anim_a\": [\n        \"html_page\",\n        \"figure_summary\"\n      ]\n    }\n  },\n  \"result\": {\n    \"parse\": {\n      \"job_id\": \"<string>\",\n      \"duration\": \"<number>\",\n      \"usage\": {\n        \"num_pages\": \"<integer>\",\n        \"credits\": \"<number>\",\n        \"credit_breakdown\": {\n          \"nulla_1\": \"<number>\",\n          \"fugiat_1c\": \"<number>\",\n          \"in___\": \"<number>\"\n        },\n        \"page_billing_breakdown\": {\n          \"doe7\": [\n            \"page\",\n            \"page\"\n          ],\n          \"occaecat6e\": [\n            \"html_page\",\n            \"html_page\"\n          ],\n          \"dolor_58\": [\n            \"billable_spreadsheet_pages\",\n            \"promptable_agentic_text\"\n          ],\n          \"exercitationb\": [\n            \"promptable_agentic_text\",\n            \"agentic_text\"\n          ],\n          \"ut_8b\": [\n            \"enrich_table\",\n            \"key_value\"\n          ]\n        }\n      },\n      \"result\": {\n        \"type\": \"<string>\",\n        \"chunks\": [\n          {\n            \"content\": \"<string>\",\n            \"embed\": \"<string>\",\n            \"enriched\": \"<string>\",\n            \"blocks\": [\n              {\n                \"type\": \"Comment\",\n                \"bbox\": {\n                  \"left\": \"<number>\",\n                  \"top\": \"<number>\",\n                  \"width\": \"<number>\",\n                  \"height\": \"<number>\",\n                  \"page\": \"<integer>\",\n                  \"original_page\": \"<integer>\"\n                },\n                \"content\": \"<string>\",\n                \"image_url\": \"<string>\",\n                \"chart_data\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"confidence\": \"<string>\",\n                \"granular_confidence\": {\n                  \"extract_confidence\": \"<number>\",\n                  \"parse_confidence\": \"<number>\"\n                },\n                \"extra\": {\n                  \"aliqua03_\": 51900375.1760405,\n                  \"eiusmod_10\": 84216207\n                }\n              },\n              {\n                \"type\": \"Section Header\",\n                \"bbox\": {\n                  \"left\": \"<number>\",\n                  \"top\": \"<number>\",\n                  \"width\": \"<number>\",\n                  \"height\": \"<number>\",\n                  \"page\": \"<integer>\",\n                  \"original_page\": \"<integer>\"\n                },\n                \"content\": \"<string>\",\n                \"image_url\": \"<string>\",\n                \"chart_data\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"confidence\": \"<string>\",\n                \"granular_confidence\": {\n                  \"extract_confidence\": \"<number>\",\n                  \"parse_confidence\": \"<number>\"\n                },\n                \"extra\": {\n                  \"minim03\": 69560848.68123892,\n                  \"dolor_c\": -74920820.8989645,\n                  \"veniam_7e\": \"dolore\"\n                }\n              }\n            ],\n            \"enrichment_success\": false\n          },\n          {\n            \"content\": \"<string>\",\n            \"embed\": \"<string>\",\n            \"enriched\": \"<string>\",\n            \"blocks\": [\n              {\n                \"type\": \"Comment\",\n                \"bbox\": {\n                  \"left\": \"<number>\",\n                  \"top\": \"<number>\",\n                  \"width\": \"<number>\",\n                  \"height\": \"<number>\",\n                  \"page\": \"<integer>\",\n                  \"original_page\": \"<integer>\"\n                },\n                \"content\": \"<string>\",\n                \"image_url\": \"<string>\",\n                \"chart_data\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"confidence\": \"<string>\",\n                \"granular_confidence\": {\n                  \"extract_confidence\": \"<number>\",\n                  \"parse_confidence\": \"<number>\"\n                },\n                \"extra\": {\n                  \"in_b47\": true,\n                  \"amet__9\": false,\n                  \"Excepteur1\": true\n                }\n              },\n              {\n                \"type\": \"Section Header\",\n                \"bbox\": {\n                  \"left\": \"<number>\",\n                  \"top\": \"<number>\",\n                  \"width\": \"<number>\",\n                  \"height\": \"<number>\",\n                  \"page\": \"<integer>\",\n                  \"original_page\": \"<integer>\"\n                },\n                \"content\": \"<string>\",\n                \"image_url\": \"<string>\",\n                \"chart_data\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"confidence\": \"<string>\",\n                \"granular_confidence\": {\n                  \"extract_confidence\": \"<number>\",\n                  \"parse_confidence\": \"<number>\"\n                },\n                \"extra\": {\n                  \"occaecat_1\": -36780658,\n                  \"consequat_3\": \"ut eiusmod sit\"\n                }\n              }\n            ],\n            \"enrichment_success\": false\n          }\n        ],\n        \"ocr\": {\n          \"words\": [\n            {\n              \"text\": \"<string>\",\n              \"bbox\": {\n                \"left\": \"<number>\",\n                \"top\": \"<number>\",\n                \"width\": \"<number>\",\n                \"height\": \"<number>\",\n                \"page\": \"<integer>\",\n                \"original_page\": \"<integer>\"\n              },\n              \"confidence\": \"<number>\",\n              \"chunk_index\": \"<integer>\",\n              \"rotation\": \"<integer>\"\n            },\n            {\n              \"text\": \"<string>\",\n              \"bbox\": {\n                \"left\": \"<number>\",\n                \"top\": \"<number>\",\n                \"width\": \"<number>\",\n                \"height\": \"<number>\",\n                \"page\": \"<integer>\",\n                \"original_page\": \"<integer>\"\n              },\n              \"confidence\": \"<number>\",\n              \"chunk_index\": \"<integer>\",\n              \"rotation\": \"<integer>\"\n            }\n          ],\n          \"lines\": [\n            {\n              \"text\": \"<string>\",\n              \"bbox\": {\n                \"left\": \"<number>\",\n                \"top\": \"<number>\",\n                \"width\": \"<number>\",\n                \"height\": \"<number>\",\n                \"page\": \"<integer>\",\n                \"original_page\": \"<integer>\"\n              },\n              \"confidence\": \"<number>\",\n              \"chunk_index\": \"<integer>\",\n              \"rotation\": \"<integer>\"\n            },\n            {\n              \"text\": \"<string>\",\n              \"bbox\": {\n                \"left\": \"<number>\",\n                \"top\": \"<number>\",\n                \"width\": \"<number>\",\n                \"height\": \"<number>\",\n                \"page\": \"<integer>\",\n                \"original_page\": \"<integer>\"\n              },\n              \"confidence\": \"<number>\",\n              \"chunk_index\": \"<integer>\",\n              \"rotation\": \"<integer>\"\n            }\n          ]\n        },\n        \"custom\": {}\n      },\n      \"response_type\": \"parse\",\n      \"pdf_url\": \"<string>\",\n      \"studio_link\": \"<string>\",\n      \"parse_mode\": \"base\"\n    },\n    \"extract\": [\n      {\n        \"split_name\": \"<string>\",\n        \"page_range\": [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        \"result\": {\n          \"ullamco_5\": -2103381.2309200466\n        },\n        \"partition\": \"<string>\"\n      },\n      {\n        \"split_name\": \"<string>\",\n        \"page_range\": [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        \"result\": {\n          \"dolore2\": -58303504.39370098,\n          \"aliqua_76\": true,\n          \"qui_f_3\": true,\n          \"sintb0\": \"in quis sit magna\"\n        },\n        \"partition\": \"<string>\"\n      }\n    ],\n    \"split\": {\n      \"usage\": {\n        \"num_pages\": \"<integer>\",\n        \"credits\": \"<number>\",\n        \"credit_breakdown\": {\n          \"reprehenderit_c\": \"<number>\",\n          \"consectetur_0f9\": \"<number>\"\n        },\n        \"page_billing_breakdown\": {\n          \"anim7\": [\n            \"docx_native_page\",\n            \"billable_spreadsheet_pages\"\n          ]\n        }\n      },\n      \"result\": {\n        \"section_mapping\": {\n          \"sed64b\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        },\n        \"splits\": [\n          {\n            \"name\": \"<string>\",\n            \"pages\": [\n              \"<integer>\",\n              \"<integer>\"\n            ],\n            \"conf\": \"low\",\n            \"partitions\": [\n              {\n                \"name\": \"<string>\",\n                \"pages\": [\n                  \"<integer>\",\n                  \"<integer>\"\n                ],\n                \"conf\": \"low\"\n              },\n              {\n                \"name\": \"<string>\",\n                \"pages\": [\n                  \"<integer>\",\n                  \"<integer>\"\n                ],\n                \"conf\": \"low\"\n              }\n            ]\n          },\n          {\n            \"name\": \"<string>\",\n            \"pages\": [\n              \"<integer>\",\n              \"<integer>\"\n            ],\n            \"conf\": \"low\",\n            \"partitions\": [\n              {\n                \"name\": \"<string>\",\n                \"pages\": [\n                  \"<integer>\",\n                  \"<integer>\"\n                ],\n                \"conf\": \"low\"\n              },\n              {\n                \"name\": \"<string>\",\n                \"pages\": [\n                  \"<integer>\",\n                  \"<integer>\"\n                ],\n                \"conf\": \"low\"\n              }\n            ]\n          }\n        ]\n      },\n      \"response_type\": \"split\"\n    },\n    \"edit\": {\n      \"document_url\": \"<string>\",\n      \"response_type\": \"edit\",\n      \"form_schema\": [\n        {\n          \"bbox\": {\n            \"left\": \"<number>\",\n            \"top\": \"<number>\",\n            \"width\": \"<number>\",\n            \"height\": \"<number>\",\n            \"page\": \"<integer>\",\n            \"original_page\": \"<integer>\"\n          },\n          \"description\": \"<string>\",\n          \"type\": \"radio\",\n          \"fill\": true,\n          \"value\": \"<string>\",\n          \"font_size\": \"<number>\"\n        },\n        {\n          \"bbox\": {\n            \"left\": \"<number>\",\n            \"top\": \"<number>\",\n            \"width\": \"<number>\",\n            \"height\": \"<number>\",\n            \"page\": \"<integer>\",\n            \"original_page\": \"<integer>\"\n          },\n          \"description\": \"<string>\",\n          \"type\": \"radio\",\n          \"fill\": true,\n          \"value\": \"<string>\",\n          \"font_size\": \"<number>\"\n        }\n      ],\n      \"usage\": {\n        \"num_pages\": \"<integer>\",\n        \"credits\": \"<number>\",\n        \"credit_breakdown\": {\n          \"ipsum_511\": \"<number>\",\n          \"aute6\": \"<number>\",\n          \"consequatc\": \"<number>\"\n        },\n        \"page_billing_breakdown\": {\n          \"utfd7\": [\n            \"enrich_table\",\n            \"spreadsheet_cells\"\n          ],\n          \"officia_d7b\": [\n            \"docx_native_page\",\n            \"complex\"\n          ],\n          \"velit0a\": [\n            \"docx_native_page\",\n            \"promptable_agentic_text\"\n          ]\n        }\n      }\n    }\n  },\n  \"response_type\": \"pipeline\"\n}",
+              "createdAt": "2026-07-28T02:43:48.000Z",
+              "updatedAt": "2026-07-28T02:43:48.000Z",
+              "uid": "35240-ff9ace06-0e48-449a-995f-f695331b6b10"
+            },
+            {
+              "id": "d7bb6d96-5ccf-40dc-9505-8001ccf92e95",
+              "name": "Validation Error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"<string>\",\n  \"pipeline_id\": \"<string>\",\n  \"settings\": {\n    \"document_password\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/pipeline",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pipeline"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T02:43:48.000Z",
+              "updatedAt": "2026-07-28T02:43:48.000Z",
+              "uid": "35240-d7bb6d96-5ccf-40dc-9505-8001ccf92e95"
+            }
+          ],
+          "createdAt": "2026-07-28T02:43:48.000Z",
+          "updatedAt": "2026-07-28T02:43:48.000Z",
+          "uid": "35240-bbc4ecaa-9b11-4834-a065-bf15fa630995"
+        }
+      ],
+      "id": "55b51e27-0b99-496a-a168-04d11e21b40e",
+      "createdAt": "2026-07-28T02:43:48.000Z",
+      "updatedAt": "2026-07-28T02:43:48.000Z",
+      "uid": "35240-55b51e27-0b99-496a-a168-04d11e21b40e"
+    },
+    {
+      "name": "pipeline_async",
+      "item": [
+        {
+          "name": "Pipeline Async",
+          "id": "ec939a25-8166-46d3-8815-88077ffc8dc8",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "user-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": \"<string>\",\n  \"pipeline_id\": \"<string>\",\n  \"async\": {\n    \"metadata\": {\n      \"title\": \"Metadata\",\n      \"description\": \"JSON metadata included in webhook request body. Defaults to None.\"\n    },\n    \"priority\": false,\n    \"webhook\": {\n      \"mode\": \"svix\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"settings\": {\n    \"document_password\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pipeline_async",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pipeline_async"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1f701bd2-fc75-41ac-83b8-bfe8d06b5ec3",
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"<string>\",\n  \"pipeline_id\": \"<string>\",\n  \"async\": {\n    \"metadata\": {\n      \"title\": \"Metadata\",\n      \"description\": \"JSON metadata included in webhook request body. Defaults to None.\"\n    },\n    \"priority\": false,\n    \"webhook\": {\n      \"mode\": \"svix\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"settings\": {\n    \"document_password\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/pipeline_async",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pipeline_async"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"job_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:43:48.000Z",
+              "updatedAt": "2026-07-28T02:43:48.000Z",
+              "uid": "35240-1f701bd2-fc75-41ac-83b8-bfe8d06b5ec3"
+            },
+            {
+              "id": "562db9fe-6a29-4454-b31e-f9471c8f8369",
+              "name": "Validation Error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"<string>\",\n  \"pipeline_id\": \"<string>\",\n  \"async\": {\n    \"metadata\": {\n      \"title\": \"Metadata\",\n      \"description\": \"JSON metadata included in webhook request body. Defaults to None.\"\n    },\n    \"priority\": false,\n    \"webhook\": {\n      \"mode\": \"svix\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"settings\": {\n    \"document_password\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/pipeline_async",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pipeline_async"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T02:43:48.000Z",
+              "updatedAt": "2026-07-28T02:43:48.000Z",
+              "uid": "35240-562db9fe-6a29-4454-b31e-f9471c8f8369"
+            }
+          ],
+          "createdAt": "2026-07-28T02:43:48.000Z",
+          "updatedAt": "2026-07-28T02:43:48.000Z",
+          "uid": "35240-ec939a25-8166-46d3-8815-88077ffc8dc8"
+        }
+      ],
+      "id": "367e522c-c96e-4ac3-93fc-42eaad97d75a",
+      "createdAt": "2026-07-28T02:43:48.000Z",
+      "updatedAt": "2026-07-28T02:43:48.000Z",
+      "uid": "35240-367e522c-c96e-4ac3-93fc-42eaad97d75a"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://platform.reducto.ai"
+    }
+  ]
+}

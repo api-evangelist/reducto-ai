@@ -1,0 +1,404 @@
+{
+  "info": {
+    "_postman_id": "f17af4ad-bddf-4cee-9368-fc00ed10f571",
+    "name": "Reducto Classify Split API",
+    "description": "Classify documents into a defined set of categories and run citation lookups against parsed content.\n\nContact Support:\n Name: Reducto Support\n Email: support@reducto.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:43:56.000Z",
+    "updatedAt": "2026-07-28T02:43:56.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-f17af4ad-bddf-4cee-9368-fc00ed10f571"
+  },
+  "item": [
+    {
+      "name": "split",
+      "item": [
+        {
+          "name": "Split",
+          "id": "44d2bcc6-9565-4a99-a62c-97c04f583906",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "user-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": \"<string>\",\n  \"split_description\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"partition_key\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"partition_key\": \"<string>\"\n    }\n  ],\n  \"parsing\": {\n    \"enhance\": {\n      \"summarize_figures\": true,\n      \"intelligent_ordering\": false\n    },\n    \"retrieval\": {\n      \"chunking\": {\n        \"chunk_mode\": \"disabled\",\n        \"chunk_size\": \"<integer>\",\n        \"chunk_overlap\": 0\n      },\n      \"embedding_optimized\": false\n    },\n    \"formatting\": {\n      \"add_page_markers\": false,\n      \"table_output_format\": \"dynamic\",\n      \"merge_tables\": false\n    },\n    \"spreadsheet\": {\n      \"split_large_tables\": {\n        \"enabled\": true,\n        \"size\": \"<integer>\"\n      },\n      \"clustering\": \"accurate\"\n    },\n    \"settings\": {\n      \"ocr_system\": \"standard\",\n      \"extraction_mode\": \"hybrid\",\n      \"force_url_result\": false,\n      \"force_file_extension\": \"<string>\",\n      \"return_ocr_data\": false,\n      \"embed_pdf_metadata\": false,\n      \"embed_pdf_metadata_dpi\": 100,\n      \"persist_results\": false,\n      \"timeout\": \"<number>\",\n      \"page_range\": {\n        \"start\": \"<integer>\",\n        \"end\": \"<integer>\"\n      },\n      \"document_password\": \"<string>\"\n    }\n  },\n  \"split_rules\": \"Split the document into the applicable sections. Sections may only overlap at their first and last page if at all.\",\n  \"settings\": {\n    \"table_cutoff\": \"truncate\",\n    \"allow_page_overlap\": true,\n    \"deep_split\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/split",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "split"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "33d3ae72-ff7b-4245-9e8e-22e2f18c5b22",
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"<string>\",\n  \"split_description\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"partition_key\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"partition_key\": \"<string>\"\n    }\n  ],\n  \"parsing\": {\n    \"enhance\": {\n      \"summarize_figures\": true,\n      \"intelligent_ordering\": false\n    },\n    \"retrieval\": {\n      \"chunking\": {\n        \"chunk_mode\": \"disabled\",\n        \"chunk_size\": \"<integer>\",\n        \"chunk_overlap\": 0\n      },\n      \"embedding_optimized\": false\n    },\n    \"formatting\": {\n      \"add_page_markers\": false,\n      \"table_output_format\": \"dynamic\",\n      \"merge_tables\": false\n    },\n    \"spreadsheet\": {\n      \"split_large_tables\": {\n        \"enabled\": true,\n        \"size\": \"<integer>\"\n      },\n      \"clustering\": \"accurate\"\n    },\n    \"settings\": {\n      \"ocr_system\": \"standard\",\n      \"extraction_mode\": \"hybrid\",\n      \"force_url_result\": false,\n      \"force_file_extension\": \"<string>\",\n      \"return_ocr_data\": false,\n      \"embed_pdf_metadata\": false,\n      \"embed_pdf_metadata_dpi\": 100,\n      \"persist_results\": false,\n      \"timeout\": \"<number>\",\n      \"page_range\": {\n        \"start\": \"<integer>\",\n        \"end\": \"<integer>\"\n      },\n      \"document_password\": \"<string>\"\n    }\n  },\n  \"split_rules\": \"Split the document into the applicable sections. Sections may only overlap at their first and last page if at all.\",\n  \"settings\": {\n    \"table_cutoff\": \"truncate\",\n    \"allow_page_overlap\": true,\n    \"deep_split\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/split",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "split"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"usage\": {\n    \"num_pages\": \"<integer>\",\n    \"credits\": \"<number>\",\n    \"credit_breakdown\": {\n      \"incididunt_3a4\": \"<number>\",\n      \"adipisicing_f0c\": \"<number>\",\n      \"deserunt_cae\": \"<number>\",\n      \"nostrud3\": \"<number>\"\n    },\n    \"page_billing_breakdown\": {\n      \"aliqua_e1d\": [\n        \"spreadsheet_cells\",\n        \"enrich_table\"\n      ],\n      \"Lorem4\": [\n        \"page\",\n        \"enrich_table\"\n      ],\n      \"laboris_6e\": [\n        \"agentic\",\n        \"key_value\"\n      ]\n    }\n  },\n  \"result\": {\n    \"section_mapping\": {\n      \"enim_8\": [\n        \"<integer>\",\n        \"<integer>\"\n      ]\n    },\n    \"splits\": [\n      {\n        \"name\": \"<string>\",\n        \"pages\": [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        \"conf\": \"low\",\n        \"partitions\": [\n          {\n            \"name\": \"<string>\",\n            \"pages\": [\n              \"<integer>\",\n              \"<integer>\"\n            ],\n            \"conf\": \"low\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"pages\": [\n              \"<integer>\",\n              \"<integer>\"\n            ],\n            \"conf\": \"low\"\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"pages\": [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        \"conf\": \"low\",\n        \"partitions\": [\n          {\n            \"name\": \"<string>\",\n            \"pages\": [\n              \"<integer>\",\n              \"<integer>\"\n            ],\n            \"conf\": \"low\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"pages\": [\n              \"<integer>\",\n              \"<integer>\"\n            ],\n            \"conf\": \"low\"\n          }\n        ]\n      }\n    ]\n  },\n  \"response_type\": \"split\"\n}",
+              "createdAt": "2026-07-28T02:43:56.000Z",
+              "updatedAt": "2026-07-28T02:43:56.000Z",
+              "uid": "35240-33d3ae72-ff7b-4245-9e8e-22e2f18c5b22"
+            },
+            {
+              "id": "f5e2e408-eb11-47d1-b4ad-5bd38bf48902",
+              "name": "Validation Error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"<string>\",\n  \"split_description\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"partition_key\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"partition_key\": \"<string>\"\n    }\n  ],\n  \"parsing\": {\n    \"enhance\": {\n      \"summarize_figures\": true,\n      \"intelligent_ordering\": false\n    },\n    \"retrieval\": {\n      \"chunking\": {\n        \"chunk_mode\": \"disabled\",\n        \"chunk_size\": \"<integer>\",\n        \"chunk_overlap\": 0\n      },\n      \"embedding_optimized\": false\n    },\n    \"formatting\": {\n      \"add_page_markers\": false,\n      \"table_output_format\": \"dynamic\",\n      \"merge_tables\": false\n    },\n    \"spreadsheet\": {\n      \"split_large_tables\": {\n        \"enabled\": true,\n        \"size\": \"<integer>\"\n      },\n      \"clustering\": \"accurate\"\n    },\n    \"settings\": {\n      \"ocr_system\": \"standard\",\n      \"extraction_mode\": \"hybrid\",\n      \"force_url_result\": false,\n      \"force_file_extension\": \"<string>\",\n      \"return_ocr_data\": false,\n      \"embed_pdf_metadata\": false,\n      \"embed_pdf_metadata_dpi\": 100,\n      \"persist_results\": false,\n      \"timeout\": \"<number>\",\n      \"page_range\": {\n        \"start\": \"<integer>\",\n        \"end\": \"<integer>\"\n      },\n      \"document_password\": \"<string>\"\n    }\n  },\n  \"split_rules\": \"Split the document into the applicable sections. Sections may only overlap at their first and last page if at all.\",\n  \"settings\": {\n    \"table_cutoff\": \"truncate\",\n    \"allow_page_overlap\": true,\n    \"deep_split\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/split",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "split"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T02:43:56.000Z",
+              "updatedAt": "2026-07-28T02:43:56.000Z",
+              "uid": "35240-f5e2e408-eb11-47d1-b4ad-5bd38bf48902"
+            }
+          ],
+          "createdAt": "2026-07-28T02:43:56.000Z",
+          "updatedAt": "2026-07-28T02:43:56.000Z",
+          "uid": "35240-44d2bcc6-9565-4a99-a62c-97c04f583906"
+        }
+      ],
+      "id": "0e54b5d0-23db-4eef-a7f7-f5b201cf4c0a",
+      "createdAt": "2026-07-28T02:43:56.000Z",
+      "updatedAt": "2026-07-28T02:43:56.000Z",
+      "uid": "35240-0e54b5d0-23db-4eef-a7f7-f5b201cf4c0a"
+    },
+    {
+      "name": "split_async",
+      "item": [
+        {
+          "name": "Split Async",
+          "id": "116cb614-4773-4a52-a279-d51c3f80f792",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "user-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": \"<string>\",\n  \"split_description\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"partition_key\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"partition_key\": \"<string>\"\n    }\n  ],\n  \"async\": {\n    \"metadata\": {\n      \"title\": \"Metadata\",\n      \"description\": \"JSON metadata included in webhook request body. Defaults to None.\"\n    },\n    \"priority\": false,\n    \"webhook\": {\n      \"mode\": \"svix\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"parsing\": {\n    \"enhance\": {\n      \"summarize_figures\": true,\n      \"intelligent_ordering\": false\n    },\n    \"retrieval\": {\n      \"chunking\": {\n        \"chunk_mode\": \"disabled\",\n        \"chunk_size\": \"<integer>\",\n        \"chunk_overlap\": 0\n      },\n      \"embedding_optimized\": false\n    },\n    \"formatting\": {\n      \"add_page_markers\": false,\n      \"table_output_format\": \"dynamic\",\n      \"merge_tables\": false\n    },\n    \"spreadsheet\": {\n      \"split_large_tables\": {\n        \"enabled\": true,\n        \"size\": \"<integer>\"\n      },\n      \"clustering\": \"accurate\"\n    },\n    \"settings\": {\n      \"ocr_system\": \"standard\",\n      \"extraction_mode\": \"hybrid\",\n      \"force_url_result\": false,\n      \"force_file_extension\": \"<string>\",\n      \"return_ocr_data\": false,\n      \"embed_pdf_metadata\": false,\n      \"embed_pdf_metadata_dpi\": 100,\n      \"persist_results\": false,\n      \"timeout\": \"<number>\",\n      \"page_range\": {\n        \"start\": \"<integer>\",\n        \"end\": \"<integer>\"\n      },\n      \"document_password\": \"<string>\"\n    }\n  },\n  \"split_rules\": \"Split the document into the applicable sections. Sections may only overlap at their first and last page if at all.\",\n  \"settings\": {\n    \"table_cutoff\": \"truncate\",\n    \"allow_page_overlap\": true,\n    \"deep_split\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/split_async",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "split_async"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "faca7f69-da7e-4cd9-85cc-2436c5d4c5d0",
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"<string>\",\n  \"split_description\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"partition_key\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"partition_key\": \"<string>\"\n    }\n  ],\n  \"async\": {\n    \"metadata\": {\n      \"title\": \"Metadata\",\n      \"description\": \"JSON metadata included in webhook request body. Defaults to None.\"\n    },\n    \"priority\": false,\n    \"webhook\": {\n      \"mode\": \"svix\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"parsing\": {\n    \"enhance\": {\n      \"summarize_figures\": true,\n      \"intelligent_ordering\": false\n    },\n    \"retrieval\": {\n      \"chunking\": {\n        \"chunk_mode\": \"disabled\",\n        \"chunk_size\": \"<integer>\",\n        \"chunk_overlap\": 0\n      },\n      \"embedding_optimized\": false\n    },\n    \"formatting\": {\n      \"add_page_markers\": false,\n      \"table_output_format\": \"dynamic\",\n      \"merge_tables\": false\n    },\n    \"spreadsheet\": {\n      \"split_large_tables\": {\n        \"enabled\": true,\n        \"size\": \"<integer>\"\n      },\n      \"clustering\": \"accurate\"\n    },\n    \"settings\": {\n      \"ocr_system\": \"standard\",\n      \"extraction_mode\": \"hybrid\",\n      \"force_url_result\": false,\n      \"force_file_extension\": \"<string>\",\n      \"return_ocr_data\": false,\n      \"embed_pdf_metadata\": false,\n      \"embed_pdf_metadata_dpi\": 100,\n      \"persist_results\": false,\n      \"timeout\": \"<number>\",\n      \"page_range\": {\n        \"start\": \"<integer>\",\n        \"end\": \"<integer>\"\n      },\n      \"document_password\": \"<string>\"\n    }\n  },\n  \"split_rules\": \"Split the document into the applicable sections. Sections may only overlap at their first and last page if at all.\",\n  \"settings\": {\n    \"table_cutoff\": \"truncate\",\n    \"allow_page_overlap\": true,\n    \"deep_split\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/split_async",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "split_async"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"job_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:43:56.000Z",
+              "updatedAt": "2026-07-28T02:43:56.000Z",
+              "uid": "35240-faca7f69-da7e-4cd9-85cc-2436c5d4c5d0"
+            },
+            {
+              "id": "b0b54273-dfa4-4d83-b049-fa390f49cdcb",
+              "name": "Validation Error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"<string>\",\n  \"split_description\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"partition_key\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"partition_key\": \"<string>\"\n    }\n  ],\n  \"async\": {\n    \"metadata\": {\n      \"title\": \"Metadata\",\n      \"description\": \"JSON metadata included in webhook request body. Defaults to None.\"\n    },\n    \"priority\": false,\n    \"webhook\": {\n      \"mode\": \"svix\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"parsing\": {\n    \"enhance\": {\n      \"summarize_figures\": true,\n      \"intelligent_ordering\": false\n    },\n    \"retrieval\": {\n      \"chunking\": {\n        \"chunk_mode\": \"disabled\",\n        \"chunk_size\": \"<integer>\",\n        \"chunk_overlap\": 0\n      },\n      \"embedding_optimized\": false\n    },\n    \"formatting\": {\n      \"add_page_markers\": false,\n      \"table_output_format\": \"dynamic\",\n      \"merge_tables\": false\n    },\n    \"spreadsheet\": {\n      \"split_large_tables\": {\n        \"enabled\": true,\n        \"size\": \"<integer>\"\n      },\n      \"clustering\": \"accurate\"\n    },\n    \"settings\": {\n      \"ocr_system\": \"standard\",\n      \"extraction_mode\": \"hybrid\",\n      \"force_url_result\": false,\n      \"force_file_extension\": \"<string>\",\n      \"return_ocr_data\": false,\n      \"embed_pdf_metadata\": false,\n      \"embed_pdf_metadata_dpi\": 100,\n      \"persist_results\": false,\n      \"timeout\": \"<number>\",\n      \"page_range\": {\n        \"start\": \"<integer>\",\n        \"end\": \"<integer>\"\n      },\n      \"document_password\": \"<string>\"\n    }\n  },\n  \"split_rules\": \"Split the document into the applicable sections. Sections may only overlap at their first and last page if at all.\",\n  \"settings\": {\n    \"table_cutoff\": \"truncate\",\n    \"allow_page_overlap\": true,\n    \"deep_split\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/split_async",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "split_async"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T02:43:56.000Z",
+              "updatedAt": "2026-07-28T02:43:56.000Z",
+              "uid": "35240-b0b54273-dfa4-4d83-b049-fa390f49cdcb"
+            }
+          ],
+          "createdAt": "2026-07-28T02:43:56.000Z",
+          "updatedAt": "2026-07-28T02:43:56.000Z",
+          "uid": "35240-116cb614-4773-4a52-a279-d51c3f80f792"
+        }
+      ],
+      "id": "277e582d-e3cf-4cd2-9288-4391832de500",
+      "createdAt": "2026-07-28T02:43:56.000Z",
+      "updatedAt": "2026-07-28T02:43:56.000Z",
+      "uid": "35240-277e582d-e3cf-4cd2-9288-4391832de500"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://platform.reducto.ai"
+    }
+  ]
+}
