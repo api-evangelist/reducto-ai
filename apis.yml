@@ -1113,7 +1113,7 @@ common:
     type: CLI
   - url: https://docs.reducto.ai/mcp-server
     name: Reducto MCP Server
-    type: MCP
+    type: Documentation
   - url: https://docs.reducto.ai/agent-guide
     type: Documentation
   - url: https://docs.reducto.ai/openapi.json
