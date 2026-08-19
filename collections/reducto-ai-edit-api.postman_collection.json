@@ -1,0 +1,387 @@
+{
+  "item": [
+    {
+      "id": "c660a6b4-9f52-4e89-8a90-707885d8b1fc",
+      "name": "Edit",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ec3b13fa-114c-4cbf-90d5-0ba57554b186",
+          "name": "Edit",
+          "request": {
+            "name": "Edit",
+            "description": {},
+            "url": {
+              "path": [
+                "edit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "user-id",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document_url\": \"<string>\",\n  \"edit_instructions\": \"<string>\",\n  \"edit_options\": {\n    \"color\": \"#FF0000\",\n    \"enable_overflow_pages\": false,\n    \"flatten\": false\n  },\n  \"form_schema\": [\n    {\n      \"bbox\": {\n        \"left\": \"<number>\",\n        \"top\": \"<number>\",\n        \"width\": \"<number>\",\n        \"height\": \"<number>\",\n        \"page\": \"<integer>\",\n        \"original_page\": \"<integer>\"\n      },\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"fill\": true,\n      \"value\": \"<string>\",\n      \"font_size\": \"<number>\"\n    },\n    {\n      \"bbox\": {\n        \"left\": \"<number>\",\n        \"top\": \"<number>\",\n        \"width\": \"<number>\",\n        \"height\": \"<number>\",\n        \"page\": \"<integer>\",\n        \"original_page\": \"<integer>\"\n      },\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"fill\": true,\n      \"value\": \"<string>\",\n      \"font_size\": \"<number>\"\n    }\n  ],\n  \"priority\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e7ac3696-345f-4da0-8be6-564c1a7641f4",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "edit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "user-id",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document_url\": \"<string>\",\n  \"edit_instructions\": \"<string>\",\n  \"edit_options\": {\n    \"color\": \"#FF0000\",\n    \"enable_overflow_pages\": false,\n    \"flatten\": false\n  },\n  \"form_schema\": [\n    {\n      \"bbox\": {\n        \"left\": 6980.023354422299,\n        \"top\": 3837.780474779824,\n        \"width\": 2861.086814003139,\n        \"height\": 4444.263919232217,\n        \"page\": 7301,\n        \"original_page\": 6722\n      },\n      \"description\": \"string\",\n      \"type\": \"radio\",\n      \"fill\": true,\n      \"value\": \"string\",\n      \"font_size\": 58.56275934875509\n    },\n    {\n      \"bbox\": {\n        \"left\": 7620.823466856572,\n        \"top\": 8288.736166583103,\n        \"width\": 9606.551987167812,\n        \"height\": 2137.2760857538988,\n        \"page\": 9548,\n        \"original_page\": 6015\n      },\n      \"description\": \"string\",\n      \"type\": \"radio\",\n      \"fill\": true,\n      \"value\": \"string\",\n      \"font_size\": 43.70517952302286\n    }\n  ],\n  \"priority\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"document_url\": \"string\",\n  \"response_type\": \"edit\",\n  \"form_schema\": [\n    {\n      \"bbox\": {\n        \"left\": 8467.721968929382,\n        \"top\": 7856.551464310396,\n        \"width\": 3849.8581134765254,\n        \"height\": 4672.3751220989825,\n        \"page\": 3567,\n        \"original_page\": 5061\n      },\n      \"description\": \"string\",\n      \"type\": \"text\",\n      \"fill\": true,\n      \"value\": \"string\",\n      \"font_size\": 29.190149639173985\n    },\n    {\n      \"bbox\": {\n        \"left\": 2868.879947102202,\n        \"top\": 5647.403005531343,\n        \"width\": 8212.063101735399,\n        \"height\": 9490.539901349588,\n        \"page\": 9948,\n        \"original_page\": 181\n      },\n      \"description\": \"string\",\n      \"type\": \"barcode\",\n      \"fill\": true,\n      \"value\": \"string\",\n      \"font_size\": 69.63786111265965\n    }\n  ],\n  \"usage\": {\n    \"num_pages\": 7214,\n    \"credits\": 7941.9880168253685,\n    \"credit_breakdown\": {\n      \"key_0\": 1046.8003568950955\n    },\n    \"page_billing_breakdown\": {\n      \"key_0\": [\n        \"page\",\n        \"key_value\"\n      ],\n      \"key_1\": [\n        \"key_value\",\n        \"table_summary\"\n      ],\n      \"key_2\": [\n        \"docx_native_page\",\n        \"docx_native_page\"\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a545720-fe99-4443-844f-a495a25e677b",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "edit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "user-id",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document_url\": \"<string>\",\n  \"edit_instructions\": \"<string>\",\n  \"edit_options\": {\n    \"color\": \"#FF0000\",\n    \"enable_overflow_pages\": false,\n    \"flatten\": false\n  },\n  \"form_schema\": [\n    {\n      \"bbox\": {\n        \"left\": 6980.023354422299,\n        \"top\": 3837.780474779824,\n        \"width\": 2861.086814003139,\n        \"height\": 4444.263919232217,\n        \"page\": 7301,\n        \"original_page\": 6722\n      },\n      \"description\": \"string\",\n      \"type\": \"radio\",\n      \"fill\": true,\n      \"value\": \"string\",\n      \"font_size\": 58.56275934875509\n    },\n    {\n      \"bbox\": {\n        \"left\": 7620.823466856572,\n        \"top\": 8288.736166583103,\n        \"width\": 9606.551987167812,\n        \"height\": 2137.2760857538988,\n        \"page\": 9548,\n        \"original_page\": 6015\n      },\n      \"description\": \"string\",\n      \"type\": \"radio\",\n      \"fill\": true,\n      \"value\": \"string\",\n      \"font_size\": 43.70517952302286\n    }\n  ],\n  \"priority\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58d51c5e-0ab6-4346-b234-ea763db907c2",
+          "name": "Edit Async",
+          "request": {
+            "name": "Edit Async",
+            "description": {},
+            "url": {
+              "path": [
+                "edit_async"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "user-id",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document_url\": \"<string>\",\n  \"edit_instructions\": \"<string>\",\n  \"edit_options\": {\n    \"color\": \"#FF0000\",\n    \"enable_overflow_pages\": false,\n    \"flatten\": false\n  },\n  \"form_schema\": [\n    {\n      \"bbox\": {\n        \"left\": \"<number>\",\n        \"top\": \"<number>\",\n        \"width\": \"<number>\",\n        \"height\": \"<number>\",\n        \"page\": \"<integer>\",\n        \"original_page\": \"<integer>\"\n      },\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"fill\": true,\n      \"value\": \"<string>\",\n      \"font_size\": \"<number>\"\n    },\n    {\n      \"bbox\": {\n        \"left\": \"<number>\",\n        \"top\": \"<number>\",\n        \"width\": \"<number>\",\n        \"height\": \"<number>\",\n        \"page\": \"<integer>\",\n        \"original_page\": \"<integer>\"\n      },\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"fill\": true,\n      \"value\": \"<string>\",\n      \"font_size\": \"<number>\"\n    }\n  ],\n  \"priority\": false,\n  \"webhook\": {\n    \"mode\": \"disabled\",\n    \"channels\": []\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9a43d156-5d7d-4770-b708-de6aacc858ae",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "edit_async"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "user-id",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document_url\": \"<string>\",\n  \"edit_instructions\": \"<string>\",\n  \"edit_options\": {\n    \"color\": \"#FF0000\",\n    \"enable_overflow_pages\": false,\n    \"flatten\": false\n  },\n  \"form_schema\": [\n    {\n      \"bbox\": {\n        \"left\": 9733.020679070598,\n        \"top\": 7527.073318096111,\n        \"width\": 5946.642361474292,\n        \"height\": 3161.848296632127,\n        \"page\": 6175,\n        \"original_page\": 6925\n      },\n      \"description\": \"string\",\n      \"type\": \"dropdown\",\n      \"fill\": true,\n      \"value\": \"string\",\n      \"font_size\": 26.212204635174366\n    },\n    {\n      \"bbox\": {\n        \"left\": 4944.411950915115,\n        \"top\": 1412.7574593250858,\n        \"width\": 8636.671848229582,\n        \"height\": 4737.789609194756,\n        \"page\": 5080,\n        \"original_page\": 2167\n      },\n      \"description\": \"string\",\n      \"type\": \"text\",\n      \"fill\": true,\n      \"value\": \"string\",\n      \"font_size\": 20.477164135623102\n    }\n  ],\n  \"priority\": false,\n  \"webhook\": {\n    \"mode\": \"disabled\",\n    \"channels\": []\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"job_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6a6399f-4987-4297-8292-2c90d47a8d07",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "edit_async"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "user-id",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document_url\": \"<string>\",\n  \"edit_instructions\": \"<string>\",\n  \"edit_options\": {\n    \"color\": \"#FF0000\",\n    \"enable_overflow_pages\": false,\n    \"flatten\": false\n  },\n  \"form_schema\": [\n    {\n      \"bbox\": {\n        \"left\": 9733.020679070598,\n        \"top\": 7527.073318096111,\n        \"width\": 5946.642361474292,\n        \"height\": 3161.848296632127,\n        \"page\": 6175,\n        \"original_page\": 6925\n      },\n      \"description\": \"string\",\n      \"type\": \"dropdown\",\n      \"fill\": true,\n      \"value\": \"string\",\n      \"font_size\": 26.212204635174366\n    },\n    {\n      \"bbox\": {\n        \"left\": 4944.411950915115,\n        \"top\": 1412.7574593250858,\n        \"width\": 8636.671848229582,\n        \"height\": 4737.789609194756,\n        \"page\": 5080,\n        \"original_page\": 2167\n      },\n      \"description\": \"string\",\n      \"type\": \"text\",\n      \"fill\": true,\n      \"value\": \"string\",\n      \"font_size\": 20.477164135623102\n    }\n  ],\n  \"priority\": false,\n  \"webhook\": {\n    \"mode\": \"disabled\",\n    \"channels\": []\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://platform.reducto.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "178c0c5d-4948-4e55-8a3f-f22556d7ea74",
+    "name": "Reducto Classify Edit API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Classify documents into a defined set of categories and run citation lookups against parsed content.\n\nContact Support:\n Name: Reducto Support\n Email: support@reducto.ai",
+      "type": "text/plain"
+    }
+  }
+}
