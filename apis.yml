@@ -330,6 +330,8 @@ apis:
   description: The Jobs API from reducto-ai — 3 operation(s) for jobs.
   humanURL: https://docs.reducto.ai/parse/overview
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
@@ -948,6 +950,8 @@ apis:
   description: The Webhooks API from reducto-ai — 1 operation(s) for webhooks.
   humanURL: https://docs.reducto.ai/parse/overview
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
