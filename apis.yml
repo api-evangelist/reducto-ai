@@ -1,4 +1,5 @@
 aid: reducto-ai
+name: "Reducto"
 specificationVersion: '0.23'
 accessModel:
   pricing: paid
