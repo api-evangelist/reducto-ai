@@ -1,0 +1,135 @@
+generated: '2026-09-17'
+method: searched
+source: https://docs.reducto.ai/quickstart, https://docs.reducto.ai/reference/error-codes,
+  https://docs.reducto.ai/reference/rate-limits, https://docs.reducto.ai/reference/throttling,
+  https://docs.reducto.ai/reference/version-pinning, https://docs.reducto.ai/workflows/async-overview,
+  https://docs.reducto.ai/workflows/deletion, https://docs.reducto.ai/workflows/direct-webhooks,
+  https://docs.reducto.ai/workflows/svix-webhooks, https://platform.reducto.ai/openapi.json
+provider: Reducto
+providerId: reducto-ai
+base_url: https://platform.reducto.ai
+authentication:
+  style: bearer API key
+  header: 'Authorization: Bearer <REDUCTO_API_KEY>'
+  scheme_name: SkippableHTTPBearer
+  issuance: https://studio.reducto.ai/api-keys
+  agent_issuance: https://accounts.reducto.ai/api/agent/accounts (two-call, cookie-free, emailed
+    verification code; 15,000 credit grant)
+  reference: authentication/reducto-ai-authentication.yml
+idempotency:
+  supported: false
+  coverage: none
+  mechanism: null
+  evidence: >-
+    No Idempotency-Key header, request-id replay key, or any other replay-protection mechanism
+    appears in the OpenAPI at platform.reducto.ai/openapi.json or anywhere in the documentation.
+    The SDKs automatically retry 408, 409, 429 and every 5xx up to two times, which means a
+    retried POST /parse or POST /extract can be billed twice with no way for the caller to
+    deduplicate it.
+  note: >-
+    This is the single clearest agent-readiness gap in an otherwise exceptionally agent-ready
+    provider. Reducto charges per page of work; a replayed mutating call costs real credits.
+pagination:
+  style: none
+  evidence: GET /jobs is the only list operation and the spec declares no limit/offset/cursor
+    parameters and no pagination envelope.
+async:
+  pattern: submit-and-poll or submit-and-webhook
+  submit_operations: [parse_async, extract_async, split_async, edit_async, pipeline_async, classify_async]
+  job_retrieval: GET /job/{job_id}
+  job_list: GET /jobs
+  cancel: POST /cancel/{job_id}
+  sync_timeout_seconds: 900
+  polling_guidance: >-
+    GET /job/{job_id} is separately rate limited at 200 req/s and returns [CODE 2000] telling the
+    caller to use webhooks instead of polling.
+  docs: https://docs.reducto.ai/workflows/async-overview
+references:
+  reducto_uri: 'reducto://<file_id> — returned by POST /upload and reusable as input across every
+    endpoint'
+  jobid_uri: 'jobid://<job_id> — lets Extract/Split/Edit/Classify reuse a prior Parse without
+    re-billing the parse'
+  note: These two reference schemes are Reducto's most distinctive convention. They are how a
+    multi-step agent avoids paying for the same page twice.
+versioning:
+  api: unversioned URL; see lifecycle/reducto-ai-lifecycle.yml
+  model: request-scoped pinning via settings.alpha
+error_envelope:
+  shape: '{"error": {"message", "type", "code"}}'
+  rfc9457: false
+  reference: errors/reducto-ai-error-codes.yml
+rate_limit_signaling:
+  response_headers: none
+  headers_note: >-
+    Reducto publishes NO rate-limit response headers — no X-RateLimit-*, no RateLimit-*, no
+    Retry-After is documented and none appears in the OpenAPI. The only runtime signal is the 429
+    status plus a [CODE 1000] or [CODE 2000] marker inside the JSON body, which a client has to
+    parse out of a prose string. An agent cannot read its remaining budget before it is refused.
+  status_on_exhaustion: 429
+  reference: rate-limits/reducto-rate-limits.yml
+webhooks:
+  modes:
+  - name: direct
+    description: Simple HTTP POST to a caller-supplied URL, for prototyping.
+    docs: https://docs.reducto.ai/workflows/direct-webhooks
+  - name: svix
+    description: Svix-backed delivery with signing, retries and a hosted management portal.
+    docs: https://docs.reducto.ai/workflows/svix-webhooks
+  configuration: POST /configure_webhook
+  reference: asyncapi/reducto-ai-webhooks.yml
+dry_run_mode:
+  supported: false
+  note: No preview, validate-only or dry-run flag is documented on any mutating operation.
+reversibility:
+  grade: verified
+  summary: >-
+    Every artifact Reducto creates can be destroyed by the caller, and the docs state the window
+    inside which that matters. Note carefully what reversibility means here: these operations
+    delete OUTPUT the caller already paid for. They do not refund credits and they do not undo
+    the billing event, and Reducto does not document any credit reversal anywhere.
+  write_surfaces:
+  - operation: POST /parse, /extract, /split, /edit, /classify, /pipeline (and _async variants)
+    creates: a job record plus its stored artifacts (parsed JSON, extracted data, intermediate
+      page renders)
+    reversal:
+      operation: DELETE /job/{job_id}
+      operationId: delete_parse_job_job__job_id__delete
+      semantics: asynchronous — returns 202 Accepted, enqueues background cleanup, then tombstones
+        the record; GET returns 409 during cleanup and 410 once tombstoned
+      window: >-
+        Before the end of the automatic retention window, which Reducto states as approximately
+        24 hours for API-submitted jobs on Growth and Enterprise tiers under its zero-data-retention
+        policy. After that the artifacts are purged automatically. Only completed or failed jobs
+        can be deleted (400 otherwise), and the endpoint is 422 NOT_APPLICABLE below Growth.
+      docs: https://docs.reducto.ai/workflows/deletion
+    caveats:
+    - Studio-run jobs and results saved with persist_results true are exempt from both automatic
+      purge and these endpoints.
+    - Child jobs of a pipeline each have their own id and are not deleted with the parent.
+    - Downstream jobs that already consumed this job's output keep their own artifacts.
+    - Credits consumed are not returned; no refund or credit-reversal operation is documented.
+  - operation: POST /upload
+    creates: an uploaded file addressable as reducto://<file_id>
+    reversal:
+      operation: DELETE /upload/{file_id}
+      operationId: delete_uploaded_file_upload__file_id__delete
+      semantics: deletes a previously uploaded file
+      window: Same retention window as above; the endpoint exists precisely to delete before it
+        expires.
+      docs: https://docs.reducto.ai/api-reference/delete-upload
+  - operation: in-flight async jobs
+    reversal:
+      operation: POST /cancel/{job_id}
+      operationId: cancel_job_cancel__job_id__post
+      semantics: cancels a running job
+      window: While the job is still running — cancellation is not available once a job reaches a
+        terminal state.
+      docs: https://docs.reducto.ai/api-reference/cancel-job
+  - operation: POST /configure_webhook
+    creates: webhook portal configuration
+    reversal:
+      operation: null
+      note: No delete or reset operation is published; reconfiguration is the only documented path.
+  not_reversible:
+  - Credit consumption. Every successful call bills pages or fields and no documented operation
+    reverses that charge.

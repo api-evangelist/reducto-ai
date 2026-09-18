@@ -1,0 +1,121 @@
+generated: '2026-09-17'
+method: derived
+source: https://platform.reducto.ai/openapi.json (101 component schemas, 20 operations) plus
+  openapi/ in this repo; object semantics cross-read from https://docs.reducto.ai/parse/response-format,
+  https://docs.reducto.ai/extract/response-format, https://docs.reducto.ai/upload/overview,
+  https://docs.reducto.ai/workflows/deletion
+provider: Reducto
+providerId: reducto-ai
+summary: >-
+  Reducto's model is small and almost entirely job-shaped. There are three durable entities — an
+  Upload, a Job, and a Result — and everything else in the 101-schema spec is configuration for
+  one of the five capabilities or a fragment of a parsed document. The two identifier schemes are
+  the load-bearing part: reducto://<file_id> addresses an Upload and jobid://<job_id> addresses a
+  completed Job's output, and passing the latter into a later call is how a caller reuses work
+  without re-billing it.
+entities:
+- name: Upload
+  id_field: file_id
+  uri_scheme: 'reducto://<file_id>'
+  created_by: upload_upload_post
+  deleted_by: delete_uploaded_file_upload__file_id__delete
+  schemas: [UploadResponse, DeleteUploadResponse]
+  description: A file staged with Reducto, reusable as the input of any capability call.
+  relationships:
+  - type: has_many
+    target: Job
+    via: input
+    note: One upload can be the input to any number of jobs.
+- name: Job
+  id_field: job_id
+  uri_scheme: 'jobid://<job_id>'
+  created_by:
+  - parse_parse_post
+  - async_parse_parse_async_post
+  - extract_extract_post
+  - extract_async_extract_async_post
+  - split_split_post
+  - split_async_split_async_post
+  - edit_edit_post
+  - edit_async_edit_async_post
+  - classify_classify_post
+  - classify_async_classify_async_post
+  - pipeline_pipeline_post
+  - pipeline_async_pipeline_async_post
+  read_by: [retrieve_parse_job__job_id__get, get_jobs_jobs_get]
+  cancelled_by: cancel_job_cancel__job_id__post
+  deleted_by: delete_parse_job_job__job_id__delete
+  schemas: [SingleJob, JobsResponse, AsyncJobResponse, EnhancedAsyncJobResponse, AsyncParseResponse,
+    AsyncExtractResponse, AsyncSplitResponse, AsyncEditResponse, AsyncClassifyResponse,
+    AsyncPipelineResponse, DeleteJobResponse]
+  relationships:
+  - type: belongs_to
+    target: Upload
+    via: input
+  - type: has_one
+    target: Result
+    via: result
+  - type: has_many
+    target: Job
+    via: pipeline child jobs
+    note: Each pipeline step (parse, split, extract, edit) runs as its own job with its own id and
+      its own artifacts; deleting the parent does not delete them.
+- name: Result
+  id_field: result_id
+  created_by: the capability call that produced the job
+  schemas: [ParseResponse, V3ExtractResponse, ExtractResponse, SplitResponse, EditResponse,
+    ClassifyResponse, PipelineResponse, UrlResult, ChartResponse]
+  description: >-
+    The output payload of a completed job. Returned inline on sync calls, or fetched by job id
+    after an async call; large results are returned as a UrlResult pointer rather than inline.
+  relationships:
+  - type: belongs_to
+    target: Job
+    via: job_id
+  - type: has_many
+    target: Chunk
+    via: chunks
+- name: Chunk
+  description: A unit of parsed content — embed string, content, and the blocks it contains.
+    Chunking mode (variable, section, page, block) is a Parse config, not an entity.
+  relationships:
+  - type: has_many
+    target: Block
+    via: blocks
+- name: Block
+  description: A typed region of a page — text, table, figure, title, list item, equation,
+    page number, discard — carrying its bounding box and page number.
+  relationships:
+  - type: has_one
+    target: BoundingBox
+    via: bbox
+- name: Citation
+  description: A pointer from an extracted field back to the source page and bounding box that
+    produced it. The distinguishing feature of Extract; also gates extract model pinning.
+  relationships:
+  - type: belongs_to
+    target: Block
+    via: bbox + page
+- name: WebhookConfiguration
+  created_by: webhook_portal_configure_webhook_post
+  description: Delivery configuration for async job completion, direct or Svix-backed.
+  relationships:
+  - type: has_many
+    target: Job
+    via: notifies
+- name: TenantThrottling
+  id_field: tenant_id
+  description: Per-account concurrency throttle state. Exposed in the spec's schema set; see
+    https://docs.reducto.ai/reference/throttling.
+identifier_schemes:
+- scheme: 'reducto://'
+  addresses: Upload
+  returned_by: POST /upload
+- scheme: 'jobid://'
+  addresses: Job output
+  returned_by: any capability call
+  note: Passing jobid:// into Extract, Split, Edit or Classify reuses a prior Parse without
+    re-billing the parse — the cost-control primitive of the whole API.
+- scheme: 's3://'
+  addresses: caller-owned source documents
+  note: 's3://bucket-name/key is accepted as an input alongside https URLs and presigned URLs.'

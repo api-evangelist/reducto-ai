@@ -1,0 +1,16 @@
+{
+  "name": "Reducto MCP",
+  "endpoint": "https://mcp.reducto.ai/mcp",
+  "documentationUrl": "https://docs.reducto.ai/mcp-server",
+  "agentSkillUrl": "https://reducto.ai/SKILL.md",
+  "serverCardsUrl": "https://reducto.ai/.well-known/mcp/server-cards.json",
+  "securitySchemes": {
+    "bearerAuth": {
+      "type": "http",
+      "scheme": "bearer",
+      "signupUrl": "https://studio.reducto.ai",
+      "registrationUrl": "https://accounts.reducto.ai/api/agent/accounts",
+      "registrationDocumentationUrl": "https://reducto.ai/auth.md"
+    }
+  }
+}

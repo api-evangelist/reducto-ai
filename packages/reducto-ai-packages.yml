@@ -1,0 +1,84 @@
+generated: '2026-09-17'
+method: searched
+source: https://registry.npmjs.org/reductoai, https://pypi.org/pypi/reductoai/json,
+  https://pypi.org/pypi/reducto-cli/json, https://pypi.org/pypi/mcp-server-reducto/json,
+  https://proxy.golang.org/github.com/reductoai/reducto-go-sdk/@latest,
+  https://docs.reducto.ai/sdk/python/overview, https://docs.reducto.ai/sdk/javascript/overview,
+  https://docs.reducto.ai/sdk/go/overview, https://docs.reducto.ai/cli,
+  https://docs.reducto.ai/mcp-server, https://api.github.com/orgs/reductoai/repos
+provider: Reducto
+providerId: reducto-ai
+note: >-
+  Every package below is published from the reductoai GitHub organization and named in Reducto's
+  own SDK documentation, so all four are first-party. Versions and publish dates were read from
+  each registry's unauthenticated metadata endpoint on 2026-09-17. The three language SDKs and the
+  CLI were all released within the last week of the API version live at platform.reducto.ai
+  (v1.12.16), so nothing here shows abandonment. mcp-server-reducto is the outlier: the local
+  stdio MCP server has not been republished since 2026-05-02, four months behind the SDKs, while
+  the hosted MCP endpoint at mcp.reducto.ai/mcp is the surface the docs lead with.
+packages:
+- name: reductoai
+  registry: npm
+  language: JavaScript/TypeScript
+  url: https://www.npmjs.com/package/reductoai
+  repository: https://github.com/reductoai/reducto-node-sdk
+  docs: https://docs.reducto.ai/sdk/javascript/overview
+  install: npm install reductoai
+  official: true
+  version: 0.18.0
+  published: '2026-09-11'
+- name: reductoai
+  registry: pypi
+  language: Python
+  url: https://pypi.org/project/reductoai/
+  repository: https://github.com/reductoai/reducto-python-sdk
+  docs: https://docs.reducto.ai/sdk/python/overview
+  install: pip install reductoai
+  official: true
+  version: 0.24.0
+  published: '2026-09-08'
+- name: github.com/reductoai/reducto-go-sdk
+  registry: go
+  language: Go
+  url: https://pkg.go.dev/github.com/reductoai/reducto-go-sdk
+  repository: https://github.com/reductoai/reducto-go-sdk
+  docs: https://docs.reducto.ai/sdk/go/overview
+  install: go get github.com/reductoai/reducto-go-sdk
+  official: true
+  version: v0.1.0
+  published: '2026-09-10'
+- name: reducto-cli
+  registry: pypi
+  language: Python
+  url: https://pypi.org/project/reducto-cli/
+  repository: https://github.com/reductoai/cli
+  docs: https://docs.reducto.ai/cli
+  install: pip install reducto-cli
+  official: true
+  kind: cli
+  version: 0.2.0
+  published: '2026-09-11'
+- name: mcp-server-reducto
+  registry: pypi
+  language: Python
+  url: https://pypi.org/project/mcp-server-reducto/
+  repository: https://github.com/reductoai/mcp-server-reducto
+  docs: https://docs.reducto.ai/mcp-server
+  install: uvx mcp-server-reducto
+  official: true
+  kind: mcp-server
+  version: 0.3.0
+  published: '2026-05-02'
+  note: Local stdio MCP server. Four months behind the language SDKs; the hosted endpoint at
+    https://mcp.reducto.ai/mcp is the transport the documentation leads with.
+absent:
+- registry: maven
+  note: No first-party Java client published; no Maven Central coordinate documented.
+- registry: nuget
+  note: No first-party .NET client published.
+- registry: rubygems
+  note: No first-party Ruby client published.
+- registry: crates.io
+  note: No first-party Rust client published.
+- registry: packagist
+  note: No first-party PHP client published.

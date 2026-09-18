@@ -1,0 +1,39 @@
+generated: '2026-09-17'
+method: searched
+source: https://studio.reducto.ai, https://reducto.ai/pricing, https://docs.reducto.ai/studio-quickstart,
+  https://docs.reducto.ai/mcp-server, https://docs.reducto.ai/quickstart
+provider: Reducto
+providerId: reducto-ai
+has_sandbox: partial
+summary: >-
+  Reducto publishes no separate test environment and no test-mode key prefix. There is exactly one
+  set of credentials and one host; what stands in for a sandbox is a free credit grant plus a
+  hosted visual workbench, and a published sample document agents can call against.
+console:
+  name: Reducto Studio
+  url: https://studio.reducto.ai
+  http_status: 200
+  description: Visual workbench for Parse, Split, Extract, Edit and Pipeline, with a Deploy
+    Pipeline path straight to production.
+  docs: https://docs.reducto.ai/studio-quickstart
+free_tier:
+  credits: 15000
+  cost: 0
+  scope: lifetime grant on the Standard plan
+  note: Also granted automatically to an agent that registers itself through
+    https://accounts.reducto.ai/api/agent/accounts.
+  source: https://reducto.ai/pricing
+test_keys:
+  separate_test_mode: false
+  key_prefix: null
+  note: No test/live key split is documented. A single API key from
+    https://studio.reducto.ai/api-keys authenticates against the one production host.
+fixtures:
+- name: fidelity-example.pdf
+  url: https://cdn.reducto.ai/samples/fidelity-example.pdf
+  http_status: 200
+  used_in: https://docs.reducto.ai/mcp-server
+  note: Publicly hosted sample document used verbatim in Reducto's own MCP examples; usable as a
+    fixture without supplying a file.
+time_simulation: false
+triggers: false

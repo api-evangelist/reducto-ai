@@ -1,0 +1,86 @@
+generated: '2026-09-17'
+method: searched
+source: https://docs.reducto.ai/security/policies, https://trust.reducto.ai,
+  https://accounts.reducto.ai/.well-known/oauth-authorization-server,
+  https://studio.reducto.ai/.well-known/oauth-protected-resource,
+  https://reducto.ai/.well-known/security.txt, https://reducto.ai/.well-known/api-catalog,
+  https://docs.reducto.ai/security/eu-data-residency, openapi/ (4xx/5xx and securitySchemes)
+provider: Reducto
+providerId: reducto-ai
+conformance:
+- id: oauth2
+  conforms: true
+  evidence: https://accounts.reducto.ai/.well-known/oauth-authorization-server
+  note: RFC 8414 authorization-server metadata — authorization_code + refresh_token grants, PKCE
+    S256, dynamic client registration endpoint, scope "mcp". Scoped to the MCP surface only; the
+    document REST API authenticates with a bearer API key, not OAuth.
+- id: rfc8414
+  conforms: true
+  evidence: https://accounts.reducto.ai/.well-known/oauth-authorization-server
+- id: rfc9728
+  conforms: true
+  evidence: https://studio.reducto.ai/.well-known/oauth-protected-resource
+  note: OAuth 2.0 Protected Resource Metadata for https://studio.reducto.ai/api/mcp.
+- id: rfc7636
+  conforms: true
+  evidence: https://accounts.reducto.ai/.well-known/oauth-authorization-server
+  note: code_challenge_methods_supported = ["S256"].
+- id: rfc9116
+  conforms: true
+  evidence: https://reducto.ai/.well-known/security.txt
+  note: security.txt with Contact, Expires (2027-07-01), Policy, Canonical and Preferred-Languages.
+- id: rfc9727
+  conforms: true
+  evidence: https://reducto.ai/.well-known/api-catalog
+  note: /.well-known/api-catalog served as an RFC 9264 linkset with service-desc, service-doc,
+    service-meta and status link relations across five anchors.
+- id: oidc
+  conforms: false
+  evidence: https://accounts.reducto.ai/.well-known/openid-configuration returned HTTP 404 on 2026-09-17.
+- id: rfc9457
+  conforms: false
+  evidence: https://docs.reducto.ai/reference/error-codes
+  note: Errors are a bespoke {"error":{"message","type","code"}} envelope, not
+    application/problem+json. No problem+json media type appears anywhere in the OpenAPI.
+- id: idempotency
+  conforms: false
+  evidence: https://docs.reducto.ai/reference/error-codes
+  note: No Idempotency-Key header or replay-protection mechanism is documented on any mutating
+    operation. See conventions/reducto-ai-conventions.yml.
+- id: pagination
+  conforms: false
+  evidence: openapi/reducto-ai-jobs-api-openapi.yml
+  note: GET /jobs is the only list operation and the spec declares no pagination parameters.
+- id: modelcontextprotocol
+  conforms: true
+  evidence: https://reducto.ai/.well-known/mcp/server-card.json
+  note: Hosted Streamable-HTTP MCP server at https://mcp.reducto.ai/mcp plus a local stdio build,
+    with published server cards and an MCP discovery document.
+- id: a2a
+  conforms: partial
+  evidence: https://reducto.ai/.well-known/agent-card.json
+  note: A2A agent card published at the canonical path but flavored against A2A 1.0.0 (no
+    protocolVersion, no capabilities object). The docs host serves a conformant card. See a2a/.
+- id: llmstxt
+  conforms: true
+  evidence: https://docs.reducto.ai/llms.txt
+- id: soc2-type-2
+  conforms: true
+  evidence: https://docs.reducto.ai/security/policies
+  note: "SOC 2 Type I and Type II completed; report available on request. Trust center at
+    https://trust.reducto.ai (HTTP 200, JS-rendered)."
+- id: hipaa
+  conforms: true
+  evidence: https://docs.reducto.ai/security/policies
+  note: HIPAA-compliant processing pipeline for Growth and Enterprise tiers; BAA available on request.
+- id: gdpr
+  conforms: true
+  evidence: https://docs.reducto.ai/security/eu-data-residency
+  note: EU data-residency endpoints on Growth and above; zero-data-retention policy purges
+    API-submitted artifacts within 24 hours.
+domain_standard:
+  applicable: false
+  note: >-
+    Document parsing and extraction has no market-wide interchange standard the way SCIM, FHIR,
+    OpenRTB or ISO 20022 do for their sectors. Reducto's contract declares none and none is
+    expected; recorded as not applicable rather than as a failure.

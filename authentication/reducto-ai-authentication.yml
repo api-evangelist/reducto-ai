@@ -1,9 +1,9 @@
-generated: '2026-07-11'
+generated: '2026-09-17'
 method: derived
-source: openapi/reducto-classify-api-openapi.yml, openapi/reducto-edit-api-openapi.yml, openapi/reducto-extract-api-openapi.yml,
-  openapi/reducto-jobs-api-openapi.yml, openapi/reducto-parse-api-openapi.yml, openapi/reducto-pipeline-api-openapi.yml,
-  openapi/reducto-platform-api-openapi.yml, openapi/reducto-split-api-openapi.yml, openapi/reducto-upload-api-openapi.yml,
-  openapi/reducto-webhooks-api-openapi.yml
+source: openapi/reducto-ai-classify-api-openapi.yml, openapi/reducto-ai-edit-api-openapi.yml,
+  openapi/reducto-ai-extract-api-openapi.yml, openapi/reducto-ai-jobs-api-openapi.yml, openapi/reducto-ai-parse-api-openapi.yml,
+  openapi/reducto-ai-pipeline-api-openapi.yml, openapi/reducto-ai-platform-api-openapi.yml,
+  openapi/reducto-ai-split-api-openapi.yml, openapi/reducto-ai-upload-api-openapi.yml, openapi/reducto-ai-webhooks-api-openapi.yml
 summary:
   types:
   - http
@@ -12,13 +12,13 @@ schemes:
   type: http
   scheme: bearer
   sources:
-  - openapi/reducto-classify-api-openapi.yml
-  - openapi/reducto-edit-api-openapi.yml
-  - openapi/reducto-extract-api-openapi.yml
-  - openapi/reducto-jobs-api-openapi.yml
-  - openapi/reducto-parse-api-openapi.yml
-  - openapi/reducto-pipeline-api-openapi.yml
-  - openapi/reducto-platform-api-openapi.yml
-  - openapi/reducto-split-api-openapi.yml
-  - openapi/reducto-upload-api-openapi.yml
-  - openapi/reducto-webhooks-api-openapi.yml
+  - openapi/reducto-ai-classify-api-openapi.yml
+  - openapi/reducto-ai-edit-api-openapi.yml
+  - openapi/reducto-ai-extract-api-openapi.yml
+  - openapi/reducto-ai-jobs-api-openapi.yml
+  - openapi/reducto-ai-parse-api-openapi.yml
+  - openapi/reducto-ai-pipeline-api-openapi.yml
+  - openapi/reducto-ai-platform-api-openapi.yml
+  - openapi/reducto-ai-split-api-openapi.yml
+  - openapi/reducto-ai-upload-api-openapi.yml
+  - openapi/reducto-ai-webhooks-api-openapi.yml

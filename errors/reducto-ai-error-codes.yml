@@ -1,0 +1,138 @@
+generated: '2026-09-17'
+method: searched
+source: https://docs.reducto.ai/reference/error-codes, https://docs.reducto.ai/reference/rate-limits,
+  https://docs.reducto.ai/workflows/deletion
+provider: Reducto
+providerId: reducto-ai
+format: vendor
+envelope:
+  shape: '{"error": {"message": <string>, "type": <snake_case string>, "code": <http status int>}}'
+  example: '{"error":{"message":"Failed to download file from url. Please check the document url
+    and try again","type":"file_download_failure","code":400}}'
+  note: >-
+    Not RFC 9457. The envelope repeats the HTTP status inside the body as `code` and carries a
+    machine-readable `type` slug. Rate-limit 429s are the exception — they return a flat
+    {"message": "[CODE nnnn] ..."} body with a numeric code embedded in the message string.
+client_errors:
+- status: 400
+  name: JSON decoding error
+  cause: LLM response too large to decode
+  remediation: 'Enable array_extract: true for large extraction schemas'
+- status: 400
+  name: Invalid URL format
+  cause: S3 URL malformed
+  remediation: Use the form s3://bucket-name/key
+- status: 400
+  name: File download failure
+  type: file_download_failure
+  cause: Cannot fetch document from URL
+  remediation: Verify the URL is accessible and not expired
+- status: 400
+  name: Invalid page range
+  cause: Specified pages do not exist
+  remediation: Page range is 1-indexed; check the document has the requested pages
+- status: 400
+  name: Job not in a terminal state
+  cause: DELETE /job/{job_id} on a job still pending, in progress or completing
+  remediation: Only completed or failed jobs can be deleted
+- status: 403
+  name: Permission error
+  cause: URL access forbidden
+  remediation: Ensure the presigned URL has not expired and credentials are valid
+- status: 403
+  name: PDF processing error
+  cause: Cannot write output
+  remediation: Internal error — contact support
+- status: 404
+  name: File access error
+  cause: File not found
+  remediation: Verify the file exists at the specified path or URL
+- status: 409
+  name: Deletion in progress
+  cause: GET /job/{job_id} while background cleanup is still running
+  remediation: Retry after cleanup completes
+- status: 410
+  name: Job deleted
+  cause: GET /job/{job_id} after cleanup finished and the job was tombstoned
+  remediation: Terminal — the job record no longer exists
+- status: 413
+  name: Image too large
+  cause: Image exceeds maximum dimensions
+  remediation: Resize to under 50 megapixels total and 15,000 pixels per axis
+- status: 415
+  name: File conversion error
+  cause: Cannot convert to images
+  remediation: Check the file is a valid, uncorrupted PDF
+- status: 415
+  name: PDF handling error
+  cause: Cannot process PDF
+  remediation: File may be corrupted; try re-saving with Adobe Acrobat
+- status: 422
+  name: Schema validation error
+  cause: Invalid JSON schema
+  remediation: Validate the schema is proper JSON Schema format
+- status: 422
+  name: Table processing error
+  cause: Table extraction failed
+  remediation: Retry, or enable agentic table mode for complex tables
+- status: 422
+  name: Not applicable
+  code: NOT_APPLICABLE
+  cause: On-demand deletion requested by an organization below the Growth tier
+  remediation: Deletion endpoints are Growth and Enterprise only
+- status: 442
+  name: Document access error
+  cause: Password protected
+  remediation: Provide the password via settings.document_password
+  note: 442 is not an IANA-registered HTTP status code; it is a Reducto-specific extension.
+- status: 429
+  name: Rate limit exceeded (edge, all endpoints)
+  code: '1000'
+  body: '{"message": "[CODE 1000] rate limit exceeded, retry with exponential backoff"}'
+  cause: Above 1,000 req/s sustained on the API key
+  remediation: Slow the submission rate or split traffic across API keys
+- status: 429
+  name: Rate limit exceeded (job polling)
+  code: '2000'
+  body: '{"message": "[CODE 2000] rate limit exceeded, please use webhooks instead of polling"}'
+  cause: Above 200 req/s sustained on GET /job/{job_id}
+  remediation: Switch to webhooks instead of polling
+- status: 429
+  name: Infrastructure shed
+  cause: Application-layer shed under load; carries no [CODE ...] body
+  remediation: Transient — retry with backoff
+server_errors:
+- status: 500
+  name: Content extraction error
+  retriable: false
+- status: 500
+  name: Citation extraction error
+  retriable: false
+- status: 500
+  name: PDF metadata error
+  retriable: false
+- status: 502
+  name: LLM service error
+  retriable: true
+- status: 503
+  name: Service unavailable
+  retriable: true
+- status: 503
+  name: Table processing error
+  retriable: true
+- status: 504
+  name: LLM timeout error
+  retriable: true
+- status: 504
+  name: Document conversion timeout
+  retriable: true
+retry_policy:
+  retried_by_sdk:
+  - 408
+  - 409
+  - 429
+  - 5xx
+  max_retries: 2
+  backoff: exponential with jitter
+  request_timeout_seconds: 3600
+  source: https://docs.reducto.ai/reference/error-codes

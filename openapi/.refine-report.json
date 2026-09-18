@@ -1,16 +1,16 @@
 {
   "provider": "reducto-ai",
   "sources": [
-    "reducto-ai-classify-api-openapi.yml",
-    "reducto-ai-edit-api-openapi.yml",
-    "reducto-ai-extract-api-openapi.yml",
-    "reducto-ai-jobs-api-openapi.yml",
-    "reducto-ai-parse-api-openapi.yml",
-    "reducto-ai-pipeline-api-openapi.yml",
-    "reducto-ai-platform-api-openapi.yml",
-    "reducto-ai-split-api-openapi.yml",
-    "reducto-ai-upload-api-openapi.yml",
-    "reducto-ai-webhooks-api-openapi.yml"
+    "_original/reducto-classify-api-openapi.yml",
+    "_original/reducto-edit-api-openapi.yml",
+    "_original/reducto-extract-api-openapi.yml",
+    "_original/reducto-jobs-api-openapi.yml",
+    "_original/reducto-parse-api-openapi.yml",
+    "_original/reducto-pipeline-api-openapi.yml",
+    "_original/reducto-platform-api-openapi.yml",
+    "_original/reducto-split-api-openapi.yml",
+    "_original/reducto-upload-api-openapi.yml",
+    "_original/reducto-webhooks-api-openapi.yml"
   ],
   "outputs": [
     "reducto-ai-classify-api-openapi.yml",
@@ -27,6 +27,30 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (10 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "reducto-classify-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "reducto-edit-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "reducto-extract-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "reducto-jobs-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "reducto-parse-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "reducto-pipeline-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "reducto-platform-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "reducto-split-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "reducto-upload-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "reducto-webhooks-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "reducto-ai-classify-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reducto-ai-edit-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reducto-ai-extract-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reducto-ai-jobs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reducto-ai-parse-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reducto-ai-pipeline-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reducto-ai-platform-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reducto-ai-split-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reducto-ai-upload-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reducto-ai-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

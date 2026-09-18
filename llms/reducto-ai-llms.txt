@@ -1,0 +1,178 @@
+# Reducto
+
+- [Overview](https://docs.reducto.ai/overview.md): The agentic document platform for leading AI teams
+- [API Quickstart](https://docs.reducto.ai/quickstart.md): Parse your first document with Reducto in 5 minutes.
+- [Studio Quickstart](https://docs.reducto.ai/studio-quickstart.md): Build and deploy your first document workflow in Reducto Studio.
+- [Reducto API Reference for Coding Agents](https://docs.reducto.ai/agent-guide.md): Complete, structured reference for AI coding agents integrating Reducto
+- [Reducto CLI](https://docs.reducto.ai/cli.md): Access Reducto from your terminal.
+- [Reducto MCP Server](https://docs.reducto.ai/mcp-server.md): Connect AI agents to Reducto via the Model Context Protocol.
+- [Upload](https://docs.reducto.ai/upload/overview.md): Upload documents to Reducto for processing
+- [Uploading Large Files](https://docs.reducto.ai/upload/large-files.md): Upload files up to 5GB using presigned URLs
+- [Parse overview](https://docs.reducto.ai/parse/overview.md): Convert documents into structured JSON with text, tables, figures, layout, and formatting.
+- [Parse r-1](https://docs.reducto.ai/parse/r-1.md): Preview agentic-quality parsing with a unified, efficient full-page model.
+- [Parse Response Format](https://docs.reducto.ai/parse/response-format.md): Understanding chunks, blocks, and bounding boxes
+- [Parse Best Practices](https://docs.reducto.ai/parse/best-practices.md): Key practices for getting the best results from Parse
+- [Extract](https://docs.reducto.ai/extract/overview.md): Reducto Extract API pulls specific fields from documents as structured JSON. Reducto returns values matching your schema, handling OCR, layout detection, and more.
+- [Extract Response Format](https://docs.reducto.ai/extract/response-format.md): Understanding extracted data, citations, and usage
+- [Schema Keyword Support](https://docs.reducto.ai/extract/schema-keywords.md): Which JSON Schema keywords Extract guarantees in the output, and which it treats as guidance
+- [Extract Best Practices](https://docs.reducto.ai/extraction/best-practices-extract.md): Schema design and prompt writing for reliable extractions
+- [Split](https://docs.reducto.ai/split.md): Divide documents into logical sections for targeted processing
+- [Classify](https://docs.reducto.ai/classify/overview.md): Categorize documents before you parse
+- [Classify Response Format](https://docs.reducto.ai/classify/response-format.md): Confidence scores, per-criterion reasoning, and all response fields
+- [Classify Best Practices](https://docs.reducto.ai/classify/best-practices.md): Write better classification schemas for more accurate results
+- [Edit](https://docs.reducto.ai/editing/edit-overview.md): Fill forms and modify documents with natural language instructions
+- [Pipeline Basics](https://docs.reducto.ai/workflows/pipeline-basics.md): Compose Reducto capabilities into reusable, single-call workflows
+- [Multi-document Pipelines](https://docs.reducto.ai/workflows/multi-document-pipelines.md): Process related documents together with shared context for extraction
+- [Chaining API Calls](https://docs.reducto.ai/workflows/chaining-endpoints.md): Combine Classify, Parse, and Extract to build document processing workflows
+- [Async Processing](https://docs.reducto.ai/workflows/async-overview.md): Process documents asynchronously with job queues, polling, and webhooks
+- [Svix Webhooks](https://docs.reducto.ai/workflows/svix-webhooks.md): Enterprise-grade webhook delivery with signing, retries, and dashboard
+- [Direct Webhooks](https://docs.reducto.ai/workflows/direct-webhooks.md): Simple HTTP POST webhooks for prototyping and basic integrations
+- [Batch Processing](https://docs.reducto.ai/workflows/batch-processing.md): Process multiple documents in parallel
+- [Batch Queue](https://docs.reducto.ai/workflows/batch-queue.md): Discounted async processing for non-urgent workloads
+- [Deleting Jobs & Uploads](https://docs.reducto.ai/workflows/deletion.md): Remove job artifacts and uploaded files before the end of the automatic retention window.
+- [Configuration Overview](https://docs.reducto.ai/configs/overview.md): Configure every step of Reducto document processing
+- [r-1 configuration compatibility](https://docs.reducto.ai/configs/parse/r-1-configuration-compatibility.md): Review your Parse settings before migrating an existing workflow to r-1.
+- [Agentic Modes](https://docs.reducto.ai/configs/parse/agentic-modes.md): Add custom prompts and specialized agentic processing to Parse
+- [Chart Extraction](https://docs.reducto.ai/configs/parse/chart-extraction.md): Extract structured data from charts and graphs
+- [Chunking Methods](https://docs.reducto.ai/configs/parse/chunking-methods.md): Control how parsed content is grouped in API responses
+- [Table Output Formats](https://docs.reducto.ai/configs/parse/table-output-formats.md): Control how tables are formatted in API responses
+- [Additional Document Data](https://docs.reducto.ai/configs/parse/additional-document-data.md): Extract revision marks, comments, highlights, hyperlinks, and signatures
+- [Spreadsheet Processing](https://docs.reducto.ai/configs/parse/spreadsheet.md): Configure how Excel, CSV, and spreadsheet files are processed
+- [Processing Settings](https://docs.reducto.ai/configs/parse/ocr-settings.md): Configure legacy OCR behavior and general Parse processing settings
+- [Page Ranges](https://docs.reducto.ai/configs/parse/page-ranges.md): Process specific pages of a document
+- [Deep Extract](https://docs.reducto.ai/configs/extract/deep-extract.md): Achieve near-perfect accuracy on complex and long extractions with our agentic loop
+- [Array Extraction](https://docs.reducto.ai/configs/extract/array-extraction.md): Extract complete arrays from long documents without truncation
+- [Citations](https://docs.reducto.ai/configs/extract/citations.md): Link extracted values to their source locations in the document
+- [Split Configuration](https://docs.reducto.ai/configs/split/configuration.md): Configure how documents are divided into sections
+- [Deep Split](https://docs.reducto.ai/configs/split/deep-split.md): Achieve near-perfect accuracy on complex document splitting with our agentic loop
+- [Classify Configuration](https://docs.reducto.ai/configs/classify/configuration.md): Configure page ranges and classification behavior
+- [Form Schema](https://docs.reducto.ai/configs/edit/form-schema.md): Pre-define field locations for faster, more consistent PDF form filling
+- [Version Pinning](https://docs.reducto.ai/reference/version-pinning.md): How Reducto model versioning works and how to pin versions
+- [Error Codes](https://docs.reducto.ai/reference/error-codes.md): Understanding and handling Reducto API errors
+- [Rate Limits](https://docs.reducto.ai/reference/rate-limits.md): Per-second request caps at the API edge and the 429s they return
+- [Checking API Health & Usage](https://docs.reducto.ai/reference/checking-api-health.md): Check Reducto hosted API availability, usage, and throttling signals
+- [Concurrency Throttle](https://docs.reducto.ai/reference/throttling.md): How Reducto queues parallel parse work per account, baselines by tier, and when you'll see slow P90
+- [Usage and Pricing](https://docs.reducto.ai/reference/credit-usage.md): Understanding how Reducto measures and bills API usage across products
+- [Pricing Migration Guide](https://docs.reducto.ai/reference/pricing-migration.md): How Reducto's move from credit-based billing to per-product pricing affects you
+- [Usage Export API](https://docs.reducto.ai/reference/usage-export-api.md): Programmatically export usage and credit data from your Reducto account
+- [Per-Page Billing Breakdown](https://docs.reducto.ai/reference/page-billing-breakdown.md): Understand exactly which billing features were applied to each page of your document
+- [Glossary](https://docs.reducto.ai/reference/glossary.md): Key terms and concepts in Reducto
+- [Frequently Asked Questions](https://docs.reducto.ai/reference/faq.md): Common questions about using Reducto
+- [SpreadsheetViewer](https://docs.reducto.ai/components/spreadsheet-viewer.md): A React component for viewing Excel spreadsheets with bounding box overlays for document extraction visualization
+- [Enterprise Readiness](https://docs.reducto.ai/enterprise/enterprise-readiness.md): How Reducto meets security, reliability, and scale requirements at enterprise grade
+- [Deployment options (Cloud, On-prem, Hybrid)](https://docs.reducto.ai/onprem/enterprise_deployment_options.md): Flexible, secure deployment options designed to meet enterprise data-governance, performance, and scalability requirements
+- [Data policies & compliance](https://docs.reducto.ai/security/policies.md)
+- [Filing Complaints](https://docs.reducto.ai/security/filing-complaints.md)
+- [EU data residency & processing](https://docs.reducto.ai/security/eu-data-residency.md): For customers requiring that all document data stays strictly within EU
+- [Single sign-on (SSO) FAQ](https://docs.reducto.ai/security/sso-saml-faq.md): How to configure SAML or OIDC single sign-on for your Reducto organization.
+- [Hybrid VPC Deployment](https://docs.reducto.ai/onprem/hybrid-vpc-deployment.md): Deploy Reducto with your data in your own cloud account and compute managed by Reducto
+- [Hybrid VPC — AWS S3](https://docs.reducto.ai/onprem/hybrid-vpc-aws.md): Set up Hybrid VPC with AWS S3 storage and optional PrivateLink
+- [Hybrid VPC — Azure Blob Storage](https://docs.reducto.ai/onprem/hybrid-vpc-azure.md): Set up Hybrid VPC with Azure Blob Storage for data sovereignty
+- [Hybrid VPC — Box](https://docs.reducto.ai/onprem/hybrid-vpc-box.md): Set up Hybrid VPC with Box as your document storage backend
+- [Hybrid VPC — Google Cloud Storage](https://docs.reducto.ai/onprem/hybrid-vpc-gcs.md): Set up Hybrid VPC with Google Cloud Storage for data sovereignty
+- [On-prem security model](https://docs.reducto.ai/onprem/security_model.md): Understand the shared security responsibilities and trust boundaries for Reducto on-premise deployments
+- [Securing Reducto](https://docs.reducto.ai/onprem/securing_reducto.md): Learn how to secure on-premise Reducto deployments
+- [OCR provider configuration](https://docs.reducto.ai/onprem/ocr_options.md): Configure cloud OCR providers for on-premise Reducto installations
+- [LLM & service configuration options](https://docs.reducto.ai/onprem/llm_options.md): Complete guide to LLM configuration and environment variables for Reducto
+- [Database configuration](https://docs.reducto.ai/onprem/database_configuration.md): Configure PostgreSQL connection pooling, timeouts, and performance settings for on-premise deployments
+- [On-premise changelog](https://docs.reducto.ai/onprem/changelog.md): Release notes for on-premise deployments of Reducto
+- [Observability & Monitoring](https://docs.reducto.ai/onprem/observability.md): Built-in observability stack for on-premise Reducto deployments
+- [Operations](https://docs.reducto.ai/onprem/operations.md): Runtime configuration for on-premise Reducto worker health and restart behavior
+- [Self-hosted fair queueing with Reducto](https://docs.reducto.ai/onprem/fair_queueing.md): Fair queueing by user-id for on-premise deployment
+- [Automatic file cleanup](https://docs.reducto.ai/onprem/file_cleanup.md): Configure automatic deletion of uploaded files in Reducto
+- [Air-gapped usage for billing](https://docs.reducto.ai/onprem/usage_for_billing.md): Export usage data from air-gapped environments for billing purposes
+- [Parse](https://docs.reducto.ai/api-reference/parse.md): Convert documents into structured JSON with r-1 or a legacy Parse pipeline.
+- [Parse Async](https://docs.reducto.ai/api-reference/async-parse.md): Convert documents asynchronously into structured JSON with r-1 or a legacy Parse pipeline.
+- [Upload](https://docs.reducto.ai/api-reference/upload.md)
+- [Extract](https://docs.reducto.ai/api-reference/extract.md): Reducto Extract API pulls structured fields from any document using a schema you define or schemaless configuration.
+- [Extract Async](https://docs.reducto.ai/api-reference/extract-async.md)
+- [Split](https://docs.reducto.ai/api-reference/split.md)
+- [Split Async](https://docs.reducto.ai/api-reference/split-async.md)
+- [Classify](https://docs.reducto.ai/api-reference/classify.md)
+- [Classify async](https://docs.reducto.ai/api-reference/classify-async.md)
+- [Edit](https://docs.reducto.ai/api-reference/edit.md)
+- [Edit Async](https://docs.reducto.ai/api-reference/edit-async.md)
+- [Pipeline](https://docs.reducto.ai/api-reference/pipeline.md)
+- [Pipeline Async](https://docs.reducto.ai/api-reference/pipeline-async.md)
+- [Retrieve Job](https://docs.reducto.ai/api-reference/retrieve-parse.md)
+- [Cancel Job](https://docs.reducto.ai/api-reference/cancel-job.md)
+- [Delete Job](https://docs.reducto.ai/api-reference/delete-job.md): Asynchronously delete a job's stored artifacts.
+- [Get Jobs](https://docs.reducto.ai/api-reference/get-jobs.md)
+- [Delete Upload](https://docs.reducto.ai/api-reference/delete-upload.md): Delete a previously uploaded file.
+- [Webhook Portal](https://docs.reducto.ai/api-reference/webhook-portal.md)
+- [Get Version](https://docs.reducto.ai/api-reference/get-version.md)
+- [Parse](https://docs.reducto.ai/api-reference/legacy/parse.md)
+- [Parse Async](https://docs.reducto.ai/api-reference/legacy/async-parse.md)
+- [Upload](https://docs.reducto.ai/api-reference/legacy/upload.md)
+- [Extract](https://docs.reducto.ai/api-reference/legacy/extract.md)
+- [Extract Async](https://docs.reducto.ai/api-reference/legacy/extract-async.md)
+- [Split](https://docs.reducto.ai/api-reference/legacy/split.md)
+- [Split Async](https://docs.reducto.ai/api-reference/legacy/split-async.md)
+- [Edit](https://docs.reducto.ai/api-reference/legacy/edit.md)
+- [Edit Async](https://docs.reducto.ai/api-reference/legacy/edit-async.md)
+- [Pipeline](https://docs.reducto.ai/api-reference/legacy/pipeline.md)
+- [Pipeline Async](https://docs.reducto.ai/api-reference/legacy/pipeline-async.md)
+- [Retrieve Job](https://docs.reducto.ai/api-reference/legacy/retrieve-parse.md)
+- [Cancel Job](https://docs.reducto.ai/api-reference/legacy/cancel-job.md)
+- [Get Jobs](https://docs.reducto.ai/api-reference/legacy/get-jobs.md)
+- [Webhook Portal](https://docs.reducto.ai/api-reference/legacy/webhook-portal.md)
+- [Get Version](https://docs.reducto.ai/api-reference/legacy/get-version.md)
+- [Cookbooks](https://docs.reducto.ai/cookbooks/overview.md): Step-by-step guides for common document processing tasks
+- [Multimodal RAG with Image Results](https://docs.reducto.ai/cookbooks/multimodal-rag-image-results.md): Build a RAG system that retrieves and reasons over both text and images from documents
+- [Layout & Table Extraction to Analytics](https://docs.reducto.ai/cookbooks/financial-analysis.md): Extract and analyze financial data from 10-K annual reports using Parse, Extract, and table extraction
+- [Multi-lingual Document Processing](https://docs.reducto.ai/cookbooks/multilingual-processing.md): Process documents in 60+ languages with automatic language detection and OCR configuration
+- [Parallel Document Processing](https://docs.reducto.ai/cookbooks/batch-processing.md): Process hundreds of documents concurrently using AsyncReducto with progress tracking and error handling
+- [Web Browsing (Browserbase)](https://docs.reducto.ai/cookbooks/web-browsing-browserbase.md): Extract financial data from investor relations PDFs using Stagehand for AI-powered web browsing and Reducto for document processing
+- [ACORD Insurance Forms](https://docs.reducto.ai/cookbooks/form-filling.md): Extract policy data from declarations pages and fill ACORD 25 certificates
+- [ID & Onboarding Documents](https://docs.reducto.ai/cookbooks/identity-verification.md): Verify user identity by extracting and cross-matching data from ID cards, utility bills, and tax forms
+- [Contract & Legal Document Review](https://docs.reducto.ai/cookbooks/redlined-legal-contracts.md): Parse redlined legal documents and extract insertions, deletions, and annotations as structured data
+- [Invoice & Accounts Payable Automation](https://docs.reducto.ai/cookbooks/invoice-extraction.md): Extract structured data from freight invoices using Reducto's Extract API with array extraction and citations
+- [Python SDK Overview](https://docs.reducto.ai/sdk/python/overview.md): Get started with the Reducto Python SDK
+- [Upload](https://docs.reducto.ai/sdk/python/upload.md): Upload documents to Reducto using the Python SDK
+- [Parse](https://docs.reducto.ai/sdk/python/parse.md): Parse documents into structured JSON using the Python SDK
+- [Extract](https://docs.reducto.ai/sdk/python/extract.md): Extract specific fields from documents using the Python SDK
+- [Split](https://docs.reducto.ai/sdk/python/split.md): Split documents into sections using the Python SDK
+- [Edit](https://docs.reducto.ai/sdk/python/edit.md): Fill PDF forms and modify DOCX documents using the Python SDK
+- [Pipeline](https://docs.reducto.ai/sdk/python/pipeline.md): Run pre-configured pipelines using the Python SDK
+- [Async Client](https://docs.reducto.ai/sdk/python/async.md): Process documents concurrently with the async Python SDK
+- [Job Management](https://docs.reducto.ai/sdk/python/job-management.md): Manage and track async jobs using the Python SDK
+- [Error Handling](https://docs.reducto.ai/sdk/python/error-handling.md): Handle errors and exceptions in the Reducto Python SDK
+- [JavaScript SDK Overview](https://docs.reducto.ai/sdk/javascript/overview.md): Get started with the Reducto JavaScript SDK
+- [Upload](https://docs.reducto.ai/sdk/javascript/upload.md): Upload documents to Reducto using the JavaScript SDK
+- [Parse](https://docs.reducto.ai/sdk/javascript/parse.md): Parse documents into structured JSON using the JavaScript SDK
+- [Extract](https://docs.reducto.ai/sdk/javascript/extract.md): Extract specific fields from documents using the JavaScript SDK
+- [Split](https://docs.reducto.ai/sdk/javascript/split.md): Split documents into sections using the JavaScript SDK
+- [Edit](https://docs.reducto.ai/sdk/javascript/edit.md): Fill PDF forms and modify DOCX documents using the JavaScript SDK
+- [Pipeline](https://docs.reducto.ai/sdk/javascript/pipeline.md): Run parse and extract in a single request using the JavaScript SDK
+- [Async Processing](https://docs.reducto.ai/sdk/javascript/async.md): Process documents concurrently with the JavaScript SDK
+- [Job Management](https://docs.reducto.ai/sdk/javascript/job-management.md): Manage and track async jobs using the JavaScript SDK
+- [Error Handling](https://docs.reducto.ai/sdk/javascript/error-handling.md): Handle errors and exceptions in the Reducto JavaScript SDK
+- [Go SDK Overview](https://docs.reducto.ai/sdk/go/overview.md): Get started with the Reducto Go SDK
+- [Upload](https://docs.reducto.ai/sdk/go/upload.md): Upload documents to Reducto using the Go SDK
+- [Parse](https://docs.reducto.ai/sdk/go/parse.md): Parse documents into structured JSON using the Go SDK
+- [Extract](https://docs.reducto.ai/sdk/go/extract.md): Extract specific fields from documents using the Go SDK
+- [Split](https://docs.reducto.ai/sdk/go/split.md): Split documents into sections using the Go SDK
+- [Edit](https://docs.reducto.ai/sdk/go/edit.md): Fill PDF forms and modify DOCX documents using the Go SDK
+- [Pipeline](https://docs.reducto.ai/sdk/go/pipeline.md): Run parse and extract in a single request using the Go SDK
+- [Async Processing](https://docs.reducto.ai/sdk/go/async.md): Process documents concurrently with the Go SDK
+- [Job Management](https://docs.reducto.ai/sdk/go/job-management.md): Manage and track async jobs using the Go SDK
+- [Error Handling](https://docs.reducto.ai/sdk/go/error-handling.md): Handle errors in the Reducto Go SDK
+- [Parse Pipeline](https://docs.reducto.ai/studio-parse.md): Turn documents into structured data in Studio
+- [Extract Pipeline](https://docs.reducto.ai/studio-extract.md): Pull specific fields from documents as structured JSON in Reducto Studio
+- [Split Pipeline](https://docs.reducto.ai/studio-split.md): Divide documents into sections for targeted workflows in Studio
+- [Edit Pipeline](https://docs.reducto.ai/studio-edit.md): Fill forms and modify documents with natural language instructions in Reducto Studio
+- [Deploying to Production](https://docs.reducto.ai/studio-deploy-pipeline.md): Publish pipelines, integrate with API, and monitor production usage
+- [Studio Quickstart](https://docs.reducto.ai/studio-quickstart.md): Build and deploy your first document workflow in Reducto Studio.
+- [Account & Settings](https://docs.reducto.ai/studio-account.md): Manage API keys, usage, billing, and organization settings in Reducto Studio
+- [Roles & Permissions](https://docs.reducto.ai/studio-roles-permissions.md): Organization roles in Reducto Studio and what each role can do
+
+## OpenAPI Specs
+
+- [openapi-legacy](/openapi-legacy.json)
+- [openapi](/openapi.json)
+
+## Optional
+
+- [Status](https://status.reducto.ai)
+- [Studio](https://studio.reducto.ai)
+- [Support](mailto:support@reducto.ai)

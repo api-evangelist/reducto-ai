@@ -1,0 +1,18 @@
+{
+  "name": "reducto-docs",
+  "title": "Reducto Documentation",
+  "version": "1.0.0",
+  "description": "MCP server for searching Reducto's documentation at docs.reducto.ai — API reference, quickstarts, SDK guides, and integration patterns for the agentic document platform.",
+  "icon": "https://cdn.reducto.ai/landing-page/logos/reducto-logo.svg",
+  "vendor": {
+    "name": "Reducto",
+    "url": "https://reducto.ai"
+  },
+  "endpoint": "https://docs.reducto.ai/mcp",
+  "transport": "http",
+  "authentication": "none",
+  "documentationUrl": "https://docs.reducto.ai",
+  "capabilities": {
+    "tools": true
+  }
+}

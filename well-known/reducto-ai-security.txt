@@ -1,0 +1,7 @@
+# Reducto security contact (RFC 9116)
+# Security posture and compliance: https://trust.reducto.ai
+Contact: mailto:support@reducto.ai
+Expires: 2027-07-01T00:00:00.000Z
+Policy: https://trust.reducto.ai
+Canonical: https://reducto.ai/.well-known/security.txt
+Preferred-Languages: en

@@ -1,0 +1,96 @@
+generated: '2026-09-17'
+method: searched
+source: https://docs.reducto.ai/reference/version-pinning, https://docs.reducto.ai/reference/model-versions,
+  https://status.reducto.ai/api/v2/status.json, https://docs.reducto.ai/onprem/changelog,
+  https://platform.reducto.ai/openapi.json
+provider: Reducto
+providerId: reducto-ai
+versioning:
+  api_versioning: none
+  note: >-
+    There is no version segment in the URL and no version header. Every operation sits at the root
+    of https://platform.reducto.ai. The spec's info.version is a build string
+    (v1.12.16-40-g42081c3db472 on 2026-09-17) that moves continuously; GET /version returns the
+    running build. What Reducto actually versions is the MODEL behind each endpoint, not the
+    endpoint itself.
+  model_versioning:
+    mechanism: request-scoped pinning via the settings.alpha config (top-level `alpha` for split)
+    stages: [alpha, default, deprecated, removed]
+    rollout_window: 4 weeks — 2 weeks alpha opt-in before a version becomes default, 2 weeks
+      pinnable after it is demoted
+    docs: https://docs.reducto.ai/reference/version-pinning
+    register: https://docs.reducto.ai/reference/model-versions
+    caveat: >-
+      Reducto is deployed as a monolith, so frozen snapshots of previous versions are not
+      available outside on-prem/VPC deployments. Pinning during the rollout window is the only
+      supported mechanism for managing behavioural change.
+deprecation:
+  policy: true
+  docs: https://docs.reducto.ai/reference/version-pinning
+  register: https://docs.reducto.ai/reference/model-versions
+  sunset_headers: false
+  sunset_header_note: RFC 8594 Sunset/Deprecation response headers are not documented and do not
+    appear in the OpenAPI.
+  deprecated_operations_in_spec: 0
+  deprecated_model_versions:
+  - component: Layout
+    version: v2
+    status: deprecated
+    removal_date: '2026-07-22'
+    pin: '{"alpha": {"layout_model": "v2"}}'
+  - component: Layout
+    version: v1
+    status: deprecated
+    removal_date: '2026-05-06'
+    pin: '{"alpha": {"layout_model": "v1"}}'
+  - component: Extract
+    version: v2
+    status: deprecated
+    removal_date: '2027-01-04'
+    pin: '{"alpha": {"extract_model": "v2"}}'
+  - component: Key-Value
+    version: v2
+    status: deprecated
+    removal_date: '2026-07-23'
+    pin: '{"alpha": {"key_value_model": "v2"}}'
+  - component: Deep Extract
+    version: v2
+    status: deprecated
+    removal_date: '2026-09-03'
+    pin: '{"alpha": {"deep_extract_model": "v2"}}'
+  note: >-
+    Every deprecated model version carries a dated removal, which is a stronger and more specific
+    deprecation signal than most providers publish. Note that three of the five removal dates
+    above are already in the past as of 2026-09-17 while the register still lists them as
+    deprecated rather than removed.
+status_page:
+  url: https://status.reducto.ai
+  platform: statuspage-compatible
+  machine_readable:
+  - https://status.reducto.ai/api/v2/status.json
+  - https://status.reducto.ai/history.rss
+  probed: '2026-09-17'
+  http_status: 200
+sla:
+  published: false
+  note: No public SLA document. The pricing page reserves custom MSA/SLA terms for the Enterprise
+    tier; support tiers differ by plan (priority support on Growth and above).
+changelog:
+  public: partial
+  urls:
+  - url: https://docs.reducto.ai/onprem/changelog
+    note: On-premise release notes. The page returns HTTP 200 but its body is a client-side
+      password gate (SHA-256 challenge), so the entries are not publicly readable.
+  - url: https://docs.reducto.ai/reference/model-versions
+    note: The genuinely public dated register of what changed — current default, deprecated and
+      removal dates per model component.
+retention:
+  automatic_window_hours: 24
+  scope: Growth and Enterprise tiers, API-submitted jobs
+  exemptions:
+  - Studio-run jobs
+  - 'results saved with persist_results: true'
+  on_demand_deletion:
+  - DELETE /job/{job_id}
+  - DELETE /upload/{file_id}
+  docs: https://docs.reducto.ai/workflows/deletion

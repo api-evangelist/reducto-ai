@@ -1,0 +1,40 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist overlay — Reducto split-api
+  version: 1.0.0
+extends: ./../openapi/reducto-ai-split-api-openapi.yml
+x-generated: '2026-09-17'
+x-method: generated
+x-source: openapi/reducto-ai-split-api-openapi.yml; reconciled against https://platform.reducto.ai/openapi.json
+actions:
+- target: $.paths['/split'].post
+  description: Operation confirmed present in the live upstream spec at https://platform.reducto.ai/openapi.json
+    (read 2026-09-17).
+  update:
+    x-apievangelist:
+      upstream-confirmed: true
+      upstream-source: https://platform.reducto.ai/openapi.json
+      upstream-checked: '2026-09-17'
+- target: $.paths['/split_async'].post
+  description: Operation confirmed present in the live upstream spec at https://platform.reducto.ai/openapi.json
+    (read 2026-09-17).
+  update:
+    x-apievangelist:
+      upstream-confirmed: true
+      upstream-source: https://platform.reducto.ai/openapi.json
+      upstream-checked: '2026-09-17'
+- target: $.info
+  description: Record the artifacts API Evangelist derived alongside this contract.
+  update:
+    x-apievangelist:
+      provider: reducto-ai
+      conventions: conventions/reducto-ai-conventions.yml
+      errors: errors/reducto-ai-error-codes.yml
+      lifecycle: lifecycle/reducto-ai-lifecycle.yml
+      authentication: authentication/reducto-ai-authentication.yml
+      rate-limits: rate-limits/reducto-rate-limits.yml
+      data-model: data-model/reducto-ai-data-model.yml
+      mcp: mcp/reducto-ai-mcp.yml
+      tool-crosswalk: mcp/reducto-ai-tool-crosswalk.yml
+      idempotency-coverage: none
+      reversibility-grade: verified

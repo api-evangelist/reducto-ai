@@ -1,0 +1,83 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Reducto",
+    "identifier": "did:web:reducto.ai",
+    "documentationUrl": "https://docs.reducto.ai",
+    "logoUrl": "https://cdn.reducto.ai/landing-page/logos/reducto-logo.svg"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:reducto.ai:mcp:reducto",
+      "displayName": "Reducto — MCP server",
+      "description": "Hosted MCP server exposing Reducto's agentic document platform: parse, extract, split, classify, and edit documents (PDFs, images, spreadsheets, and 30+ file types) with citations on every value. Requires a Reducto API key (Bearer auth); sign up at https://studio.reducto.ai/.",
+      "mediaType": "application/mcp-server-card+json",
+      "type": "application/mcp-server-card+json",
+      "url": "https://reducto.ai/.well-known/mcp/server-card.json",
+      "representativeQueries": [
+        "parse this PDF into structured markdown with tables",
+        "extract the invoice number, total, and line items from this document as JSON",
+        "split this multi-document file into its sections and classify each one"
+      ],
+      "tags": ["mcp", "documents", "parsing", "extraction", "ocr", "agentic"],
+      "version": "1.0.0",
+      "updatedAt": "2026-07-06T00:00:00Z"
+    },
+    {
+      "identifier": "urn:air:reducto.ai:mcp:reducto-docs",
+      "displayName": "Reducto Docs — MCP server",
+      "description": "Public MCP server for searching Reducto's documentation: API reference, quickstarts, SDK guides, and integration patterns. No authentication required.",
+      "mediaType": "application/mcp-server-card+json",
+      "type": "application/mcp-server-card+json",
+      "url": "https://reducto.ai/.well-known/mcp/docs-server-card.json",
+      "representativeQueries": [
+        "how do I call the Reducto parse endpoint from Node",
+        "what options does Reducto extract support",
+        "how does Reducto credit pricing work"
+      ],
+      "tags": ["mcp", "documentation", "search"],
+      "version": "1.0.0",
+      "updatedAt": "2026-07-06T00:00:00Z"
+    },
+    {
+      "identifier": "urn:air:reducto.ai:agent:reducto",
+      "displayName": "Reducto — agent card",
+      "description": "Machine-readable agent card for Reducto's MCP and REST API interface.",
+      "mediaType": "application/a2a-agent-card+json",
+      "type": "application/a2a-agent-card+json",
+      "url": "https://reducto.ai/.well-known/agent-card.json"
+    },
+    {
+      "identifier": "urn:air:reducto.ai:discovery:agents",
+      "displayName": "Reducto — agent discovery",
+      "description": "Discovery metadata linking Reducto's agent card, skill, and MCP endpoint.",
+      "mediaType": "application/json",
+      "type": "application/json",
+      "url": "https://reducto.ai/.well-known/agents.json"
+    },
+    {
+      "identifier": "urn:air:reducto.ai:discovery:mcp",
+      "displayName": "Reducto — MCP discovery",
+      "description": "Machine-readable MCP endpoint, authentication, and server-card metadata.",
+      "mediaType": "application/json",
+      "type": "application/json",
+      "url": "https://reducto.ai/.well-known/mcp.json"
+    },
+    {
+      "identifier": "urn:air:reducto.ai:discovery:webmcp",
+      "displayName": "Reducto — Web MCP discovery",
+      "description": "Machine-readable Web MCP endpoint and server-card metadata.",
+      "mediaType": "application/json",
+      "type": "application/json",
+      "url": "https://reducto.ai/.well-known/webmcp.json"
+    },
+    {
+      "identifier": "urn:air:reducto.ai:discovery:mcp-server-cards",
+      "displayName": "Reducto — MCP server cards",
+      "description": "Index of Reducto's hosted MCP server cards.",
+      "mediaType": "application/json",
+      "type": "application/json",
+      "url": "https://reducto.ai/.well-known/mcp/server-cards.json"
+    }
+  ]
+}

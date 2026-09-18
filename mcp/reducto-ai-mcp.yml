@@ -1,0 +1,86 @@
+generated: '2026-09-17'
+method: searched
+source: https://docs.reducto.ai/mcp-server, https://reducto.ai/.well-known/mcp.json,
+  https://reducto.ai/.well-known/mcp/server-card.json,
+  https://reducto.ai/.well-known/mcp/docs-server-card.json,
+  https://studio.reducto.ai/.well-known/oauth-protected-resource,
+  live POST tools/list against https://mcp.reducto.ai/mcp
+provider: Reducto
+providerId: reducto-ai
+status: published
+name: Reducto MCP Server
+description: >-
+  Hosted MCP server exposing Reducto's agentic document platform — parse, extract, split,
+  classify and edit documents (PDF, image, spreadsheet and 30+ other formats) with citations on
+  every extracted value — plus a documentation-search server and a local stdio build of the same
+  tools.
+deployment:
+  mode: both
+  endpoint: https://mcp.reducto.ai/mcp
+  install: uvx mcp-server-reducto
+  package: https://pypi.org/project/mcp-server-reducto/
+  auth: api-key
+  verified: probed
+  note: >-
+    POST {"jsonrpc":"2.0","id":1,"method":"tools/list"} to https://mcp.reducto.ai/mcp returned
+    HTTP 401 {"error":"Missing or invalid Authorization header. Use: Bearer <your-api-key>"} on
+    2026-09-17 — the endpoint is live and the schema is key-gated, so the tool list below comes
+    from the provider's own published MCP server card rather than live introspection. Local mode
+    is `uvx mcp-server-reducto` (Python 3.11+), documented verbatim at docs.reducto.ai/mcp-server
+    alongside `claude mcp add -s user reducto -- uvx mcp-server-reducto` and
+    `codex mcp add reducto -- uvx mcp-server-reducto`.
+servers:
+- name: reducto
+  endpoint: https://mcp.reducto.ai/mcp
+  transport: http
+  authentication: bearer
+  card: https://reducto.ai/.well-known/mcp/server-card.json
+  documentation: https://docs.reducto.ai/mcp-server
+  auth_note: Bearer API key from https://studio.reducto.ai/api-keys.
+- name: reducto-docs
+  endpoint: unpublished
+  transport: http
+  authentication: none
+  card: https://reducto.ai/.well-known/mcp/docs-server-card.json
+  note: >-
+    A second, unauthenticated documentation-search MCP server declared in Reducto's ai-catalog and
+    server-cards index. Its server card is served publicly; the endpoint URL is carried inside
+    that card rather than in the index.
+oauth:
+  protected_resource: https://studio.reducto.ai/api/mcp
+  protected_resource_document: https://studio.reducto.ai/.well-known/oauth-protected-resource
+  authorization_servers:
+  - https://accounts.reducto.ai
+  scopes_supported:
+  - mcp
+  bearer_methods_supported:
+  - header
+  note: >-
+    A second, OAuth-protected MCP surface sits on the console host at
+    https://studio.reducto.ai/api/mcp (RFC 9728 protected-resource document, HTTP 200). It is
+    distinct from the api-key-authenticated https://mcp.reducto.ai/mcp endpoint above. Dynamic
+    client registration is supported at accounts.reducto.ai/api/oauth/register.
+tools:
+- name: get_documentation
+  description: Fetch Reducto SDK code examples, install commands, and response shapes by topic and language.
+- name: upload_file
+  description: Upload a local file or public URL for processing.
+- name: parse_document
+  description: Get all text, tables, and figures from a document as structured, citation-ready output.
+- name: extract_data
+  description: Extract specific fields into typed JSON with a schema, with citations on every value.
+- name: split_document
+  description: Divide a document into named page sections described in plain language.
+- name: classify_document
+  description: Categorize a document against a plain-language taxonomy.
+- name: edit_document
+  description: Fill forms or modify a PDF/DOCX, writing structured data back into a finished file.
+- name: get_job
+  description: Fetch a full, URL-backed, truncated, or async processing result.
+- name: list_jobs
+  description: Inspect recent processing jobs.
+tools_source: https://reducto.ai/.well-known/mcp/server-card.json
+tools_note: >-
+  Names and descriptions verbatim from the provider's MCP server card. inputSchema is NOT recorded
+  because the live tools/list is key-gated; obtaining real input schemas requires authenticated
+  introspection.

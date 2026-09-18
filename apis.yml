@@ -34,11 +34,14 @@ apis:
   name: reducto-ai Classify API
   description: The Classify API from reducto-ai — 2 operation(s) for classify.
   humanURL: https://docs.reducto.ai/parse/overview
+  baseURL: https://platform.reducto.ai
   tags:
   - Classify
   properties:
   - type: OpenAPI
     url: openapi/reducto-ai-classify-api-openapi.yml
+  - type: Overlay
+    url: overlays/reducto-ai-classify-api-overlay.yaml
   - type: Documentation
     url: https://docs.reducto.ai/parse/overview
   - type: APIReference
@@ -137,11 +140,14 @@ apis:
   name: reducto-ai Edit API
   description: The Edit API from reducto-ai — 2 operation(s) for edit.
   humanURL: https://docs.reducto.ai/parse/overview
+  baseURL: https://platform.reducto.ai
   tags:
   - Edit
   properties:
   - type: OpenAPI
     url: openapi/reducto-ai-edit-api-openapi.yml
+  - type: Overlay
+    url: overlays/reducto-ai-edit-api-overlay.yaml
   - type: Documentation
     url: https://docs.reducto.ai/parse/overview
   - type: APIReference
@@ -240,11 +246,14 @@ apis:
   name: reducto-ai Extract API
   description: The Extract API from reducto-ai — 2 operation(s) for extract.
   humanURL: https://docs.reducto.ai/parse/overview
+  baseURL: https://platform.reducto.ai
   tags:
   - Extract
   properties:
   - type: OpenAPI
     url: openapi/reducto-ai-extract-api-openapi.yml
+  - type: Overlay
+    url: overlays/reducto-ai-extract-api-overlay.yaml
   - type: Documentation
     url: https://docs.reducto.ai/parse/overview
   - type: APIReference
@@ -343,6 +352,7 @@ apis:
   name: reducto-ai Jobs API
   description: The Jobs API from reducto-ai — 3 operation(s) for jobs.
   humanURL: https://docs.reducto.ai/parse/overview
+  baseURL: https://platform.reducto.ai
   tags:
   - Job
   tags_raw:
@@ -350,6 +360,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/reducto-ai-jobs-api-openapi.yml
+  - type: Overlay
+    url: overlays/reducto-ai-jobs-api-overlay.yaml
   - type: Documentation
     url: https://docs.reducto.ai/parse/overview
   - type: APIReference
@@ -448,11 +460,14 @@ apis:
   name: reducto-ai Parse API
   description: The Parse API from reducto-ai — 2 operation(s) for parse.
   humanURL: https://docs.reducto.ai/parse/overview
+  baseURL: https://platform.reducto.ai
   tags:
   - Parse
   properties:
   - type: OpenAPI
     url: openapi/reducto-ai-parse-api-openapi.yml
+  - type: Overlay
+    url: overlays/reducto-ai-parse-api-overlay.yaml
   - type: Documentation
     url: https://docs.reducto.ai/parse/overview
   - type: APIReference
@@ -551,11 +566,16 @@ apis:
   name: reducto-ai Pipeline API
   description: The Pipeline API from reducto-ai — 2 operation(s) for pipeline.
   humanURL: https://docs.reducto.ai/parse/overview
+  baseURL: https://platform.reducto.ai
   tags:
+  - Pipelines
+  tags_raw:
   - Pipeline
   properties:
   - type: OpenAPI
     url: openapi/reducto-ai-pipeline-api-openapi.yml
+  - type: Overlay
+    url: overlays/reducto-ai-pipeline-api-overlay.yaml
   - type: Documentation
     url: https://docs.reducto.ai/parse/overview
   - type: APIReference
@@ -654,11 +674,14 @@ apis:
   name: reducto-ai Platform API
   description: The Platform API from reducto-ai — 5 operation(s) for platform.
   humanURL: https://docs.reducto.ai/parse/overview
+  baseURL: https://platform.reducto.ai
   tags:
   - Platform
   properties:
   - type: OpenAPI
     url: openapi/reducto-ai-platform-api-openapi.yml
+  - type: Overlay
+    url: overlays/reducto-ai-platform-api-overlay.yaml
   - type: Documentation
     url: https://docs.reducto.ai/parse/overview
   - type: APIReference
@@ -757,11 +780,14 @@ apis:
   name: reducto-ai Split API
   description: The Split API from reducto-ai — 2 operation(s) for split.
   humanURL: https://docs.reducto.ai/parse/overview
+  baseURL: https://platform.reducto.ai
   tags:
   - Split
   properties:
   - type: OpenAPI
     url: openapi/reducto-ai-split-api-openapi.yml
+  - type: Overlay
+    url: overlays/reducto-ai-split-api-overlay.yaml
   - type: Documentation
     url: https://docs.reducto.ai/parse/overview
   - type: APIReference
@@ -860,11 +886,14 @@ apis:
   name: reducto-ai Upload API
   description: The Upload API from reducto-ai — 1 operation(s) for upload.
   humanURL: https://docs.reducto.ai/parse/overview
+  baseURL: https://platform.reducto.ai
   tags:
   - Upload
   properties:
   - type: OpenAPI
     url: openapi/reducto-ai-upload-api-openapi.yml
+  - type: Overlay
+    url: overlays/reducto-ai-upload-api-overlay.yaml
   - type: Documentation
     url: https://docs.reducto.ai/parse/overview
   - type: APIReference
@@ -963,6 +992,7 @@ apis:
   name: reducto-ai Webhooks API
   description: The Webhooks API from reducto-ai — 1 operation(s) for webhooks.
   humanURL: https://docs.reducto.ai/parse/overview
+  baseURL: https://platform.reducto.ai
   tags:
   - Webhook
   tags_raw:
@@ -970,6 +1000,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/reducto-ai-webhooks-api-openapi.yml
+  - type: Overlay
+    url: overlays/reducto-ai-webhooks-api-overlay.yaml
   - type: Documentation
     url: https://docs.reducto.ai/parse/overview
   - type: APIReference
@@ -1064,6 +1096,33 @@ apis:
     url: https://docs.reducto.ai/reference/version-pinning
   - type: Documentation
     url: https://docs.reducto.ai/onprem/observability
+- aid: reducto-ai:reducto-ai-agent-signup-api
+  name: reducto-ai Agent Signup API
+  description: >-
+    Cookie-free registration API that lets an AI agent obtain its own Reducto API key without a
+    human in the loop. Two operations: request a signup (eligibility check plus an emailed
+    verification code) and verify it (consent plus ownership, then provisioning and key delivery).
+    Standard grant is 15,000 credits. Discovered on 2026-09-17 as a first-party OpenAPI 3.1
+    document named by Reducto's own /.well-known/api-catalog linkset and by the registrationUrl of
+    its published agent card. Existing accounts and companies go through Studio instead.
+  humanURL: https://reducto.ai/auth.md
+  baseURL: https://accounts.reducto.ai
+  tags:
+  - Onboarding
+  - Authentication
+  - Agents
+  properties:
+  - type: OpenAPI
+    url: openapi/reducto-ai-agent-signup-openapi.json
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://accounts.reducto.ai/api/agent/openapi.json
+  - type: Documentation
+    url: https://reducto.ai/auth.md
+  - type: Authentication
+    url: authentication/reducto-ai-authentication.yml
+  - type: SignUp
+    url: https://studio.reducto.ai
 common:
   - type: Website
     url: https://www.reducto.ai/
@@ -1192,6 +1251,56 @@ common:
     type: RateLimits
   - url: finops/reducto-finops.yml
     type: FinOps
+  - type: GitHubOrganization
+    url: https://github.com/reductoai
+  - type: Packages
+    url: packages/reducto-ai-packages.yml
+  - type: SDKs
+    url: packages/reducto-ai-packages.yml
+  - type: WellKnown
+    url: well-known/reducto-ai-well-known.yml
+  - type: APICatalog
+    url: well-known/reducto-ai-api-catalog.json
+  - type: SecurityTxt
+    url: well-known/reducto-ai-security.txt
+  - type: MCPServer
+    url: mcp/reducto-ai-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/reducto-ai-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/reducto-ai-a2a.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: LLMsTxt
+    url: llms/reducto-ai-llms.txt
+  - type: Conformance
+    url: conformance/reducto-ai-conformance.yml
+  - type: Compliance
+    url: security/reducto-ai-trust-center.yml
+  - type: TrustCenter
+    url: security/reducto-ai-trust-center.yml
+  - type: Security
+    url: security/reducto-ai-vulnerability-disclosure.yml
+  - type: ErrorCatalog
+    url: errors/reducto-ai-error-codes.yml
+  - type: Lifecycle
+    url: lifecycle/reducto-ai-lifecycle.yml
+  - type: Deprecation
+    url: lifecycle/reducto-ai-lifecycle.yml
+  - type: OAuthScopes
+    url: scopes/reducto-ai-scopes.yml
+  - type: Conventions
+    url: conventions/reducto-ai-conventions.yml
+  - type: ChangeLog
+    url: changelog/reducto-ai-changelog.yml
+  - type: CLI
+    url: cli/reducto-ai-cli.yml
+  - type: DataModel
+    url: data-model/reducto-ai-data-model.yml
+  - type: Sandbox
+    url: sandbox/reducto-ai-sandbox.yml
+  - type: Webhooks
+    url: asyncapi/reducto-ai-webhooks.yml
   - type: Features
     data:
       - >-
@@ -1322,8 +1431,30 @@ common:
       - https://reducto.ai/pricing
     updated: '2026-05-25'
 created: '2026-05-25'
-modified: '2026-05-25'
+modified: '2026-09-17'
 position: Consuming
+tags:
+  - Document AI
+  - OCR
+  - Document Parsing
+  - Data Extraction
+  - Document Classification
+  - Form Filling
+  - Unstructured Data
+  - RAG
+  - Machine-Learning
+  - Artificial Intelligence
+tags_raw:
+  - Document AI
+  - OCR
+  - Document Parsing
+  - Data Extraction
+  - Document Classification
+  - Form Filling
+  - Unstructured Data
+  - RAG
+  - Machine Learning
+  - Artificial Intelligence
 description: >-
   Reducto is an AI document-parsing platform that turns unstructured PDFs, images, spreadsheets, slides, and forms into
   LLM-ready layout, structured data, and form completions. The API exposes Parse, Extract, Split, Edit, Classify, and
@@ -1335,3 +1466,9 @@ maintainers:
     email: info@apievangelist.com
     X: apievangelist
     url: https://apievangelist.com
+
+x-enrichment:
+  date: '2026-09-17'
+  status: enriched
+  artifacts_added: 47
+  pass: local-v3

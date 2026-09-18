@@ -1,0 +1,52 @@
+{
+  "name": "Reducto",
+  "description": "Agentic document platform — parse, extract, split, classify, and edit documents (PDFs, images, spreadsheets, and 30+ file types) with citations. Primary agent interface today is MCP + REST API.",
+  "version": "1.0.0",
+  "url": "https://mcp.reducto.ai/mcp",
+  "documentationUrl": "https://docs.reducto.ai",
+  "registrationUrl": "https://accounts.reducto.ai/api/agent/accounts",
+  "registrationDocumentationUrl": "https://reducto.ai/auth.md",
+  "provider": {
+    "name": "Reducto",
+    "url": "https://reducto.ai"
+  },
+  "securitySchemes": {
+    "bearerAuth": {
+      "type": "http",
+      "scheme": "bearer",
+      "description": "Use a Reducto API key from https://studio.reducto.ai."
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "skills": [
+    {
+      "id": "parse",
+      "name": "Parse",
+      "description": "Convert documents into structured text, tables, and figures with citation-ready output."
+    },
+    {
+      "id": "extract",
+      "name": "Extract",
+      "description": "Extract typed JSON fields with citations on every value."
+    },
+    {
+      "id": "split",
+      "name": "Split",
+      "description": "Split documents into named sections and page ranges."
+    },
+    {
+      "id": "classify",
+      "name": "Classify",
+      "description": "Classify documents against a plain-language taxonomy."
+    },
+    {
+      "id": "edit",
+      "name": "Edit",
+      "description": "Edit PDFs and DOCX files with natural-language instructions."
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+generated: '2026-09-17'
+method: searched
+source: https://docs.reducto.ai/cli, https://pypi.org/pypi/reducto-cli/json,
+  https://github.com/reductoai/cli
+provider: Reducto
+providerId: reducto-ai
+name: Reducto CLI
+binary: reducto
+description: >-
+  Terminal access to Reducto's document capabilities — parse, extract, split, classify and edit —
+  for batch processing, scripting and CI/CD without writing application code.
+install:
+- method: pip
+  command: pip install reducto-cli
+  registry: https://pypi.org/project/reducto-cli/
+version: 0.2.0
+published: '2026-09-11'
+repository: https://github.com/reductoai/cli
+docs: https://docs.reducto.ai/cli
+changelog: https://github.com/reductoai/cli/blob/master/CHANGELOG.md
+commands:
+- group: parse
+  description: Convert documents into structured text, tables and figures.
+- group: extract
+  description: Pull schema-defined fields out of documents as typed JSON.
+- group: split
+  description: Divide documents into named page sections.
+- group: classify
+  description: Categorize documents against a taxonomy.
+- group: edit
+  description: Fill forms and modify PDF/DOCX files.
+commands_note: >-
+  Command groups mirror the five document capabilities named in the CLI documentation. Per-command
+  flags were not enumerated here because the docs page presents them inside prose and code blocks
+  rather than a reference table; treat this as the capability surface, not a full flag reference.
+package_reference: packages/reducto-ai-packages.yml

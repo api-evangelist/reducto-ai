@@ -1,0 +1,78 @@
+generated: '2026-09-17'
+method: probed
+source: https://reducto.ai/.well-known/agent-card.json
+provider: Reducto
+providerId: reducto-ai
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: reducto.ai
+  note: >-
+    The same body is also served at https://reducto.ai/.well-known/agent.json (the pre-0.3 path),
+    at www.reducto.ai on both paths, and is named as "Reducto agent card" by the provider's own
+    /.well-known/api-catalog linkset, /.well-known/agents.json and /.well-known/ai-catalog.json.
+    reducto.ai/.well-known/a2a/agent-card.json, which agents.json advertises, answers 308.
+x-evidence:
+  fetched: '2026-09-17'
+  url: https://reducto.ai/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json
+grade: flavored
+grade_note: >-
+  Graded against A2A 1.0.0. The canonical apex card fails two hard checks — it carries no
+  protocolVersion and no capabilities object — so it is flavored, not near-conformant. It is
+  nonetheless a real, provider-served card: name, description, version, url, provider,
+  securitySchemes, security and a five-entry skills array are all present, and its url field
+  points at the live MCP endpoint rather than an A2A one, which is exactly what the description
+  says the primary agent interface is.
+deviations:
+- field: protocolVersion
+  issue: absent
+  severity: hard
+- field: capabilities
+  issue: absent (A2A 1.0.0 requires an object)
+  severity: hard
+- field: preferredTransport
+  issue: absent
+  severity: optional
+- field: defaultInputModes
+  issue: absent
+  severity: optional
+- field: defaultOutputModes
+  issue: absent
+  severity: optional
+- field: skills[].tags
+  issue: absent on all five skills
+  severity: optional
+- field: url
+  issue: points at an MCP endpoint (https://mcp.reducto.ai/mcp), not an A2A endpoint
+  severity: note
+cards:
+- file: reducto-ai-agent-card.json
+  url: https://reducto.ai/.well-known/agent-card.json
+  host: reducto.ai
+  http_status: 200
+  grade: flavored
+  skills: 5
+  endpoint: https://mcp.reducto.ai/mcp
+- file: reducto-ai-docs-agent-card.json
+  url: https://docs.reducto.ai/.well-known/agent-card.json
+  host: docs.reducto.ai
+  http_status: 200
+  grade: conformant
+  skills: 1
+  endpoint: https://docs.reducto.ai/
+  note: >-
+    A second, separate card scoped to the documentation host. It IS conformant — capabilities is
+    an object, protocolVersion is "0.3", skills is an array, and preferredTransport,
+    defaultInputModes and defaultOutputModes are all present. It is not the card the provider's
+    own discovery documents nominate as canonical, and its single skill points at the published
+    Agent Skill saved in skills/reducto-ai-reducto.md, so it is recorded here as a secondary.
+registration:
+  url: https://accounts.reducto.ai/api/agent/accounts
+  documentation: https://reducto.ai/auth.md
+  openapi: openapi/reducto-ai-agent-signup-openapi.json
+  note: >-
+    The card carries registrationUrl and registrationDocumentationUrl — an agent can obtain its
+    own API key without a human, through a two-call, cookie-free signup API that Reducto
+    publishes as its own OpenAPI 3.1 document.

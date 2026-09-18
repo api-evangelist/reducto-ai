@@ -1,0 +1,8 @@
+{
+  "name": "Reducto Agent Discovery",
+  "agentCardUrl": "https://reducto.ai/.well-known/agent-card.json",
+  "a2aAgentCardUrl": "https://reducto.ai/.well-known/a2a/agent-card.json",
+  "documentationUrl": "https://docs.reducto.ai",
+  "agentSkillUrl": "https://reducto.ai/SKILL.md",
+  "mcpEndpoint": "https://mcp.reducto.ai/mcp"
+}

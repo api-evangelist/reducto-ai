@@ -1,0 +1,56 @@
+{
+  "name": "reducto",
+  "title": "Reducto",
+  "version": "1.0.0",
+  "description": "MCP server for Reducto, the agentic document platform. Exposes Reducto's document tools — parse, extract, split, classify, and edit — so AI agents can process PDFs, images, spreadsheets, and 30+ other file types as part of their reasoning loop.",
+  "icon": "https://cdn.reducto.ai/landing-page/logos/reducto-logo.svg",
+  "vendor": {
+    "name": "Reducto",
+    "url": "https://reducto.ai"
+  },
+  "endpoint": "https://mcp.reducto.ai/mcp",
+  "transport": "http",
+  "authentication": "bearer",
+  "documentationUrl": "https://docs.reducto.ai/mcp-server",
+  "capabilities": {
+    "tools": true
+  },
+  "tools": [
+    {
+      "name": "get_documentation",
+      "description": "Fetch Reducto SDK code examples, install commands, and response shapes by topic and language."
+    },
+    {
+      "name": "upload_file",
+      "description": "Upload a local file or public URL for processing."
+    },
+    {
+      "name": "parse_document",
+      "description": "Get all text, tables, and figures from a document as structured, citation-ready output."
+    },
+    {
+      "name": "extract_data",
+      "description": "Extract specific fields into typed JSON with a schema, with citations on every value."
+    },
+    {
+      "name": "split_document",
+      "description": "Divide a document into named page sections described in plain language."
+    },
+    {
+      "name": "classify_document",
+      "description": "Categorize a document against a plain-language taxonomy."
+    },
+    {
+      "name": "edit_document",
+      "description": "Fill forms or modify a PDF/DOCX, writing structured data back into a finished file."
+    },
+    {
+      "name": "get_job",
+      "description": "Fetch a full, URL-backed, truncated, or async processing result."
+    },
+    {
+      "name": "list_jobs",
+      "description": "Inspect recent processing jobs."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+generated: '2026-09-17'
+method: searched
+source: https://trust.reducto.ai, https://docs.reducto.ai/security/policies,
+  https://docs.reducto.ai/security/eu-data-residency, https://docs.reducto.ai/enterprise/enterprise-readiness,
+  https://reducto.ai/.well-known/security.txt
+provider: Reducto
+providerId: reducto-ai
+trust_center:
+  url: https://trust.reducto.ai
+  http_status: 200
+  machine_readable: false
+  note: >-
+    The trust center renders client-side — the served HTML contains only the title "Reducto Trust
+    Center" and no certification text, so the certifications below were read from Reducto's own
+    security-policy documentation rather than scraped from the portal. security.txt names
+    trust.reducto.ai as both its Policy URL and its security-posture page.
+certifications:
+- name: SOC 2 Type I
+  status: completed
+  evidence: https://docs.reducto.ai/security/policies
+  report_access: on request
+- name: SOC 2 Type II
+  status: completed
+  evidence: https://docs.reducto.ai/security/policies
+  report_access: on request
+compliance_programs:
+- name: HIPAA
+  status: supported
+  scope: Growth and Enterprise tiers
+  mechanism: HIPAA-compliant processing pipeline; BAA signed on request
+  evidence: https://docs.reducto.ai/security/policies
+- name: GDPR / EU data residency
+  status: supported
+  scope: Growth and above
+  mechanism: EU data-residency endpoints
+  evidence: https://docs.reducto.ai/security/eu-data-residency
+data_handling:
+- control: Zero Data Retention (ZDR)
+  scope: Growth tier and above, API-submitted data
+  detail: API-submitted data expires within 24 hours; Studio-run jobs and results saved with
+    persist_results true are exempt.
+  evidence: https://docs.reducto.ai/security/policies
+- control: On-demand deletion
+  detail: DELETE /job/{job_id} and DELETE /upload/{file_id} remove artifacts before the automatic
+    retention window ends. Growth and Enterprise only (422 NOT_APPLICABLE below Growth).
+  evidence: https://docs.reducto.ai/workflows/deletion
+- control: Self-hosted / hybrid VPC deployment
+  detail: Hybrid VPC and on-premise deployment on AWS, Azure, GCS and Box for workloads that
+    cannot leave the customer's network.
+  evidence: https://docs.reducto.ai/onprem/enterprise_deployment_options
+- control: Complaint procedure
+  detail: Published filing-complaints procedure.
+  evidence: https://docs.reducto.ai/security/filing-complaints
+enterprise_controls:
+- RBAC
+- SSO / SAML
+- custom MSA and SLA
+evidence_source: https://docs.reducto.ai/enterprise/enterprise-readiness
+certifications_not_found:
+- ISO 27001
+- PCI DSS
+- FedRAMP
+not_found_note: Not claimed anywhere in Reducto's public security documentation; recorded as
+  absent, not as failed.

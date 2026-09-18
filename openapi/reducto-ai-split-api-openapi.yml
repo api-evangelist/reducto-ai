@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Reducto Classify Split API
+  title: Reducto Split API
   version: 1.0.0
-  description: Classify documents into a defined set of categories and run citation lookups against parsed content.
+  description: Automatically separate multi-document files and long forms into individual units using rules-based or deep split.
   contact:
     name: Reducto Support
     email: support@reducto.ai
@@ -92,139 +92,33 @@ paths:
       - Split
 components:
   schemas:
-    SplitSettings:
+    Chunking:
       properties:
-        table_cutoff:
+        chunk_mode:
           type: string
           enum:
-          - truncate
-          - preserve
-          title: Table Cutoff
-          description: If tables should be truncated to the first few rows or if all content should be preserved. truncate improves latency, preserve is recommended for cases where partition_key is being used and the partition_key may be included within the table. Defaults to truncate
-          default: truncate
-        allow_page_overlap:
-          type: boolean
-          title: Allow Page Overlap
-          description: If True, a page can belong to multiple categories/partitions. If False, each page must belong to exactly one category. Defaults to True.
-          default: true
-        deep_split:
-          type: boolean
-          title: Deep Split
-          description: If True, uses the deep split agent for higher-quality document splitting. Off by default.
-          default: false
-      type: object
-      title: SplitSettings
-    TableAgentic:
-      properties:
-        scope:
-          type: string
-          const: table
-          title: Scope
-        prompt:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Prompt
-          description: Custom prompt for table agentic.
-        mode:
-          type: string
-          enum:
-          - default
-          - auto
-          title: Mode
-          description: 'Routing mode for table agentic: ''default'' runs enrichment on all tables, ''auto'' uses the router to skip tables where enrichment is unlikely to help.'
-          default: default
-      type: object
-      required:
-      - scope
-      title: TableAgentic
-    PageRange:
-      properties:
-        start:
+          - variable
+          - section
+          - page
+          - disabled
+          - block
+          - page_sections
+          title: Chunk Mode
+          description: Choose how to partition chunks. Variable mode chunks by character length and visual context. Section mode chunks by section headers. Page mode chunks according to pages. Page sections mode chunks first by page, then by sections within each page. Disabled returns one single chunk.
+          default: disabled
+        chunk_size:
           anyOf:
           - type: integer
           - type: 'null'
-          title: Start
-          description: The page number to start processing from (1-indexed).
-        end:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: End
-          description: The page number to stop processing at (1-indexed).
+          title: Chunk Size
+          description: The approximate size of chunks (in characters) that the document will be split into. Defaults to null, in which case the chunk size is variable between 250 - 1500 characters.
+        chunk_overlap:
+          type: integer
+          title: Chunk Overlap
+          description: Number of characters of overlap to include from adjacent chunks. Defaults to 0.
+          default: 0
       type: object
-      title: PageRange
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ParseOptions:
-      properties:
-        enhance:
-          $ref: '#/components/schemas/Enhance'
-          default:
-            agentic: []
-            summarize_figures: true
-            intelligent_ordering: false
-        retrieval:
-          $ref: '#/components/schemas/Retrieval'
-          default:
-            chunking:
-              chunk_mode: disabled
-              chunk_overlap: 0
-            filter_blocks: []
-            embedding_optimized: false
-        formatting:
-          $ref: '#/components/schemas/Formatting'
-          default:
-            add_page_markers: false
-            table_output_format: dynamic
-            merge_tables: false
-            include: []
-        spreadsheet:
-          $ref: '#/components/schemas/Spreadsheet'
-          default:
-            split_large_tables:
-              enabled: true
-              size: 50
-            include: []
-            clustering: accurate
-            exclude: []
-        settings:
-          $ref: '#/components/schemas/Settings'
-          default:
-            ocr_system: standard
-            extraction_mode: hybrid
-            force_url_result: false
-            return_ocr_data: false
-            return_images: []
-            embed_pdf_metadata: false
-            embed_pdf_metadata_dpi: 100
-            persist_results: false
-      type: object
-      title: ParseOptions
+      title: Chunking
     config__v3__AsyncSplitConfig:
       properties:
         async:
@@ -299,43 +193,6 @@ components:
       - input
       - split_description
       title: AsyncSplitConfig
-    DeepSplit:
-      properties:
-        name:
-          type: string
-          title: Name
-        pages:
-          items:
-            $ref: '#/components/schemas/DeepSplitPageEvidence'
-          type: array
-          title: Pages
-        partitions:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/DeepSplitPartition'
-            type: array
-          - type: 'null'
-          title: Partitions
-      type: object
-      required:
-      - name
-      - pages
-      title: DeepSplit
-    DeepSplitPartition:
-      properties:
-        name:
-          type: string
-          title: Name
-        pages:
-          items:
-            $ref: '#/components/schemas/DeepSplitPageEvidence'
-          type: array
-          title: Pages
-      type: object
-      required:
-      - name
-      - pages
-      title: DeepSplitPartition
     Formatting:
       properties:
         add_page_markers:
@@ -376,20 +233,79 @@ components:
           default: []
       type: object
       title: Formatting
-    DirectWebhookConfig:
+    UploadResponse:
       properties:
-        mode:
+        file_id:
           type: string
-          const: direct
-          title: Mode
-          default: direct
-        url:
-          type: string
-          title: Url
+          title: File Id
+        presigned_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Presigned Url
       type: object
       required:
-      - url
-      title: DirectWebhookConfig
+      - file_id
+      title: UploadResponse
+    Enhance:
+      properties:
+        agentic:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/TableAgentic'
+            - $ref: '#/components/schemas/FigureAgentic'
+            - $ref: '#/components/schemas/TextAgentic'
+          type: array
+          title: Agentic
+          description: Agentic uses vision language models to enhance the accuracy of the output of different types of extraction. This will incur a cost and latency increase.
+          default: []
+        summarize_figures:
+          type: boolean
+          title: Summarize Figures
+          description: If True, summarize figures using a small vision language model. Defaults to True.
+          default: true
+        intelligent_ordering:
+          type: boolean
+          title: Intelligent Ordering
+          description: If True, use an advanced vision language model to improve reading order accuracy, with a small increase in latency. Defaults to False.
+          default: false
+      type: object
+      title: Enhance
+    SplitLargeTableSizes:
+      properties:
+        row:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Row
+          description: The number of rows to include in each chunk when splitting large tables. Does not chunk rows if set to None.
+        column:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Column
+          description: The number of columns to include in each chunk when splitting large tables. Does not chunk columns if set to None.
+      type: object
+      title: SplitLargeTableSizes
+    config__v3__AsyncConfig:
+      properties:
+        metadata:
+          title: Metadata
+          description: JSON metadata included in webhook request body. Defaults to None.
+        priority:
+          type: boolean
+          title: Priority
+          description: If True, attempts to process the job with priority if the user has priority processing budget available; by default, sync jobs are prioritized above async jobs.
+          default: false
+        webhook:
+          anyOf:
+          - $ref: '#/components/schemas/SvixWebhookConfig'
+          - $ref: '#/components/schemas/DirectWebhookConfig'
+          - type: 'null'
+          title: Webhook
+          description: The webhook configuration for the asynchronous processing.
+      type: object
+      title: AsyncConfig
     Split:
       properties:
         name:
@@ -419,22 +335,227 @@ components:
       - name
       - pages
       title: Split
-    SplitLargeTables:
+    SplitResponse:
       properties:
-        enabled:
-          type: boolean
-          title: Enabled
-          description: If True, split large tables into smaller tables. Defaults to True.
-          default: true
-        size:
+        response_type:
+          type: string
+          const: split
+          title: Response Type
+          default: split
+        usage:
+          $ref: '#/components/schemas/ParseUsage'
+        result:
           anyOf:
-          - type: integer
-          - $ref: '#/components/schemas/SplitLargeTableSizes'
-          title: Size
-          description: The size of the tables to split into. Defaults to 50. Use 'row' and 'column' to independently specify the number of rows and columns to include when splitting. If you only want to split by rows or columns, set the other value to None.
-          default: 50
+          - $ref: '#/components/schemas/SplitResult'
+          - $ref: '#/components/schemas/DeepSplitResult'
+          title: Result
+          description: The split result.
       type: object
-      title: SplitLargeTables
+      required:
+      - usage
+      - result
+      title: SplitResponse
+    ParseUsage:
+      properties:
+        num_pages:
+          type: integer
+          title: Num Pages
+        credits:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Credits
+        credit_breakdown:
+          anyOf:
+          - additionalProperties:
+              type: number
+            propertyNames:
+              enum:
+              - page
+              - html_page
+              - docx_native_page
+              - chart_agent
+              - spreadsheet_cells
+              - billable_spreadsheet_pages
+              - agentic
+              - complex
+              - enrich_table
+              - figure_summary
+              - table_summary
+              - key_value
+              - agentic_text
+              - promptable_agentic_text
+            type: object
+          - type: 'null'
+          title: Credit Breakdown
+        page_billing_breakdown:
+          anyOf:
+          - additionalProperties:
+              items:
+                type: string
+                enum:
+                - page
+                - html_page
+                - docx_native_page
+                - agentic
+                - complex
+                - chart_agent
+                - spreadsheet_cells
+                - billable_spreadsheet_pages
+                - enrich_table
+                - figure_summary
+                - table_summary
+                - key_value
+                - agentic_text
+                - promptable_agentic_text
+              type: array
+            type: object
+          - type: 'null'
+          title: Page Billing Breakdown
+          description: Per-page breakdown of features used. Maps 1-indexed page numbers (as strings) to the list of billing features applied on that page (e.g. 'page', 'complex', 'chart_agent').
+      type: object
+      required:
+      - num_pages
+      title: ParseUsage
+    ParseOptions:
+      properties:
+        enhance:
+          $ref: '#/components/schemas/Enhance'
+          default:
+            agentic: []
+            summarize_figures: true
+            intelligent_ordering: false
+        retrieval:
+          $ref: '#/components/schemas/Retrieval'
+          default:
+            chunking:
+              chunk_mode: disabled
+              chunk_overlap: 0
+            filter_blocks: []
+            embedding_optimized: false
+        formatting:
+          $ref: '#/components/schemas/Formatting'
+          default:
+            add_page_markers: false
+            table_output_format: dynamic
+            merge_tables: false
+            include: []
+        spreadsheet:
+          $ref: '#/components/schemas/Spreadsheet'
+          default:
+            split_large_tables:
+              enabled: true
+              size: 50
+            include: []
+            clustering: accurate
+            exclude: []
+        settings:
+          $ref: '#/components/schemas/Settings'
+          default:
+            ocr_system: standard
+            extraction_mode: hybrid
+            force_url_result: false
+            return_ocr_data: false
+            return_images: []
+            embed_pdf_metadata: false
+            embed_pdf_metadata_dpi: 100
+            persist_results: false
+      type: object
+      title: ParseOptions
+    DeepSplitResult:
+      properties:
+        splits:
+          items:
+            $ref: '#/components/schemas/DeepSplit'
+          type: array
+          title: Splits
+      type: object
+      required:
+      - splits
+      title: DeepSplitResult
+    DeepSplit:
+      properties:
+        name:
+          type: string
+          title: Name
+        pages:
+          items:
+            $ref: '#/components/schemas/DeepSplitPageEvidence'
+          type: array
+          title: Pages
+        partitions:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/DeepSplitPartition'
+            type: array
+          - type: 'null'
+          title: Partitions
+      type: object
+      required:
+      - name
+      - pages
+      title: DeepSplit
+    TableAgentic:
+      properties:
+        scope:
+          type: string
+          const: table
+          title: Scope
+        prompt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt
+          description: Custom prompt for table agentic.
+        mode:
+          type: string
+          enum:
+          - default
+          - auto
+          title: Mode
+          description: 'Routing mode for table agentic: ''default'' runs enrichment on all tables, ''auto'' uses the router to skip tables where enrichment is unlikely to help.'
+          default: default
+      type: object
+      required:
+      - scope
+      title: TableAgentic
+    SplitResult:
+      properties:
+        section_mapping:
+          anyOf:
+          - additionalProperties:
+              items:
+                type: integer
+              type: array
+            type: object
+          - type: 'null'
+          title: Section Mapping
+        splits:
+          items:
+            $ref: '#/components/schemas/Split'
+          type: array
+          title: Splits
+      type: object
+      required:
+      - section_mapping
+      - splits
+      title: SplitResult
+    TextAgentic:
+      properties:
+        scope:
+          type: string
+          const: text
+          title: Scope
+        prompt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt
+          description: 'Custom instructions for agentic text. Note: This only applies to form regions (key-value).'
+      type: object
+      required:
+      - scope
+      title: TextAgentic
     SvixWebhookConfig:
       properties:
         mode:
@@ -450,6 +571,64 @@ components:
           description: A list of Svix channels the message will be delivered down, omit to send to all channels.
       type: object
       title: SvixWebhookConfig
+    DirectWebhookConfig:
+      properties:
+        mode:
+          type: string
+          const: direct
+          title: Mode
+          default: direct
+        url:
+          type: string
+          title: Url
+      type: object
+      required:
+      - url
+      title: DirectWebhookConfig
+    DeepSplitPageEvidence:
+      properties:
+        page_number:
+          type: integer
+          title: Page Number
+        evidence:
+          type: string
+          title: Evidence
+        confidence:
+          anyOf:
+          - type: string
+            enum:
+            - high
+            - medium
+            - low
+          - type: 'null'
+          title: Confidence
+      type: object
+      required:
+      - page_number
+      - evidence
+      title: DeepSplitPageEvidence
+    SplitPartition:
+      properties:
+        name:
+          type: string
+          title: Name
+        pages:
+          items:
+            type: integer
+          type: array
+          title: Pages
+        conf:
+          type: string
+          enum:
+          - high
+          - low
+          title: Conf
+          default: low
+      type: object
+      required:
+      - name
+      - pages
+      title: SplitPartition
     Retrieval:
       properties:
         chunking:
@@ -484,155 +663,64 @@ components:
           default: false
       type: object
       title: Retrieval
-    UploadResponse:
+    ValidationError:
       properties:
-        file_id:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          title: File Id
-        presigned_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Presigned Url
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
       required:
-      - file_id
-      title: UploadResponse
-    Chunking:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    PageRange:
       properties:
-        chunk_mode:
-          type: string
-          enum:
-          - variable
-          - section
-          - page
-          - disabled
-          - block
-          - page_sections
-          title: Chunk Mode
-          description: Choose how to partition chunks. Variable mode chunks by character length and visual context. Section mode chunks by section headers. Page mode chunks according to pages. Page sections mode chunks first by page, then by sections within each page. Disabled returns one single chunk.
-          default: disabled
-        chunk_size:
+        start:
           anyOf:
           - type: integer
           - type: 'null'
-          title: Chunk Size
-          description: The approximate size of chunks (in characters) that the document will be split into. Defaults to null, in which case the chunk size is variable between 250 - 1500 characters.
-        chunk_overlap:
-          type: integer
-          title: Chunk Overlap
-          description: Number of characters of overlap to include from adjacent chunks. Defaults to 0.
-          default: 0
-      type: object
-      title: Chunking
-    SplitResult:
-      properties:
-        section_mapping:
+          title: Start
+          description: The page number to start processing from (1-indexed).
+        end:
           anyOf:
-          - additionalProperties:
-              items:
-                type: integer
-              type: array
-            type: object
+          - type: integer
           - type: 'null'
-          title: Section Mapping
-        splits:
-          items:
-            $ref: '#/components/schemas/Split'
-          type: array
-          title: Splits
+          title: End
+          description: The page number to stop processing at (1-indexed).
       type: object
-      required:
-      - section_mapping
-      - splits
-      title: SplitResult
-    SplitCategory:
+      title: PageRange
+    SplitLargeTables:
       properties:
-        name:
-          type: string
-          title: Name
-        description:
-          type: string
-          title: Description
-        partition_key:
+        enabled:
+          type: boolean
+          title: Enabled
+          description: If True, split large tables into smaller tables. Defaults to True.
+          default: true
+        size:
           anyOf:
-          - type: string
-          - type: 'null'
-          title: Partition Key
+          - type: integer
+          - $ref: '#/components/schemas/SplitLargeTableSizes'
+          title: Size
+          description: The size of the tables to split into. Defaults to 50. Use 'row' and 'column' to independently specify the number of rows and columns to include when splitting. If you only want to split by rows or columns, set the other value to None.
+          default: 50
       type: object
-      required:
-      - name
-      - description
-      title: SplitCategory
-    SyncSplitConfig:
-      properties:
-        input:
-          anyOf:
-          - type: string
-          - items:
-              type: string
-            type: array
-          - $ref: '#/components/schemas/UploadResponse'
-          title: Input
-          description: "For parse/split/extract pipelines, the URL of the document to be processed. You can provide one of the following:\n            1. A publicly available URL\n            2. A presigned S3 URL\n            3. A reducto:// prefixed URL obtained from the /upload endpoint after directly uploading a document\n            4. A jobid:// prefixed URL obtained from a previous /parse invocation\n            5. A list of URLs (for multi-document pipelines, V3 API only)\n\n            For edit pipelines, this should be a string containing the edit instructions "
-        parsing:
-          $ref: '#/components/schemas/ParseOptions'
-          description: The configuration options for parsing the document. If you are passing in a jobid:// URL for the file, then this configuration will be ignored.
-          default:
-            enhance:
-              agentic: []
-              intelligent_ordering: false
-              summarize_figures: true
-            retrieval:
-              chunking:
-                chunk_mode: disabled
-                chunk_overlap: 0
-              embedding_optimized: false
-              filter_blocks: []
-            formatting:
-              add_page_markers: false
-              include: []
-              merge_tables: false
-              table_output_format: dynamic
-            spreadsheet:
-              clustering: accurate
-              exclude: []
-              include: []
-              split_large_tables:
-                enabled: true
-                size: 50
-            settings:
-              embed_pdf_metadata: false
-              embed_pdf_metadata_dpi: 100
-              extraction_mode: hybrid
-              force_url_result: false
-              ocr_system: standard
-              persist_results: false
-              return_images: []
-              return_ocr_data: false
-        split_description:
-          items:
-            $ref: '#/components/schemas/SplitCategory'
-          type: array
-          title: Split Description
-          description: The configuration options for processing the document.
-        split_rules:
-          type: string
-          title: Split Rules
-          description: The prompt that describes rules for splitting the document.
-          default: Split the document into the applicable sections. Sections may only overlap at their first and last page if at all.
-        settings:
-          $ref: '#/components/schemas/SplitSettings'
-          description: The settings for split processing.
-          default:
-            table_cutoff: truncate
-            allow_page_overlap: true
-            deep_split: false
-      type: object
-      required:
-      - input
-      - split_description
-      title: SyncSplitConfig
+      title: SplitLargeTables
     Settings:
       properties:
         ocr_system:
@@ -724,166 +812,75 @@ components:
           description: Password to decrypt password-protected documents.
       type: object
       title: Settings
-    ParseUsage:
+    SyncSplitConfig:
       properties:
-        num_pages:
-          type: integer
-          title: Num Pages
-        credits:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Credits
-        credit_breakdown:
-          anyOf:
-          - additionalProperties:
-              type: number
-            propertyNames:
-              enum:
-              - page
-              - html_page
-              - docx_native_page
-              - chart_agent
-              - spreadsheet_cells
-              - billable_spreadsheet_pages
-              - agentic
-              - complex
-              - enrich_table
-              - figure_summary
-              - table_summary
-              - key_value
-              - agentic_text
-              - promptable_agentic_text
-            type: object
-          - type: 'null'
-          title: Credit Breakdown
-        page_billing_breakdown:
-          anyOf:
-          - additionalProperties:
-              items:
-                type: string
-                enum:
-                - page
-                - html_page
-                - docx_native_page
-                - agentic
-                - complex
-                - chart_agent
-                - spreadsheet_cells
-                - billable_spreadsheet_pages
-                - enrich_table
-                - figure_summary
-                - table_summary
-                - key_value
-                - agentic_text
-                - promptable_agentic_text
-              type: array
-            type: object
-          - type: 'null'
-          title: Page Billing Breakdown
-          description: Per-page breakdown of features used. Maps 1-indexed page numbers (as strings) to the list of billing features applied on that page (e.g. 'page', 'complex', 'chart_agent').
-      type: object
-      required:
-      - num_pages
-      title: ParseUsage
-    DeepSplitPageEvidence:
-      properties:
-        page_number:
-          type: integer
-          title: Page Number
-        evidence:
-          type: string
-          title: Evidence
-        confidence:
+        input:
           anyOf:
           - type: string
-            enum:
-            - high
-            - medium
-            - low
-          - type: 'null'
-          title: Confidence
-      type: object
-      required:
-      - page_number
-      - evidence
-      title: DeepSplitPageEvidence
-    DeepSplitResult:
-      properties:
-        splits:
+          - items:
+              type: string
+            type: array
+          - $ref: '#/components/schemas/UploadResponse'
+          title: Input
+          description: "For parse/split/extract pipelines, the URL of the document to be processed. You can provide one of the following:\n            1. A publicly available URL\n            2. A presigned S3 URL\n            3. A reducto:// prefixed URL obtained from the /upload endpoint after directly uploading a document\n            4. A jobid:// prefixed URL obtained from a previous /parse invocation\n            5. A list of URLs (for multi-document pipelines, V3 API only)\n\n            For edit pipelines, this should be a string containing the edit instructions "
+        parsing:
+          $ref: '#/components/schemas/ParseOptions'
+          description: The configuration options for parsing the document. If you are passing in a jobid:// URL for the file, then this configuration will be ignored.
+          default:
+            enhance:
+              agentic: []
+              intelligent_ordering: false
+              summarize_figures: true
+            retrieval:
+              chunking:
+                chunk_mode: disabled
+                chunk_overlap: 0
+              embedding_optimized: false
+              filter_blocks: []
+            formatting:
+              add_page_markers: false
+              include: []
+              merge_tables: false
+              table_output_format: dynamic
+            spreadsheet:
+              clustering: accurate
+              exclude: []
+              include: []
+              split_large_tables:
+                enabled: true
+                size: 50
+            settings:
+              embed_pdf_metadata: false
+              embed_pdf_metadata_dpi: 100
+              extraction_mode: hybrid
+              force_url_result: false
+              ocr_system: standard
+              persist_results: false
+              return_images: []
+              return_ocr_data: false
+        split_description:
           items:
-            $ref: '#/components/schemas/DeepSplit'
+            $ref: '#/components/schemas/SplitCategory'
           type: array
-          title: Splits
-      type: object
-      required:
-      - splits
-      title: DeepSplitResult
-    SplitPartition:
-      properties:
-        name:
+          title: Split Description
+          description: The configuration options for processing the document.
+        split_rules:
           type: string
-          title: Name
-        pages:
-          items:
-            type: integer
-          type: array
-          title: Pages
-        conf:
-          type: string
-          enum:
-          - high
-          - low
-          title: Conf
-          default: low
+          title: Split Rules
+          description: The prompt that describes rules for splitting the document.
+          default: Split the document into the applicable sections. Sections may only overlap at their first and last page if at all.
+        settings:
+          $ref: '#/components/schemas/SplitSettings'
+          description: The settings for split processing.
+          default:
+            table_cutoff: truncate
+            allow_page_overlap: true
+            deep_split: false
       type: object
       required:
-      - name
-      - pages
-      title: SplitPartition
-    config__v3__AsyncConfig:
-      properties:
-        metadata:
-          title: Metadata
-          description: JSON metadata included in webhook request body. Defaults to None.
-        priority:
-          type: boolean
-          title: Priority
-          description: If True, attempts to process the job with priority if the user has priority processing budget available; by default, sync jobs are prioritized above async jobs.
-          default: false
-        webhook:
-          anyOf:
-          - $ref: '#/components/schemas/SvixWebhookConfig'
-          - $ref: '#/components/schemas/DirectWebhookConfig'
-          - type: 'null'
-          title: Webhook
-          description: The webhook configuration for the asynchronous processing.
-      type: object
-      title: AsyncConfig
-    Enhance:
-      properties:
-        agentic:
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/TableAgentic'
-            - $ref: '#/components/schemas/FigureAgentic'
-            - $ref: '#/components/schemas/TextAgentic'
-          type: array
-          title: Agentic
-          description: Agentic uses vision language models to enhance the accuracy of the output of different types of extraction. This will incur a cost and latency increase.
-          default: []
-        summarize_figures:
-          type: boolean
-          title: Summarize Figures
-          description: If True, summarize figures using a small vision language model. Defaults to True.
-          default: true
-        intelligent_ordering:
-          type: boolean
-          title: Intelligent Ordering
-          description: If True, use an advanced vision language model to improve reading order accuracy, with a small increase in latency. Defaults to False.
-          default: false
-      type: object
-      title: Enhance
+      - input
+      - split_description
+      title: SyncSplitConfig
     AsyncSplitResponse:
       properties:
         job_id:
@@ -893,93 +890,28 @@ components:
       required:
       - job_id
       title: AsyncSplitResponse
-    SplitLargeTableSizes:
+    SplitSettings:
       properties:
-        row:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Row
-          description: The number of rows to include in each chunk when splitting large tables. Does not chunk rows if set to None.
-        column:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Column
-          description: The number of columns to include in each chunk when splitting large tables. Does not chunk columns if set to None.
-      type: object
-      title: SplitLargeTableSizes
-    TextAgentic:
-      properties:
-        scope:
+        table_cutoff:
           type: string
-          const: text
-          title: Scope
-        prompt:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Prompt
-          description: 'Custom instructions for agentic text. Note: This only applies to form regions (key-value).'
-      type: object
-      required:
-      - scope
-      title: TextAgentic
-    SplitResponse:
-      properties:
-        response_type:
-          type: string
-          const: split
-          title: Response Type
-          default: split
-        usage:
-          $ref: '#/components/schemas/ParseUsage'
-        result:
-          anyOf:
-          - $ref: '#/components/schemas/SplitResult'
-          - $ref: '#/components/schemas/DeepSplitResult'
-          title: Result
-          description: The split result.
-      type: object
-      required:
-      - usage
-      - result
-      title: SplitResponse
-    FigureAgentic:
-      properties:
-        scope:
-          type: string
-          const: figure
-          title: Scope
-        prompt:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Prompt
-          description: Custom prompt for figure agentic.
-        advanced_chart_agent:
+          enum:
+          - truncate
+          - preserve
+          title: Table Cutoff
+          description: If tables should be truncated to the first few rows or if all content should be preserved. truncate improves latency, preserve is recommended for cases where partition_key is being used and the partition_key may be included within the table. Defaults to truncate
+          default: truncate
+        allow_page_overlap:
           type: boolean
-          title: Advanced Chart Agent
-          description: If True, use the advanced chart agent. Defaults to False.
-          default: false
-        return_overlays:
+          title: Allow Page Overlap
+          description: If True, a page can belong to multiple categories/partitions. If False, each page must belong to exactly one category. Defaults to True.
+          default: true
+        deep_split:
           type: boolean
-          title: Return Overlays
-          description: If True, return overlays for the figure. This is so you can use the overlays to double check the quality of the extraction
+          title: Deep Split
+          description: If True, uses the deep split agent for higher-quality document splitting. Off by default.
           default: false
       type: object
-      required:
-      - scope
-      title: FigureAgentic
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      title: SplitSettings
     Spreadsheet:
       properties:
         split_large_tables:
@@ -1022,6 +954,74 @@ components:
           default: []
       type: object
       title: Spreadsheet
+    DeepSplitPartition:
+      properties:
+        name:
+          type: string
+          title: Name
+        pages:
+          items:
+            $ref: '#/components/schemas/DeepSplitPageEvidence'
+          type: array
+          title: Pages
+      type: object
+      required:
+      - name
+      - pages
+      title: DeepSplitPartition
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    FigureAgentic:
+      properties:
+        scope:
+          type: string
+          const: figure
+          title: Scope
+        prompt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt
+          description: Custom prompt for figure agentic.
+        advanced_chart_agent:
+          type: boolean
+          title: Advanced Chart Agent
+          description: If True, use the advanced chart agent. Defaults to False.
+          default: false
+        return_overlays:
+          type: boolean
+          title: Return Overlays
+          description: If True, return overlays for the figure. This is so you can use the overlays to double check the quality of the extraction
+          default: false
+      type: object
+      required:
+      - scope
+      title: FigureAgentic
+    SplitCategory:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        partition_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Partition Key
+      type: object
+      required:
+      - name
+      - description
+      title: SplitCategory
   securitySchemes:
     SkippableHTTPBearer:
       type: http

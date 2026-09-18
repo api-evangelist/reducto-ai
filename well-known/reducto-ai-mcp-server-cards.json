@@ -1,0 +1,12 @@
+{
+  "serverCards": [
+    {
+      "name": "reducto",
+      "url": "https://reducto.ai/.well-known/mcp/server-card.json"
+    },
+    {
+      "name": "reducto-docs",
+      "url": "https://reducto.ai/.well-known/mcp/docs-server-card.json"
+    }
+  ]
+}

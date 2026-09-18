@@ -1,0 +1,33 @@
+generated: '2026-09-17'
+method: searched
+source: https://reducto.ai/SKILL.md, https://docs.reducto.ai/.well-known/agent-skills/reducto/skill.md
+provider: Reducto
+providerId: reducto-ai
+note: >-
+  Reducto publishes its own Agent Skills — nothing here was authored on the provider's behalf.
+  Two distinct documents are served, and they are not copies of each other: the apex one is a
+  packaged, installable skill with compatibility, license and an openclaw install block; the docs
+  one is a longer reference keyed to the Mintlify docs project and is the skill the docs host's
+  A2A agent card points at. Both are saved verbatim.
+skills:
+- file: reducto-ai-reducto-apex.md
+  name: reducto
+  source: https://reducto.ai/SKILL.md
+  http_status: 200
+  bytes: 21079
+  license: MIT
+  description: 'Document processing for AI agents: parse, extract, split, classify and edit PDFs,
+    images, spreadsheets, DOCX and 30+ file types via the Reducto API, SDKs, CLI and MCP server.'
+  distribution: named as agentSkillUrl by /.well-known/mcp.json, /.well-known/webmcp.json and
+    /.well-known/agents.json
+  install_paths: [REST, 'pip install reductoai', 'pip install reducto-cli', 'npm install reductoai',
+    'uvx mcp-server-reducto']
+- file: reducto-ai-reducto.md
+  name: reducto
+  source: https://docs.reducto.ai/.well-known/agent-skills/reducto/skill.md
+  http_status: 200
+  bytes: 13157
+  description: Use when processing documents to extract structured data, parse content into
+    chunks, classify documents, split into sections, or fill forms.
+  distribution: referenced as skills[0].url by the A2A agent card at
+    https://docs.reducto.ai/.well-known/agent-card.json

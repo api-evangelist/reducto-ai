@@ -1,0 +1,114 @@
+generated: '2026-09-17'
+method: derived
+source: mcp/reducto-ai-mcp.yml (tool names from https://reducto.ai/.well-known/mcp/server-card.json)
+  bound against openapi/ operationIds and https://platform.reducto.ai/openapi.json
+provider: Reducto
+providerId: reducto-ai
+surfaces:
+  openapi: openapi/reducto-ai-parse-api-openapi.yml (and nine sibling per-resource documents);
+    full upstream spec at https://platform.reducto.ai/openapi.json (HTTP 200, 20 operations)
+  graphql: null
+  mcp: https://mcp.reducto.ai/mcp
+  gated:
+  - surface: mcp
+    reason: tools/list returns HTTP 401 without a Bearer API key, so the live inputSchema per tool
+      could not be read; binding below is by name and documented semantics.
+confidence_note: >-
+  Every REST operationId below was read out of the repo's OpenAPI documents and re-confirmed
+  against the live spec at platform.reducto.ai. Tool names are verbatim from Reducto's published
+  server card. Bindings are high confidence where the tool name and the operation are
+  one-to-one, medium where one tool fans out to a sync/async pair the caller chooses between.
+crosswalk:
+- tool: upload_file
+  category: ingest
+  rest:
+  - upload_upload_post
+  binding: direct
+  confidence: high
+- tool: parse_document
+  category: parse
+  rest:
+  - parse_parse_post
+  - async_parse_parse_async_post
+  binding: sync-or-async pair
+  confidence: medium
+  note: The tool chooses between POST /parse and POST /parse_async; the server card does not say which.
+- tool: extract_data
+  category: extract
+  rest:
+  - extract_extract_post
+  - extract_async_extract_async_post
+  binding: sync-or-async pair
+  confidence: medium
+- tool: split_document
+  category: split
+  rest:
+  - split_split_post
+  - split_async_split_async_post
+  binding: sync-or-async pair
+  confidence: medium
+- tool: classify_document
+  category: classify
+  rest:
+  - classify_classify_post
+  binding: direct
+  confidence: high
+  note: The live spec also carries classify_async_classify_async_post, which the repo's refined
+    Classify document does not yet include.
+- tool: edit_document
+  category: edit
+  rest:
+  - edit_edit_post
+  - edit_async_edit_async_post
+  binding: sync-or-async pair
+  confidence: medium
+- tool: get_job
+  category: jobs
+  rest:
+  - retrieve_parse_job__job_id__get
+  binding: direct
+  confidence: high
+- tool: list_jobs
+  category: jobs
+  rest:
+  - get_jobs_jobs_get
+  binding: direct
+  confidence: high
+mcp_only:
+- tool: get_documentation
+  reason: Documentation retrieval. No public REST operation backs it; it reads Reducto's docs
+    corpus, the same surface the separate reducto-docs MCP server exposes.
+rest_only:
+- operationId: cancel_job_cancel__job_id__post
+  path: POST /cancel/{job_id}
+  reason: Job cancellation is not exposed as an MCP tool.
+- operationId: delete_parse_job_job__job_id__delete
+  path: DELETE /job/{job_id}
+  reason: Destructive artifact deletion is not exposed as an MCP tool.
+- operationId: delete_uploaded_file_upload__file_id__delete
+  path: DELETE /upload/{file_id}
+  reason: Destructive upload deletion is not exposed as an MCP tool.
+- operationId: pipeline_pipeline_post
+  path: POST /pipeline
+  reason: Composite pipeline execution has no tool equivalent; agents compose the individual tools instead.
+- operationId: pipeline_async_pipeline_async_post
+  path: POST /pipeline_async
+  reason: As above, async variant.
+- operationId: webhook_portal_configure_webhook_post
+  path: POST /configure_webhook
+  reason: Webhook portal configuration is an account-management call, not an agent tool.
+- operationId: get_version_version_get
+  path: GET /version
+  reason: Service metadata; not exposed as a tool.
+coverage:
+  mcp_tools: 9
+  mcp_tools_bound: 8
+  mcp_only: 1
+  rest_operations_live: 20
+  rest_operations_bound: 13
+  rest_only: 7
+  note: >-
+    The MCP surface is deliberately read-and-produce only. Every one of Reducto's three
+    destructive REST operations (cancel, delete job, delete upload) and its webhook configuration
+    call is absent from the tool set — an agent using Reducto through MCP cannot delete or cancel
+    anything.

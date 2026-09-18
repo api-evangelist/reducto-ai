@@ -1,0 +1,63 @@
+generated: '2026-09-17'
+method: searched
+source: https://docs.reducto.ai/workflows/svix-webhooks, https://docs.reducto.ai/workflows/direct-webhooks,
+  https://docs.reducto.ai/workflows/async-overview, https://docs.reducto.ai/api-reference/webhook-portal
+provider: Reducto
+providerId: reducto-ai
+asyncapi_published: false
+asyncapi_note: >-
+  Reducto publishes no AsyncAPI document. /asyncapi.yaml and /asyncapi.json were not served on any
+  host probed. The event surface below is the webhook catalog read from the documentation; it is
+  recorded as a Webhooks artifact rather than fabricated into an AsyncAPI.
+surface: webhooks
+configuration:
+  operation: POST /configure_webhook
+  operationId: webhook_portal_configure_webhook_post
+  portal: https://docs.reducto.ai/api-reference/webhook-portal
+  per_request: 'async.webhook config on any _async submission: {"mode": "direct"|"svix", "url": "..."}'
+  metadata: 'async.metadata is echoed back verbatim in the delivered payload, which is how a
+    caller correlates a delivery to its own record.'
+modes:
+- name: svix
+  recommended: true
+  description: Svix-backed delivery with cryptographic signing, advanced retries and a debugging
+    dashboard. The production path.
+  signing:
+    provider: svix
+    secret_prefix: whsec_
+    headers: [svix-id, svix-timestamp, svix-signature]
+    verification: Svix Webhook verify() in the official SDKs; invalid signature should return 401.
+  replay_guidance: >-
+    Svix may retry. The documentation explicitly tells consumers to use the svix-id header as an
+    idempotency key — worth noting that this is the only idempotency guidance Reducto publishes
+    anywhere, and it applies to the consumer's handler, not to Reducto's own API.
+  routing: channel routing supports separate production and development endpoints
+  docs: https://docs.reducto.ai/workflows/svix-webhooks
+- name: direct
+  recommended: false
+  description: Plain HTTP POST to a caller-supplied URL. Documented as suitable for prototyping
+    and simple internal integrations only.
+  signing: none
+  retries: up to 3 attempts with exponential backoff
+  docs: https://docs.reducto.ai/workflows/direct-webhooks
+events:
+- name: async.update
+  transport: svix
+  description: Emitted when an async job reaches a terminal state.
+  payload:
+    status: Completed | Failed
+    job_id: string (uuid)
+    metadata: object — the caller's own metadata, echoed verbatim
+  example: '{"status":"Completed","job_id":"a1b9090e-c9ae-420b-9726-f658afbbe338","metadata":{"user_id":"123","document_type":"invoice"}}'
+  note: >-
+    The payload carries no result. It carries a job_id the consumer then fetches with
+    GET /job/{job_id}. This matters for an agent: the webhook is a completion signal, not a
+    delivery mechanism.
+event_count: 1
+triggering_operations:
+- async_parse_parse_async_post
+- extract_async_extract_async_post
+- split_async_split_async_post
+- edit_async_edit_async_post
+- classify_async_classify_async_post
+- pipeline_async_pipeline_async_post

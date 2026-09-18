@@ -1,0 +1,156 @@
+generated: '2026-09-17'
+method: probed
+source: live HTTP probes of every host in apis.yml, every OpenAPI servers[] host, the docs/console
+  host, and the authorization_servers host named by the protected-resource document
+provider: Reducto
+providerId: reducto-ai
+note: >-
+  Reducto publishes an unusually complete discovery surface. The apex domain serves RFC 9116
+  security.txt, an RFC 9727 api-catalog linkset, an agent card, and five further agent/MCP
+  discovery documents that the linkset itself names. The OAuth protected-resource document lives
+  on the console host (studio.reducto.ai) and points at a third host (accounts.reducto.ai) for the
+  authorization server, which is where the authorization-server metadata actually resolves —
+  probing only the primary domain would have missed both. platform.reducto.ai (the API host)
+  returns 403 for every /.well-known/ path; docs.reducto.ai serves its own, separate agent card.
+hosts:
+- host: reducto.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: reducto-ai-security.txt
+  - path: /.well-known/api-catalog
+    status: 200
+    file: reducto-ai-api-catalog.json
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: reducto-ai-agent-card.json
+  - path: /.well-known/agent.json
+    status: 200
+    file: reducto-ai-agent-card.json
+  - path: /.well-known/agents.json
+    status: 200
+    file: reducto-ai-agents.json
+  - path: /.well-known/mcp.json
+    status: 200
+    file: reducto-ai-mcp.json
+  - path: /.well-known/webmcp.json
+    status: 200
+    file: reducto-ai-webmcp.json
+  - path: /.well-known/mcp/server-cards.json
+    status: 200
+    file: reducto-ai-mcp-server-cards.json
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: reducto-ai-mcp-server-card.json
+  - path: /.well-known/mcp/docs-server-card.json
+    status: 200
+    file: reducto-ai-mcp-docs-server-card.json
+  - path: /.well-known/ai-catalog.json
+    status: 200
+    file: reducto-ai-ai-catalog.json
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+- host: www.reducto.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: reducto-ai-security.txt
+  - path: /.well-known/api-catalog
+    status: 200
+    file: reducto-ai-api-catalog.json
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: reducto-ai-agent-card.json
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: platform.reducto.ai
+  note: API host; the edge returns 403 Forbidden for every /.well-known/ path probed.
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+  - path: /.well-known/ai-plugin.json
+    status: 403
+- host: docs.reducto.ai
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: reducto-ai-docs-agent-card.json
+    note: A second, separate A2A agent card scoped to the documentation host. Saved under a2a/.
+  - path: /.well-known/agent-skills/reducto/skill.md
+    status: 200
+    file: ../skills/reducto-ai-reducto.md
+    note: Provider-published Agent Skill; the same document is also served at reducto.ai/SKILL.md.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: studio.reducto.ai
+  note: Console host. Serves the RFC 9728 protected-resource document for its MCP endpoint;
+    every other path answers 401 behind the console session wall.
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: reducto-ai-oauth-protected-resource.json
+  - path: /.well-known/oauth-authorization-server
+    status: 302
+    note: Redirects; the metadata resolves on accounts.reducto.ai.
+  - path: /.well-known/openid-configuration
+    status: 401
+  - path: /.well-known/api-catalog
+    status: 401
+  - path: /.well-known/agent-card.json
+    status: 401
+  - path: /.well-known/security.txt
+    status: 404
+- host: accounts.reducto.ai
+  note: The authorization server named in studio.reducto.ai's protected-resource document.
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: reducto-ai-oauth-authorization-server.json
+  - path: /.well-known/openid-configuration
+    status: 404
+- host: mcp.reducto.ai
+  note: Hosted MCP host. Every path, /.well-known/ included, answers 401 with
+    '{"error":"Missing or invalid Authorization header. Use Bearer <your-api-key>"}'.
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 401
+  - path: /.well-known/oauth-authorization-server
+    status: 401
+  - path: /.well-known/agent-card.json
+    status: 401
+  - path: /.well-known/security.txt
+    status: 401

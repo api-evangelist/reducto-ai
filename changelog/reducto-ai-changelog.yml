@@ -1,0 +1,87 @@
+generated: '2026-09-17'
+method: searched
+source: https://docs.reducto.ai/reference/model-versions, https://docs.reducto.ai/onprem/changelog,
+  https://platform.reducto.ai/openapi.json
+provider: Reducto
+providerId: reducto-ai
+scheme: model-version register (no dated API release notes)
+current_version: v1.12.16-40-g42081c3db472
+current_version_source: info.version of https://platform.reducto.ai/openapi.json, read 2026-09-17
+note: >-
+  Reducto publishes no public dated changelog for its hosted API. The on-premise changelog at
+  docs.reducto.ai/onprem/changelog returns HTTP 200 but its body is a client-side SHA-256 password
+  gate, so its entries are not publicly readable. What IS public and dated is the model-version
+  register, which names the current default for each model component and gives an explicit removal
+  date for each deprecated one. That register is recorded below as the changelog surface, because
+  it is the only place a consumer can see what changed and when it stops working.
+surfaces:
+- url: https://docs.reducto.ai/reference/model-versions
+  public: true
+  dated: true
+- url: https://docs.reducto.ai/onprem/changelog
+  public: false
+  http_status: 200
+  note: Password-gated client-side; scope is on-premise deployments only.
+entries:
+- component: Parse
+  version: r-1
+  status: preview
+  date: null
+  highlights: Unified full-page model for text, tables, figures, layout, formatting and grounding.
+    Default for all new Parse pipelines.
+  breaking: false
+- component: Layout
+  version: v3
+  status: default
+  date: null
+  highlights: Improved document structure detection.
+  breaking: false
+- component: Layout
+  version: v2
+  status: deprecated
+  removal_date: '2026-07-22'
+  breaking: true
+- component: Layout
+  version: v1
+  status: deprecated
+  removal_date: '2026-05-06'
+  breaking: true
+- component: Extract
+  version: v4
+  status: default
+  highlights: Current default extraction model.
+  breaking: false
+- component: Extract
+  version: v2
+  status: deprecated
+  removal_date: '2027-01-04'
+  breaking: true
+- component: Agentic Tables
+  version: v3
+  status: default
+  highlights: Faster and more accurate than v2; tuned to perform without custom prompts.
+  breaking: false
+- component: Agentic Text
+  version: v3
+  status: default
+  highlights: More accurate with reduced hallucination.
+  breaking: false
+- component: Key-Value
+  version: v3
+  status: default
+  breaking: false
+- component: Key-Value
+  version: v2
+  status: deprecated
+  removal_date: '2026-07-23'
+  breaking: true
+- component: Deep Extract
+  version: v3
+  status: default
+  highlights: Comparable accuracy at lower cost and latency.
+  breaking: false
+- component: Deep Extract
+  version: v2
+  status: deprecated
+  removal_date: '2026-09-03'
+  breaking: true

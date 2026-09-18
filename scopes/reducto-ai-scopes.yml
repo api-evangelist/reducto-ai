@@ -1,0 +1,34 @@
+generated: '2026-09-17'
+method: searched
+source: https://accounts.reducto.ai/.well-known/oauth-authorization-server,
+  https://studio.reducto.ai/.well-known/oauth-protected-resource, https://reducto.ai/auth.md
+provider: Reducto
+providerId: reducto-ai
+applies_to: MCP surface only
+note: >-
+  The document REST API at platform.reducto.ai declares a single securityScheme
+  (SkippableHTTPBearer, an API key) and has no OAuth surface, so derive-oauth-scopes.py has
+  nothing in the spec to read. The OAuth surface that does exist belongs to the MCP endpoint on
+  the console host: studio.reducto.ai/.well-known/oauth-protected-resource nominates
+  accounts.reducto.ai as its authorization server, and that server's RFC 8414 metadata publishes
+  exactly one scope. Recorded from those two live documents rather than derived.
+authorization_server: https://accounts.reducto.ai
+protected_resource: https://studio.reducto.ai/api/mcp
+endpoints:
+  authorization: https://accounts.reducto.ai/authorize
+  token: https://accounts.reducto.ai/api/oauth/token
+  registration: https://accounts.reducto.ai/api/oauth/register
+  revocation: https://accounts.reducto.ai/api/oauth/revoke
+grant_types: [authorization_code, refresh_token]
+pkce: [S256]
+token_endpoint_auth_methods: [none, client_secret_post]
+scopes:
+- name: mcp
+  description: Access to the Reducto MCP endpoint at https://studio.reducto.ai/api/mcp.
+  source: scopes_supported in the authorization-server metadata
+  note: The provider publishes no per-tool or per-resource scope decomposition; `mcp` is the only
+    scope advertised.
+scope_count: 1
+docs: null
+docs_note: No dedicated scopes/permissions reference page is published. reducto.ai/auth.md is the
+  agent-facing authentication guide and documents key issuance, not scopes.
